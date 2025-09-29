@@ -64,9 +64,9 @@ The commands are similar, but not the same as `vi(1)`.  Most commands can be pre
 * `R          ` Read a file into buffer after cursor.
 * `W          ` Write buffer to file.
 * `V          ` Show build and version.
-* `Q          ` Quit.
+* `CTRL+R     ` Redraw the screen.
 * `CTRL+C     ` Quit.
-* Any other key will redraw the screen.
+* `Q          ` Quit.
 
 
 Environment

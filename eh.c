@@ -33,6 +33,7 @@
 #endif
 
 #define CTRL_C		'\003'
+#define CTRL_R		'\022'
 #define CTRL_V		'\026'
 #define CTRL_Z		'\032'
 #define ESC		'\033'
@@ -593,6 +594,12 @@ display(void)
 	}
 	(void) move(cur_row, cur_col);
 	(void) refresh();
+}
+
+void
+nil(void)
+{
+	/* Do nothing. */
 }
 
 void
@@ -1622,8 +1629,8 @@ anchor(void)
  * they're less common.
  */
 
-/*                         |--------MOTION_CMDS-------|-------edit--------|---misc---| */
-static const char key[] = "hjklbewHJKL^$|G/n`'%\006\002~iIaAxXyYdDcCoOPpuU!\030\\mRWQ\003V";
+/*                         |--------MOTION_CMDS-------|-------edit--------|------misc-----it dif---| */
+static const char key[] = "hjklbewHJKL^$|G/n`'%\006\002~iIaAxXyYdDcCoOPpuU!\030\\mRWQ\003V\022";
 
 static void (*func[])(void) = {
 	/* Motion */
@@ -1638,7 +1645,7 @@ static void (*func[])(void) = {
 	pasteP, pastep, undo, redo, bang, altx,
 	/* Other */
 	anchor, setmark, readfile, writefile, quit, quit,
-	version, redraw
+	version, redraw, nil
 };
 #else /* IOCCC */
 /*                        |-MOTION_CMDS-|-edit-|--misc-| */
