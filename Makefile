@@ -122,8 +122,7 @@ nuke: distclean
 	-rm ioccc28/prog.c
 
 strip: build
-	strip eh$E ioccc28/prog$E
-	ls -l ioccc28
+	strip eh$E
 	ls -l
 
 size: ioccc28/prog.c
