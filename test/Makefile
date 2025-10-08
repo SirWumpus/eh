@@ -109,7 +109,7 @@ tests_have_term_data:
 # Allow missing filename argument.
 arg0:
 	-${TITLE}
-	-printf "\aQ" | ${PROG} >a.out
+	-printf "\022Q" | ${PROG} >a.out
 	${A_CORE}
 	${A_OUT}
 	-${PASS}
@@ -124,7 +124,7 @@ term0:
 # An unknown command character redraws the screen.
 redraw0:
 	-${TITLE}
-	printf "\aQ" | ${PROG} a.txt >a.out
+	printf "\022Q" | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	-${PASS}
