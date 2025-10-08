@@ -1546,6 +1546,12 @@ search_next(void)
 		match_length = gap-xgap;
 		undo_save(UNDO_INS_B, here, xgap, match_length);
 		adjmarks(match_length-undo_list->next->size);
+		/* Advance the next serach by one, not the match length.
+		 * Consider initial match, undo, then match next where
+		 * we want to ignore the last match/undo and continue.
+		 * See regexec(&ere, ptr(here+match_length)... above.
+		 */
+		match_length = 1;
 	}
 #else /* IOCCC */
 #endif /* IOCCC */
@@ -1611,6 +1617,7 @@ search(void)
 	} else {
 		/* Kludge to handle repeated /$/ matching. */
 		ere_dollar_only = gap[0] == '$' and '\0' == gap[1];
+		match_length = 0;
 		search_next();
 	}
 	count = 0;
