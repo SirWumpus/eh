@@ -784,27 +784,53 @@ isword(int ch)
 void
 wleft(void)
 {
-	/* Move backwards to end of previous word. */
-	while (0 < here and not isword(*ptr(here-1))) {
+	while (0 < here and isspace(*ptr(here-1))) {
 		--here;
 	}
-	/* Move backwards to start of previous word. */
-	while (0 < here and isword(*ptr(here-1))) {
-		--here;
+	if (0 < here and isword(*ptr(here-1))) {
+		/* Move backwards to start of previous word. */
+		while (0 < here and isword(*ptr(here-1))) {
+			--here;
+		}
+	} else {
+		/* Move backwards to end of previous word. */
+		while (0 < here and ispunct(*ptr(here-1))) {
+			--here;
+		}
 	}
 }
 
+/*
+ * See https://pubs.opengroup.org/onlinepubs/9799919799/utilities/vi.html
+ * definition of "word" (not "bigword").
+ */
 void
 wright(void)
 {
 	off_t eof = pos(ebuf);
-	/* Move forwards to end of current word. */
-	while (here < eof and isword(*ptr(here))) {
-		++here;
-	}
-	/* Move forwards to start of next word. */
-	while (here < eof and not isword(*ptr(here))) {
-		++here;
+	if (here < eof and isword(*ptr(here))) {
+		/* Move forwards to end of current word. */
+		while (here < eof and isword(*ptr(here))) {
+			++here;
+		}
+		/* Skip blanks, but not newlines. */
+		while (here < eof and isblank(*ptr(here))) {
+			++here;
+		}
+	} else if (here < eof and ispunct(*ptr(here))) {
+		/* Move forwards to start of next word. */
+		while (here < eof and ispunct(*ptr(here))) {
+			++here;
+		}
+		/* Skip blanks, but not newlines. */
+		while (here < eof and isblank(*ptr(here))) {
+			++here;
+		}
+	} else {
+		/* Skip over whitespace. */
+		while (here < eof and isspace(*ptr(here))) {
+			++here;
+		}
 	}
 }
 
@@ -1083,13 +1109,19 @@ void
 wend(void)
 {
 	off_t eof = pos(ebuf);
-	/* Move forwards to start of next word. */
-	while (here < eof and not isword(*ptr(++here))) {
+	while (here < eof and isspace(*ptr(++here))) {
 		;
 	}
-	/* Move forwards to end of current word. */
-	while (here < eof and isword(*ptr(here))) {
-		here++;
+	if (here < eof and isword(*ptr(here))) {
+		/* Move forwards to end of current word. */
+		while (here < eof and isword(*ptr(here))) {
+			here++;
+		}
+	} else {
+		/* Move forwards to start of next word. */
+		while (here < eof and ispunct(*ptr(here))) {
+			here++;
+		}
 	}
 	here--;
 }
