@@ -813,8 +813,12 @@ wright(void)
 		while (here < eof and isword(*ptr(here))) {
 			++here;
 		}
-		/* Skip blanks, but not newlines. */
-		while (here < eof and isblank(*ptr(here))) {
+		/* Skip blanks and newlines.
+		 * ACH: SUS says end-of-line are word breaks, so in
+		 * theory word-right treats end-of-line as its own
+		 * word.  nvi and vim do not.
+		 */
+		while (here < eof and isspace(*ptr(here))) {
 			++here;
 		}
 	} else if (here < eof and ispunct(*ptr(here))) {
@@ -822,12 +826,16 @@ wright(void)
 		while (here < eof and ispunct(*ptr(here))) {
 			++here;
 		}
-		/* Skip blanks, but not newlines. */
-		while (here < eof and isblank(*ptr(here))) {
+		/* Skip blanks and newlines.
+		 * ACH: SUS standard says begin/end-of-line are word
+		 * breaks, so in theory word-right treats end-of-line
+		 * word.  nvi and vim do not.
+		 */
+		while (here < eof and isspace(*ptr(here))) {
 			++here;
 		}
 	} else {
-		/* Skip over whitespace. */
+		/* Skip over all whitespace. */
 		while (here < eof and isspace(*ptr(here))) {
 			++here;
 		}

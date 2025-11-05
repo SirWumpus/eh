@@ -77,7 +77,7 @@ CINCLUDE := -include curses.h -include ctype.h -include string.h \
 	-include stdlib.h -include iso646.h -include regex.h \
 	-include fcntl.h -include locale.h -include unistd.h
 
-CFLAGS	:= -std=gnu17 -Os -funsigned-char -Wall -Wextra -pedantic ${CSILENCE} ${DBG}
+CFLAGS	:= -std=gnu17 -Os -funsigned-char -Wall -Wextra ${CSILENCE} ${DBG}
 
 # Frack need extra #define to enable SUS standard strdup(), strndup().
 CPPFLAGS:= -DBUF=${BUF} -DMODE=${MODE} -DBUILT="\"${BUILT}\"" -DCOMMIT="\"${COMMIT}\"" \
