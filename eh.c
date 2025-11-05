@@ -1012,9 +1012,7 @@ yankY(void)
 void
 delx(void)
 {
-	if (marker < 0) {
-		(void) ungetch('l');
-	}
+	(void) ungetch('l');
 	deld();
 }
 
@@ -1024,9 +1022,7 @@ delx(void)
 void
 delX(void)
 {
-	if (marker < 0) {
-		(void) ungetch('h');
-	}
+	(void) ungetch('h');
 	deld();
 }
 
@@ -1036,9 +1032,7 @@ delX(void)
 void
 delD(void)
 {
-	if (marker < 0) {
-		(void) ungetch('$');
-	}
+	(void) ungetch('$');
 	deld();
 }
 
@@ -1062,9 +1056,7 @@ chgc(void)
 void
 chgC(void)
 {
-	if (marker < 0) {
-		(void) ungetch('$');
-	}
+	(void) ungetch('$');
 	chgc();
 }
 
@@ -1676,7 +1668,7 @@ anchor(void)
  * they're less common.
  */
 
-/*                         |--------MOTION_CMDS-------|-------edit--------|------misc-----it dif---| */
+/*                         |--------MOTION_CMDS-------|-------edit--------|------misc--------| */
 static const char key[] = "hjklbewHJKL^$|G/n`'%\006\002~iIaAxXyYdDcCoOPpuU!\030\\mRWQ\003V\022";
 
 static void (*func[])(void) = {
