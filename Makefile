@@ -30,7 +30,7 @@ INSTALL_FLAGS != if test ${MAKE_OS} != 'Cygwin'; then echo "-o ${USER} -g ${GROU
 # Override from the command-line, eg. make DBG='-O0 -g'
 DBG	:= -DNDEBUG
 LDDBG	:=
-CCONFIG	:= -DPLACEHOLDER
+CCONFIG	:= -DPLACEHOLDER -DFAST_MOVE
 
 CC	!= if test ${CC} = 'c99'; then echo gcc; else echo ${CC}; fi
 LDFLAGS	!= if test ${CC} = 'gcc'; then echo '-fno-ident -flto'; fi
