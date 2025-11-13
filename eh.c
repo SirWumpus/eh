@@ -34,7 +34,9 @@
 
 #define CTRL_C		'\003'
 #define CTRL_R		'\022'
+#define CTRL_U		'\025'
 #define CTRL_V		'\026'
+#define CTRL_W		'\027'
 #define CTRL_Z		'\032'
 #define ESC		'\033'
 
@@ -881,12 +883,59 @@ insert(void)
 {
 	int ch, mbl;
 	off_t eof = pos(ebuf);
+	movegap(here);
 #ifndef IOCCC
 	mode = ins;
 	display();
+	char *start = gap;
+	while ((ch = getsigch()) not_eq CTRL_C and ch not_eq ESC) {
+		switch (ch) {
+		case ERR:
+			continue;
+		case '\b':
+			/* Move to previous (multibyte) character. */
+			while (eof < pos(ebuf) and (192 bitand *--gap) == 128) {
+				;
+			}
+			break;
+		case CTRL_U:
+			gap = start;
+			break;
+		case CTRL_W:
+			while (start < gap && isspace(gap[-1])) {
+				gap--;
+			}
+			while (start < gap && !isspace(gap[-1])) {
+				gap--;
+			}
+			break;
+		case CTRL_V:
+			(void) nonl();  /* CR as-is */
+			ch = getch();
+			(void) nl();    /* CR -> LF */
+			/*@fallthrough@*/
+		default:
+			mbl = mblength(ch);
+			if (gap+mbl < egap) {
+				/* Read the remainder of a multibyte
+				 * character BEFORE updating the display.
+				 */
+				growgap(mbl);
+				do {
+					*gap++ = ch;
+					epage++;
+				} while (0 < --mbl and (ch = getch()));
+			}
+		}
+		here = pos(egap);
+		chg = CHANGED;
+		display();
+	}
+	mode = cmd;
+	off_t len = pos(ebuf)-eof;
+	undo_save(UNDO_INS, here-len, gap-len, len);
+	adjmarks(len);
 #else /* IOCCC */
-#endif /* IOCCC */
-	movegap(here);
 	while ((ch = getsigch()) not_eq CTRL_C and ch not_eq ESC) {
 		mbl = mblength(ch);
 		if (ch == '\b') {
@@ -895,20 +944,6 @@ insert(void)
 				;
 			}
 		} else if (gap+mbl < egap) {
-#ifndef IOCCC
-			/* Using cbreak() then ^V is handled
-			 * so ESC ^[ is inserted with ^V^V^[.
-			 * With raw() we handle ^V so ESC ^[
-			 * is inserted with ^V^[ and we'd have
-			 * to handle ^C ourselves.
-			 */
-			if (ch == CTRL_V) {
-				(void) nonl();	/* CR as-is */
-				ch = getch();
-				(void) nl();	/* CR -> LF */
-			}
-#else /* IOCCC */
-#endif /* IOCCC */
 			/* Read the remainder of a multibyte
 			 * character BEFORE updating the display.
 			 */
@@ -919,18 +954,8 @@ insert(void)
 			} while (0 < --mbl and (ch = getch()));
 		}
 		here = pos(egap);
-#ifndef IOCCC
-		chg = CHANGED;
-#else /* IOCCC */
-#endif /* IOCCC */
 		display();
 	}
-#ifndef IOCCC
-	mode = cmd;
-	off_t len = pos(ebuf)-eof;
-	undo_save(UNDO_INS, here-len, gap-len, len);
-	adjmarks(len);
-#else /* IOCCC */
 #endif /* IOCCC */
 	/* Not repeatable yet. */
 	count = 0;
