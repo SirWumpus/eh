@@ -888,9 +888,18 @@ insert(void)
 	mode = ins;
 	display();
 	char *start = gap;
+	(void) timeout(100);
+	unsigned input = 0, pause = 0;
 	while ((ch = getsigch()) not_eq CTRL_C and ch not_eq ESC) {
 		switch (ch) {
 		case ERR:
+			/* Timeout. */
+			input = 0;
+			if (!pause) {
+				/* Update screen once more before pause. */
+				display();
+				pause = 1;
+			}
 			continue;
 		case '\b':
 			/* Move to previous (multibyte) character. */
@@ -899,9 +908,11 @@ insert(void)
 			}
 			break;
 		case CTRL_U:
+			/* Kill line. */
 			gap = start;
 			break;
 		case CTRL_W:
+			/* Erase previous bigword. */
 			while (start < gap && isspace(gap[-1])) {
 				gap--;
 			}
@@ -910,11 +921,13 @@ insert(void)
 			}
 			break;
 		case CTRL_V:
+			/* Insert literal character. */
 			(void) nonl();  /* CR as-is */
 			ch = getch();
 			(void) nl();    /* CR -> LF */
 			/*@fallthrough@*/
 		default:
+			/* Input (multibyte) character. */
 			mbl = mblength(ch);
 			if (gap+mbl < egap) {
 				/* Read the remainder of a multibyte
@@ -929,8 +942,16 @@ insert(void)
 		}
 		here = pos(egap);
 		chg = CHANGED;
-		display();
+		/* Slow (manual) input, maintain the screen; otherwise
+		 * put off screen updates for pasted text until all
+		 * input processed.
+		 */
+		if (input++ < 3) {
+			display();
+		}
+		pause = 0;
 	}
+	(void) timeout(-1);
 	mode = cmd;
 	off_t len = pos(ebuf)-eof;
 	undo_save(UNDO_INS, here-len, gap-len, len);
