@@ -276,6 +276,11 @@ struct ubuf {
 
 struct ubuf *undo_list, *redo_list;
 
+/* See `ex` Mark which describes when the preious-mark (` or ') is set.
+ * https://pubs.opengroup.org/onlinepubs/9799919799/utilities/ex.html#tag_20_40_13_25
+ */
+#define SET_PREVIOUS_MARK(x)	marks[0] = (x)
+
 void
 adjmarks(off_t n)
 {
@@ -378,6 +383,7 @@ redo(void)
 }
 #else /* IOCCC */
 #define growgap(n)
+#define SET_PREVIOUS_MARK(x)
 #endif /* IOCCC */
 
 int
@@ -718,20 +724,14 @@ column(void)
 void
 pgtop(void)
 {
-#ifndef IOCCC
-	marks[0] = here;
-#else /* IOCCC */
-#endif /* IOCCC */
+	SET_PREVIOUS_MARK(here);
 	here = page;
 }
 
 void
 pgbottom(void)
 {
-#ifndef IOCCC
-	marks[0] = here;
-#else /* IOCCC */
-#endif /* IOCCC */
+	SET_PREVIOUS_MARK(here);
 	here = row_start(bol(epage-1), epage-1);
 }
 
@@ -847,10 +847,7 @@ wright(void)
 void
 lngoto(void)
 {
-#ifndef IOCCC
-	marks[0] = here;
-#else /* IOCCC */
-#endif /* IOCCC */
+	SET_PREVIOUS_MARK(here);
 	/* Count physcical lines, just as ed, grep, or wc would. */
 	off_t eof = pos(ebuf);
 	for (here = eof * (count == 0); here < eof and 1 < count; count--) {
@@ -1243,7 +1240,7 @@ gomark(void)
 	int i = getsigch() - '`';
 	if (0 <= i and i < MARKS) {
 		off_t j = marks[0];
-		marks[0] = here;
+		SET_PREVIOUS_MARK(here);
 		here = 0 < i ? marks[i] : j;
 	}
 	count = 0;
@@ -1563,10 +1560,7 @@ search_next(void)
 	 */
 	assert(gap < egap);
 	movegap(pos(ebuf));
-#ifndef IOCCC
-	marks[0] = here;
-#else /* IOCCC */
-#endif /* IOCCC */
+	SET_PREVIOUS_MARK(here);
 	*gap = '\0';
 	/* REG_NOTBOL allows /^/ to advance to start of next line. */
 	if (here+match_length < pos(ebuf) and 0 == regexec(&ere, ptr(here+match_length), MATCHES, matches, REG_NOTBOL)) {

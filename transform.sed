@@ -125,6 +125,8 @@ s/CTRL_Z/26/
 s/ESC/27/
 s/'\\b'/8/
 
+/^#define SET_PREVIOUS_MARK/d
+
 #
 #  Types
 #
