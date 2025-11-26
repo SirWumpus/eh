@@ -1409,8 +1409,12 @@ bang(void)
 					off_t len = pos(ebuf)-eof;
 					undo_save(UNDO_INS_B, here, gap-len, len);
 					adjmarks(len-undo_list->next->size);
+					/* Position after the last character read. */
 					here = pos(egap);
-					epage = here+1;
+					/* Force page reframe in case region goes
+					 * off the bottom of the screen.
+					 */
+					epage = 1;
 				}
 			}
 			(void) close(child_out[0]);
