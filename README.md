@@ -34,6 +34,7 @@ The commands are similar, but not the same as `vi(1)`.  Most commands can be pre
 * `H J K L    ` Page top, page down, page up, page bottom.
 * `^F ^B      ` Page down (forward), page up (back).
 * `b e w      ` Word left, word end, word right.
+* `{ }        ` Paragraph up, paragraph down.
 * `^ $        ` Start and end of line, ie. `0|` or `999|`.
 * `|          ` Goto column (count) of physical line.
 * `%          ` * Find matching brace, bracket, square bracket, or angle bracket.

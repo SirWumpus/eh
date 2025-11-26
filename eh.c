@@ -54,7 +54,7 @@
 
 #ifndef IOCCC
 #define MATCHES		10
-#define MOTION_CMDS	22
+#define MOTION_CMDS	24
 
 static char chg = NOCHANGE;
 static int cur_row, cur_col, count, ere_dollar_only;
@@ -1168,6 +1168,40 @@ wend(void)
 	}
 	here--;
 }
+
+void
+paraup(void)
+{
+	int i = 0;
+	while (0 < here and *ptr(here-1) == '\n') {
+		here--;
+	}
+	while (0 < here and i < 2) {
+		if (*ptr(--here) != '\n') {
+			i = 0;
+		} else {
+			i++;
+		}
+	}
+	here += 0 < here;
+}
+
+void
+paradown(void)
+{
+	int i = 0;
+	off_t eof = pos(ebuf);
+	while (here < eof and *ptr(++here) == '\n') {
+		;
+	}
+	while (here < eof and i < 2) {
+		if (*ptr(++here) == '\n') {
+			i++;
+		} else {
+			i = 0;
+		}
+	}
+}
 #else /* IOCCC */
 /**
  * Delete character right (under) the cursor; same as `dl`.
@@ -1712,8 +1746,8 @@ anchor(void)
  * they're less common.
  */
 
-/*                         |--------MOTION_CMDS-------|-------edit--------|------misc--------| */
-static const char key[] = "hjklbewHJKL^$|G/n`'%\006\002~iIaAxXyYdDcCoOPpuU!\030\\mRWQ\003V\022";
+/*                         |---------MOTION_CMDS--------|----------edit----------|----misc-----| */
+static const char key[] = "hjklbewHJKL^$|G/n`'%\006\002{}~iIaAxXyYdDcCoOPpuU!\030\\mRWQ\003V\022";
 
 static void (*func[])(void) = {
 	/* Motion */
@@ -1721,7 +1755,7 @@ static void (*func[])(void) = {
 	pgtop, pgdown, pgup, pgbottom,
 	lnbegin, lnend, column, lngoto,
 	search, search_next, gomark, lnmark,
-	pairs, pgdown, pgup,
+	pairs, pgdown, pgup, paraup, paradown,
 	/* Modify */
 	flipcase, insert, insertI, append, appendA, delx, delX,
 	yanky, yankY, deld, delD, chgc, chgC, openo, openO,
