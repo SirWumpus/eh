@@ -33,5 +33,6 @@ indent_style = tab
 trim_trailing_whitespace = false
 
 [*.md]
+indent_size = 4
 indent_style = space
 trim_trailing_whitespace = false

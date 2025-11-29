@@ -622,6 +622,7 @@ left(void)
 {
 	here = prevch(here);
 }
+
 void
 right(void)
 {
@@ -1656,7 +1657,7 @@ search_next(void)
 		match_length = gap-xgap;
 		undo_save(UNDO_INS_B, here, xgap, match_length);
 		adjmarks(match_length-undo_list->next->size);
-		/* Advance the next serach by one, not the match length.
+		/* Advance the next search by one, not the match length.
 		 * Consider initial match, undo, then match next where
 		 * we want to ignore the last match/undo and continue.
 		 * See regexec(&ere, ptr(here+match_length)... above.
