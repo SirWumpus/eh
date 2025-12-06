@@ -62,6 +62,7 @@ The commands are similar, but not the same as `vi(1)`.  Most commands can be pre
 * `~          ` Invert character case.
 * `! move cmd ` Filter a text selection or region through shell command line, eg. `!Gfmt -w68`.  Or read only the output of a shell command line, eg. `!!ls -l`.
 * `CTRL+X     ` Toggle hex digits in the range 0..10FFFF or a Unicode character left of the cursor.
+* `E          ` Reset buffer and edit a file.
 * `R          ` Read a file into buffer after cursor.
 * `W          ` Write buffer to file.
 * `V          ` Show build and version.

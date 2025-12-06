@@ -1352,7 +1352,6 @@ fileread(const char *fn)
 	int fd;
 	ssize_t n = 0;
 	if (0 < (fd = open(fn, 0))) {
-		movegap(here);
 		while (0 < (n = read(fd, gap, egap-gap))) {
 			gap += n;
 			growgap(BUF/2);
@@ -1365,6 +1364,7 @@ fileread(const char *fn)
 void
 readfile(void)
 {
+	movegap(here);
 	prompt('<', "");
 	const off_t eof = pos(ebuf);
 	if (fileread(gap)) {
@@ -1379,6 +1379,25 @@ readfile(void)
 		adjmarks(len);
 	}
 	count = 0;
+}
+
+void
+edit(void)
+{
+	here = 0;
+	page = 0;
+	epage = 1;
+	gap = buf;
+	egap = ebuf;
+	undo_free(undo_list);
+	undo_free(redo_list);
+	prompt('*', filename);
+	free(filename);
+	filename = strdup(gap);
+	if (fileread(gap)) {
+		/* ed(1) ? */
+		(void) beep();
+	}
 }
 
 /*
@@ -1776,7 +1795,7 @@ anchor(void)
  */
 
 /*                         |---------MOTION_CMDS--------|----------edit----------|----misc-----| */
-static const char key[] = "hjklbewHJKL^$|G/n`'%\006\002{}~iIaAxXyYdDcCoOPpuU!\030\\mRWQ\003V\022";
+static const char key[] = "hjklbewHJKL^$|G/n`'%\006\002{}~iIaAxXyYdDcCoOPpuU!\030\\mERWQ\003V\022";
 
 static void (*func[])(void) = {
 	/* Motion */
@@ -1790,7 +1809,7 @@ static void (*func[])(void) = {
 	yanky, yankY, deld, delD, chgc, chgC, openo, openO,
 	pasteP, pastep, undo, redo, bang, altx,
 	/* Other */
-	anchor, setmark, readfile, writefile, quit, quit,
+	anchor, setmark, edit, readfile, writefile, quit, quit,
 	version, redraw, nil
 };
 #else /* IOCCC */
