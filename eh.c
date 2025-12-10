@@ -936,7 +936,7 @@ insert(void)
 				do {
 					*gap++ = ch;
 					epage++;
-				} while (0 < --mbl and (ch = getch()));
+				} while (0 < --mbl and (ch = getch()) != ERR);
 			}
 		}
 		here = pos(egap);
@@ -1295,13 +1295,14 @@ lnmark(void)
 }
 
 void
-prompt(int ch, const char *str)
+prompt(const char *msg, const char *str)
 {
 	(void) echo();
 	(void) noraw();
 	(void) standend();
 	(void) attron(A_UNDERLINE);
-	(void) mvaddch(0, 0, ch);
+	size_t len = strlen(msg);
+	(void) mvaddstr(0, 0, msg);
 	clr_to_eol();
 	/* Limit the input to a phrase no wider than COLS, not lines. */
 	if (str == NULL or strchr(str, '\n') != NULL) {
@@ -1310,7 +1311,7 @@ prompt(int ch, const char *str)
 	/* Prime the input with initial input. */
 	ungetstr(str);
 	/* NetBSD 9.3 erase ^H works fine, but not the kill ^U character. */
-	(void) mvgetnstr(0, 1, gap, COLS);
+	(void) mvgetnstr(0, len, gap, COLS);
 	(void) attroff(A_UNDERLINE);
 	(void) standout();
 	(void) noecho();
@@ -1333,7 +1334,7 @@ filewrite(const char *fn)
 void
 writefile(void)
 {
-	prompt('>', filename);
+	prompt(">", filename);
 	if (*gap not_eq '\0') {
 		free(filename);
 		filename = strdup(gap);
@@ -1365,7 +1366,7 @@ void
 readfile(void)
 {
 	movegap(here);
-	prompt('<', "");
+	prompt("<", "");
 	const off_t eof = pos(ebuf);
 	if (fileread(gap)) {
 		/* ed(1) ? */
@@ -1391,7 +1392,7 @@ edit(void)
 	egap = ebuf;
 	undo_free(undo_list);
 	undo_free(redo_list);
-	prompt('*', filename);
+	prompt("*", filename);
 	free(filename);
 	filename = strdup(gap);
 	if (fileread(gap)) {
@@ -1418,7 +1419,7 @@ bang(void)
 	pid_t child;
 	int child_in[2], child_out[2], ex = 74;
 	deld();
-	prompt('!', "");
+	prompt("!", "");
 	if (0 == pipe(child_in)) {
 		if (0 == pipe(child_out)) {
 			if ((child = fork()) >= 0) {
@@ -1535,6 +1536,12 @@ version(void)
 void
 quit(void)
 {
+	if (chg == CHANGED) {
+		prompt("Discard changes y/[n]? ", "");
+		if (*gap != 'y') {
+			return;
+		}
+	}
 	mode = NULL;
 }
 
@@ -1728,7 +1735,7 @@ search(void)
 {
 #ifndef IOCCC
 	char *s, *t;
-	prompt('/', "");
+	prompt("/", "");
 	free(replace);
 	replace = NULL;
 	/* Find end of pattern. */
