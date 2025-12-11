@@ -19,37 +19,10 @@ E<1;7>
 <SMSO>3<RMSO>
 <2;3>
 L<1;7>
-<SMSO>4<RMSO>
+<SMSO>12B 1<RMSO>
+ <SMSO>0% *   <RMSO>
 <2;4>
-L<1;7>
-<SMSO>5<RMSO>
-<2;5>
-O<1;7>
-<SMSO>6<RMSO>
-<2;7>
-<1;7>
-<SMSO>7<RMSO>
-<2;7>
-w<1;7>
-<SMSO>8<RMSO>
-<2;8>
-o<1;7>
-<SMSO>9<RMSO>
-<2;9>
-r<1;7>
-<SMSO>10B 1<RMSO>
- <SMSO>0% * INS<RMSO>
-<2;10>
-l<1;8>
-<SMSO>1<RMSO>
-<2;11>
-d<1;8>
-<SMSO>2<RMSO>
-<2;12>
-!<1;18>
-<SMSO>   <RMSO>
-<2;13>
-<1;11>
+LO world!<1;11>
 <SMSO>0% *<RMSO>
  <SMSO> <RMSO>
 <2;1>

@@ -19,37 +19,10 @@ e<1;7>
 <SMSO>3<RMSO>
 <2;3>
 l<1;7>
-<SMSO>4<RMSO>
+<SMSO>12B 1<RMSO>
+ <SMSO>0% *   <RMSO>
 <2;4>
-l<1;7>
-<SMSO>5<RMSO>
-<2;5>
-o<1;7>
-<SMSO>6<RMSO>
-<2;7>
-<1;7>
-<SMSO>7<RMSO>
-<2;7>
-w<1;7>
-<SMSO>8<RMSO>
-<2;8>
-o<1;7>
-<SMSO>9<RMSO>
-<2;9>
-r<1;7>
-<SMSO>10B 1<RMSO>
- <SMSO>0% * INS<RMSO>
-<2;10>
-l<1;8>
-<SMSO>1<RMSO>
-<2;11>
-d<1;8>
-<SMSO>2<RMSO>
-<2;12>
-!<1;18>
-<SMSO>   <RMSO>
-<2;13>
-<1;11>
+lo world!<1;11>
 <SMSO>0% *<RMSO>
  <SMSO> <RMSO>
 <2;1>
@@ -75,23 +48,11 @@ Oworld!<2;9>
 <2;9>
 Oworld!<2;10>
 <1;8>
-<SMSO>6<RMSO>
-   <SMSO>2<RMSO>
-<2;10>
-Tworld!<2;11>
-<1;8>
-<SMSO>7<RMSO>
-   <SMSO>4<RMSO>
-<2;11>
-!world!<2;12>
-<1;8>
 <SMSO>8<RMSO>
    <SMSO>6<RMSO>
-<2;12>
- world!<2;13>
-<1;17>
-<SMSO>   <RMSO>
-<2;13>
+    <SMSO>   <RMSO>
+<2;10>
+T! world!<2;13>
 <1;1>
 ><EL>
 a.txt<1;1>

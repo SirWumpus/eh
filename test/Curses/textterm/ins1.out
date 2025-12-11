@@ -19,49 +19,12 @@ e<1;7>
 <SMSO>3<RMSO>
 <2;3>
 l<1;7>
-<SMSO>4<RMSO>
+<SMSO>14B 1<RMSO>
+ <SMSO>0% *   <RMSO>
 <2;4>
-l<1;7>
-<SMSO>5<RMSO>
-<2;5>
-o<1;7>
-<SMSO>6<RMSO>
-<3;1>
-<EL>
-<4;1>
+lo<3;1>
+        world!<5;1>
 <SMSO>^D<RMSO>
-<3;1>
-<1;7>
-<SMSO>7<RMSO>
-<3;9>
-<1;7>
-<SMSO>8<RMSO>
-<3;9>
-w<1;7>
-<SMSO>9<RMSO>
-<3;10>
-o<1;7>
-<SMSO>10B 1<RMSO>
- <SMSO>0% * INS<RMSO>
-<3;11>
-r<1;8>
-<SMSO>1<RMSO>
-<3;12>
-l<1;8>
-<SMSO>2<RMSO>
-<3;13>
-d<1;8>
-<SMSO>3<RMSO>
-<3;14>
-!<1;8>
-<SMSO>4<RMSO>
-<4;1>
-<EL>
-<5;1>
-<SMSO>^D<RMSO>
-<4;1>
-<1;18>
-<SMSO>   <RMSO>
 <4;1>
 <1;1>
 ><EL>
