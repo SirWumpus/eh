@@ -1593,25 +1593,22 @@ quit(void)
 void
 search_next(void)
 {
+	off_t eof = pos(ebuf);
 	regmatch_t matches[MATCHES];
 	/* Move the gap out of the way in case it sits in the middle
 	 * of a potential match and NUL terminate the buffer.
 	 */
-	assert(gap < egap);
-	movegap(pos(ebuf));
+	movegap(eof);
 	SET_PREVIOUS_MARK(here);
+	assert(gap < egap);
 	*gap = '\0';
 	/* REG_NOTBOL allows /^/ to advance to start of next line. */
-	if (here+match_length < pos(ebuf) and 0 == regexec(&ere, ptr(here+match_length), MATCHES, matches, REG_NOTBOL)) {
+	if (here+match_length < eof and 0 == regexec(&ere, ptr(here+match_length), MATCHES, matches, REG_NOTBOL)) {
 		here += match_length + matches[0].rm_so;
-		/* Position match in the centre of the screen.*/
-		scrollup(here, LINES/2-TOP_LINE);
 	}
 	/* Wrap-around search. */
 	else if (0 == regexec(&ere, buf, MATCHES, matches, 0)) {
 		here = matches[0].rm_so;
-		/* Position match in the centre of the screen.*/
-		scrollup(here, LINES/2-TOP_LINE);
 	}
 	/* No match after wrap-around. */
 	else {
@@ -1624,6 +1621,8 @@ search_next(void)
 		return;
 	}
 	match_length = matches[0].rm_eo - matches[0].rm_so + ere_dollar_only;
+	/* Position match in the centre of the screen.*/
+	scrollup(here, LINES/2-TOP_LINE);
 #ifndef IOCCC
 	if (NULL not_eq replace) {
 		movegap(here);
