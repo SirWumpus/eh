@@ -73,4 +73,6 @@ test undo redo<CR><1;3>
 <2;6>
 foo redo<EL>
 <2;6>
-<24;1>
+<1;1>
+Discard changes y/[n]?<EL>
+ y<24;1>

@@ -54,4 +54,6 @@ face <EL>
 <1;21>
 <SMSO>82<RMSO>
 <10;9>
-<24;1>
+<1;1>
+Discard changes y/[n]?<EL>
+ y<24;1>

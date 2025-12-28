@@ -48,4 +48,6 @@ tab indent<11;1>
 -last line-<13;1>
 <SMSO>^D<RMSO>
 <12;1>
-<24;1>
+<1;1>
+Discard changes y/[n]?<EL>
+ y<24;1>

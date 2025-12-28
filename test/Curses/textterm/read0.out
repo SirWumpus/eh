@@ -9,4 +9,6 @@
 test/short.txtWa.txt<1;1>
 <SMSO> 0B 0% *                                                                        <RMSO>
 <2;1>
-<24;1>
+<1;1>
+Discard changes y/[n]?<EL>
+ y<24;1>

@@ -275,7 +275,7 @@ open3:
 # Delete from empty buffer.
 del0:
 	-${TITLE}
-	printf "xQ" | ${PROG} a.txt >a.out
+	printf "xQy" | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	-${PASS}
@@ -283,7 +283,7 @@ del0:
 # Insert nothing, delete from empty buffer.
 del1:
 	-${TITLE}
-	printf "i\exQ" | ${PROG} a.txt >a.out
+	printf "i\exQy" | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	-${PASS}
@@ -291,7 +291,7 @@ del1:
 # Insert single character, delete from buffer.
 del2:
 	-${TITLE}
-	printf "iZ\ehxW\nQ" | ${PROG} a.txt >a.out
+	printf "iZ\ehxW\nQy" | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	diff -u ${DATA}/empty.txt a.txt
@@ -309,7 +309,7 @@ del3:
 # Insert some characters with newline, delete newline from buffer.
 del4:
 	-${TITLE}
-	printf "i123Z\n\ehxW\nQ" | ${PROG} a.txt >a.out
+	printf "i123Z\n\ehxW\nQy" | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
@@ -319,7 +319,7 @@ del4:
 del5:
 	-${TITLE}
 	printf "Hello\n\tworld!\n" >a.txt
-	printf "GkxhxW\nQ" | ${PROG} a.txt >a.out
+	printf "GkxhxW\nQy" | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
@@ -328,7 +328,7 @@ del5:
 del6:
 	-${TITLE}
 	printf "Hello\n\tworld!\n" >a.txt
-	printf "Gk6xW\nQ" | ${PROG} a.txt >a.out
+	printf "Gk6xW\nQy" | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
@@ -636,7 +636,7 @@ mark3:
 
 mark4:
 	-${TITLE}
-	printf '/butt\nmajmb/rude\ny2wPP`a`bu`a`bQ' | ${PROG} test/short.txt >a.out
+	printf '/butt\nmajmb/rude\ny2wPP`a`bu`a`bQy' | ${PROG} test/short.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	-${PASS}
@@ -645,7 +645,7 @@ mark4:
 # marks above the `gap`, _not_ `here`.
 mark5:
 	-${TITLE}
-	printf '/butt\nma/rude\nifuzz\e`au`aU`aQ' | ${PROG} test/short.txt >a.out
+	printf '/butt\nma/rude\nifuzz\e`au`aU`aQy' | ${PROG} test/short.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	-${PASS}
@@ -654,7 +654,7 @@ mark5:
 # `dd` not supported.
 del7:
 	-${TITLE}
-	printf '3wddQ' | ${PROG} test/short.txt >a.out
+	printf '3wddQy' | ${PROG} test/short.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	-${PASS}
@@ -758,7 +758,7 @@ undo3:
 # Fix bug with paired undo operations.
 undo4:
 	-${TITLE}
-	printf 'itest undo redo\ebbcwfoo \euuUUQ' | ${PROG} >a.out
+	printf 'itest undo redo\ebbcwfoo \euuUUQy' | ${PROG} >a.out
 	${A_CORE}
 	${A_OUT}
 	-${PASS}
@@ -774,7 +774,7 @@ paste0:
 # Delete buffer and paste back.
 paste1:
 	-${TITLE}
-	printf 'dGPQ' | ${PROG} test/short.txt >a.out
+	printf 'dGPQy' | ${PROG} test/short.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	-${PASS}
@@ -803,7 +803,7 @@ paste3:
 bang0:
 	-${TITLE}
 	cp test/short.txt a.txt
-	printf 'j!!WOOT\nQ' | ${PROG} a.txt >a.out
+	printf 'j!!WOOT\nQy' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	-${PASS}
@@ -812,7 +812,7 @@ bang0:
 bang1:
 	-${TITLE}
 	cp test/short.txt a.txt
-	printf 'j!!false\nQ' | ${PROG} a.txt >a.out
+	printf 'j!!false\nQy' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	-${PASS}
@@ -821,7 +821,7 @@ bang1:
 bang2:
 	-${TITLE}
 	cp test/short.txt a.txt
-	printf 'j!!true\nQ' | ${PROG} a.txt >a.out
+	printf 'j!!true\nQy' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	-${PASS}
@@ -942,7 +942,7 @@ write1:
 # Read file into an empty buffer.
 read0:
 	-${TITLE}
-	printf 'Rtest/short.txtWa.txt\nQ' | ${PROG} >a.out
+	printf 'Rtest/short.txtWa.txt\nQy' | ${PROG} >a.out
 	${A_CORE}
 	${A_OUT}
 	-${PASS}
