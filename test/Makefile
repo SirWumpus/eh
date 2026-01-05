@@ -86,14 +86,15 @@ TESTS:= tests_have_term_data \
 	bang0 bang1 bang2 bang3 bang4 bang5 bang6 bang7 \
 	replace0 replace1 replace2 write0 read0 read1 \
 	select0 select1 select2 select3 select4 select5 \
-	mb0 mb1 mb2 mb3 mb4
+	mb0 mb1 mb2 mb3 mb4 \
+	replace3
 
 .PHONY : ${TESTS}
 .SILENT: ${TESTS}
 
 tests: $T/terminfo.cdb ${TESTS} clean
 
-tests_skipped: empty2 write1
+tests_skipped: empty2 write1 replace4
 
 # While the terminal definition will probably contain definitions for
 # the number of hardware `lines` and `columns`, we explicitly override
@@ -897,6 +898,24 @@ replace2:
 	-${TITLE}
 	cp test/short.txt a.txt
 	printf '/line/plugh!\nnnnW\nQ' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	-${PASS}
+
+# CB-1 /^/XYZZY/a loops forever.
+replace3:
+	-${TITLE}
+	cp test/short.txt a.txt
+	printf 'jjw/^/plugh!/a\nW\nQ' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	-${PASS}
+
+# CB-4 /$/XYZZY/a will crash.
+replace4:
+	-${TITLE}
+	cp test/short.txt a.txt
+	printf 'jjw/$/plugh!/a\nW\nQ' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	-${PASS}

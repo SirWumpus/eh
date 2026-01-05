@@ -57,17 +57,17 @@
 #define MOTION_CMDS	24
 
 static char chg = NOCHANGE;
-static int cur_row, cur_col, count, ere_dollar_only;
+static int cur_row, cur_col, count, ere_dollar_only, ere_carat_only, search_wrapped, replace_all;
 static char *filename, *scrap, *replace;
 static char *buf, *gap, *egap, *ebuf;
 static const char ins[] = "INS", cmd[] = "   ", *mode = cmd;
-static off_t here, page, epage, match_length, scrap_length, marks[MARKS], marker = -1;
+static off_t here, page, epage, match_length, scrap_length, marks[MARKS], marker = -1, search_start;
 static regex_t ere;
 #else /* IOCCC */
 #define MATCHES		1
 #define MOTION_CMDS	14
 
-static int cur_row, cur_col, count, ere_dollar_only;
+static int cur_row, cur_col, count, ere_carat_only, ere_dollar_only;
 static char *filename, *scrap;
 static char buf[BUF], *gap = buf, *egap, *ebuf, *ugap, *uegap;
 static off_t here, uhere, page, epage, match_length, scrap_length, marker = -1;
@@ -276,7 +276,7 @@ struct ubuf {
 
 struct ubuf *undo_list, *redo_list;
 
-/* See `ex` Mark which describes when the preious-mark (` or ') is set.
+/* See `ex` Mark which describes when the previous-mark (` or ') is set.
  * https://pubs.opengroup.org/onlinepubs/9799919799/utilities/ex.html#tag_20_40_13_25
  */
 #define SET_PREVIOUS_MARK(x)	marks[0] = (x)
@@ -1602,28 +1602,37 @@ search_next(void)
 	SET_PREVIOUS_MARK(here);
 	assert(gap < egap);
 	*gap = '\0';
-	/* REG_NOTBOL allows /^/ to advance to start of next line. */
+	/* REG_NOTBOL allows /^/ to advance to start of next line.
+	 *
+	 * In all other cases need to offset by one the start of the
+	 * next search so as to avoid remaining stuck repeatedly
+	 * matching at the cursor.
+	 */
 	if (here+match_length < eof and 0 == regexec(&ere, ptr(here+match_length), MATCHES, matches, REG_NOTBOL)) {
 		here += match_length + matches[0].rm_so;
 	}
 	/* Wrap-around search. */
 	else if (0 == regexec(&ere, buf, MATCHES, matches, 0)) {
 		here = matches[0].rm_so;
+		search_wrapped = 1;
 	}
 	/* No match after wrap-around. */
 	else {
 		match_length = 0;
-#ifndef IOCCC
-		free(replace);
-		replace = NULL;
-#else /* IOCCC */
-#endif /* IOCCC */
 		return;
 	}
 	match_length = matches[0].rm_eo - matches[0].rm_so + ere_dollar_only;
-	/* Position match in the centre of the screen.*/
-	scrollup(here, LINES/2-TOP_LINE);
 #ifndef IOCCC
+	/* CB-1 Have we come full circle? */
+	if (search_wrapped and search_start <= here) {
+		here -= ere_carat_only ? matches[0].rm_so : 0;
+//		here -= matches[0].rm_so;
+		search_wrapped = 0;
+		search_start = eof;
+		match_length = 0;
+		replace_all = 0;
+		return;
+	}
 	if (NULL not_eq replace) {
 		movegap(here);
 		char *xgap = gap;
@@ -1641,13 +1650,19 @@ search_next(void)
 				continue;
 			} else if (*s == '/') {
 				/* End replacement string. */
-				if (*++s == 'a') {
+				if (replace_all and *++s == 'a') {
 					/* a = replace all (do it again) */
 					(void) ungetch('n');
 				}
 				break;
 			}
 			*gap++ = *s;
+		}
+		/* CB-1 Adjust search_start to maintain origin position
+		 * by preceeding replacements.
+		 */
+		if (search_wrapped and here < search_start) {
+			search_start += (gap-xgap)-match_length;
 		}
 		/* Delete the match. */
 		undo_save(UNDO_DEL_A, here, egap, match_length);
@@ -1662,9 +1677,12 @@ search_next(void)
 		 * See regexec(&ere, ptr(here+match_length)... above.
 		 */
 		match_length = 1;
+		chg = CHANGED;
 	}
 #else /* IOCCC */
 #endif /* IOCCC */
+	/* Position match in the centre of the screen.*/
+	scrollup(here, LINES/2-TOP_LINE);
 }
 
 /**
@@ -1710,6 +1728,10 @@ search(void)
 			*s = *t;
 		}
 	}
+	/* CB-1 Small hack to handle `/^/XYZ/a`. */
+	search_start = here;
+	search_wrapped = 0;
+	replace_all = 1;
 	*s = '\0';
 #else /* IOCCC */
 	(void) echo();
@@ -1725,6 +1747,8 @@ search(void)
 		/* Something about the pattern is fubar. */
 		(void) beep();
 	} else {
+		/* Kludge to handle repeated /^/ matching. */
+		ere_carat_only = gap[0] == '^' and '\0' == gap[1];
 		/* Kludge to handle repeated /$/ matching. */
 		ere_dollar_only = gap[0] == '$' and '\0' == gap[1];
 		match_length = 0;

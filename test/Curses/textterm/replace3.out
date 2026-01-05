@@ -1,0 +1,110 @@
+<CLEAR>
+<CLEAR>
+<SMSO>a.txt 119B 0%                                                                   <RMSO>
+<2;1>
+hello   world<3;1>
+this file might be a<4;1>
+little rude fart face<5;1>
+empty line<7;1>
+blank line<9;1>
+qwerty butt<10;9>
+tab indent<11;1>
+-last line-<13;1>
+<SMSO>^D<RMSO>
+<2;1>
+<1;12>
+<SMSO>10%<RMSO>
+<3;1>
+<1;12>
+<SMSO>27<RMSO>
+<4;1>
+<1;12>
+<SMSO>33<RMSO>
+<4;8>
+<1;1>
+/<EL>
+^/plugh!/a<1;1>
+<SMSO>a.txt 125B 44% *                                                                <RMSO>
+<5;1>
+plugh!empty line<CR><1;8>
+<SMSO>31<RMSO>
+  <SMSO>5<RMSO>
+<6;1>
+plugh!<CR><1;9>
+<SMSO>7<RMSO>
+   <SMSO>7<RMSO>
+<7;1>
+plugh!blank line<CR><1;8>
+<SMSO>43<RMSO>
+  <SMSO>6<RMSO>
+<8;1>
+plugh!<CR><1;9>
+<SMSO>9<RMSO>
+  <SMSO>71<RMSO>
+<9;1>
+plugh!qwerty butt<CR><1;8>
+<SMSO>55<RMSO>
+  <SMSO>80<RMSO>
+<10;1>
+plugh!<CR><1;8>
+<SMSO>61<RMSO>
+   <SMSO>8<RMSO>
+<11;1>
+plugh!-last line-<CR><1;9>
+<SMSO>7<RMSO>
+  <SMSO>96<RMSO>
+<2;1>
+this file might be a<3;1>
+little rude fart face<4;1>
+plugh!empty line <EL>
+<5;7>
+<EL>
+<6;7>
+blank line<7;7>
+<EL>
+<8;7>
+qwerty butt<9;7>
+  tab indent<10;7>
+-last line-<EL>
+<11;7>
+<EL>
+<12;1>
+<SMSO>^D<RMSO>
+<13;1>
+<EL>
+<11;1>
+<1;8>
+<SMSO>73<RMSO>
+  <SMSO>0% * <RMSO>
+<2;1>
+plugh!hello     world<3;1>
+this file might be a<EL>
+<4;1>
+little rude fart face<5;7>
+empty line<6;7>
+<EL>
+<7;7>
+blank line<8;7>
+<EL>
+<9;7>
+qwerty butt<EL>
+<10;7>
+  tab indent<11;7>
+-last line-<12;1>
+plugh!<13;1>
+<SMSO>^D<RMSO>
+<2;1>
+<1;9>
+<SMSO>9<RMSO>
+  <SMSO>10% *<RMSO>
+<3;1>
+plugh!this file might be a<CR><1;8>
+<SMSO>85<RMSO>
+  <SMSO>24<RMSO>
+<4;1>
+plugh!little rude fart face<CR>p<1;1>
+><EL>
+a.txt<1;1>
+<SMSO>a.txt 185B 24%                                                                  <RMSO>
+<4;2>
+<24;1>
