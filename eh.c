@@ -482,7 +482,8 @@ display(void)
 {
 	char *p;
 	int i, j;
-	off_t from, to, eof = pos(ebuf);
+	off_t from, to;
+	const off_t eof = pos(ebuf);
 	/* Find the top of the display page. */
 	if (here < page) {
 		/* Scroll up one logical line or goto physical line. */
@@ -694,7 +695,7 @@ pairs(void)
 		}
 	} else {
 		/* Find next. */
-		off_t eof = pos(ebuf);
+		const off_t eof = pos(ebuf);
 		for (mark++; mark < eof; mark++) {
 			ch = *ptr(mark);
 			if (ch == brackets[b]) {
@@ -810,7 +811,7 @@ wleft(void)
 void
 wright(void)
 {
-	off_t eof = pos(ebuf);
+	const off_t eof = pos(ebuf);
 	if (here < eof and isword(*ptr(here))) {
 		/* Move forwards to end of current word. */
 		while (here < eof and isword(*ptr(here))) {
@@ -850,7 +851,7 @@ lngoto(void)
 {
 	SET_PREVIOUS_MARK(here);
 	/* Count physcical lines, just as ed, grep, or wc would. */
-	off_t eof = pos(ebuf);
+	const off_t eof = pos(ebuf);
 	for (here = eof * (count == 0); here < eof and 1 < count; count--) {
 		/* Next physical line. */
 		here = col_or_eol(here, 0, MAX_COLS);
@@ -880,7 +881,7 @@ void
 insert(void)
 {
 	int ch, mbl;
-	off_t eof = pos(ebuf);
+	const off_t eof = pos(ebuf);
 	movegap(here);
 #ifndef IOCCC
 	mode = ins;
@@ -1152,7 +1153,7 @@ openO(void)
 void
 wend(void)
 {
-	off_t eof = pos(ebuf);
+	const off_t eof = pos(ebuf);
 	while (here < eof and isspace(*ptr(++here))) {
 		;
 	}
@@ -1191,7 +1192,7 @@ void
 paradown(void)
 {
 	int i = 0;
-	off_t eof = pos(ebuf);
+	const off_t eof = pos(ebuf);
 	while (here < eof and *ptr(++here) == '\n') {
 		;
 	}
@@ -1365,7 +1366,7 @@ void
 readfile(void)
 {
 	prompt('<', "");
-	off_t eof = pos(ebuf);
+	const off_t eof = pos(ebuf);
 	if (fileread(gap)) {
 		/* ed(1) ? */
 		(void) beep();
@@ -1433,7 +1434,7 @@ bang(void)
 					ex = WIFEXITED(ex) ? WEXITSTATUS(ex) : 127;
 					/* Avoid blocking on read() and allow for long or no output. */
 					(void) fcntl(child_out[0], F_SETFL, O_NONBLOCK);
-					off_t eof = pos(ebuf);
+					const off_t eof = pos(ebuf);
 					while (0 < (n = read(child_out[0], gap, egap-gap))) {
 						gap += n;
 						chg = CHANGED;
@@ -1598,7 +1599,7 @@ quit(void)
 void
 search_next(void)
 {
-	off_t eof = pos(ebuf);
+	const off_t eof = pos(ebuf);
 	regmatch_t matches[MATCHES];
 	/* Move the gap out of the way in case it sits in the middle
 	 * of a potential match and NUL terminate the buffer.
@@ -1834,7 +1835,7 @@ getcmd(int m)
 void
 cleanup(void)
 {
-	/* Most of these are to satisfy Valgrind or saniisers.  The OS
+	/* Most of these are to satisfy Valgrind or sanitisers.  The OS
 	 * reclaims memory when the program exits, making the need to
 	 * free() theoritcally unnecessary.
 	 */
