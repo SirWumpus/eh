@@ -1,0 +1,34 @@
+<CLEAR>
+<CLEAR>
+<SMSO>a.txt 119B 0%                                                                   <RMSO>
+<2;1>
+hello   world<3;1>
+this file might be a<4;1>
+little rude fart face<5;1>
+empty line<7;1>
+blank line<9;1>
+qwerty butt<10;9>
+tab indent<11;1>
+-last line-<13;1>
+<SMSO>^D<RMSO>
+<2;1>
+<1;12>
+<SMSO>10%<RMSO>
+<3;1>
+<1;12>
+<SMSO>27<RMSO>
+<4;1>
+<1;12>
+<SMSO>33<RMSO>
+<4;8>
+<1;1>
+/<EL>
+plugh!/a<1;1>
+<SMSO>a.txt 119B 33%                                                                  <RMSO>
+<4;8>
+<1;1>
+><EL>
+a.txt<1;1>
+<SMSO>a.txt 119B 33%                                                                  <RMSO>
+<4;8>
+<24;1>
