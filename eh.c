@@ -1886,13 +1886,13 @@ main(int argc, char **argv)
 		/* Try TERM=ansi-mini which works. */
 		return 1;
 	}
+	/* Switching between cbreak() and raw() impacts terminal output
+	 * which can alter the expected test output files.
+	 */
 	(void) raw();
 #ifndef IOCCC
 	(void) noecho();
 	(void) atexit(cleanup);
-	/* Switching between cbreak() and raw() impacts terminal output
-	 * which can alter the expected test output files.
-	 */
 	growgap(BUF);
 	filename = strdup(argv[1] == NULL ? "" : *++argv);
 	if (fileread(filename)) {
