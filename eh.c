@@ -1589,6 +1589,11 @@ quit(void)
  *               ^             ^
  *      BOFtext\n\nnot terminatedEOF
  *	         ^               ^
+ *
+ * Cursor position:
+ *  - No match, cursor unchanged.
+ *  - Match found, cursor at start of match.
+ *  - Match found and replaced, cursor at end of replacement.
  */
 void
 search_next(void)
@@ -1618,24 +1623,26 @@ search_next(void)
 	}
 	/* No match after wrap-around. */
 	else {
-		match_length = 0;
-		return;
-	}
-	match_length = matches[0].rm_eo - matches[0].rm_so + ere_dollar_only;
-#ifndef IOCCC
-	/* CB-1 Have we come full circle? */
-	if (search_wrapped and search_start <= here) {
-		here -= ere_carat_only ? matches[0].rm_so : 0;
-//		here -= matches[0].rm_so;
 		search_wrapped = 0;
-		search_start = eof;
+		search_start = 0;
 		match_length = 0;
-		replace_all = 0;
 		return;
 	}
+	/* Next search resumes after this match, see here+match_length above. */
+	match_length = matches[0].rm_eo - matches[0].rm_so;
+#ifndef IOCCC
 	if (NULL not_eq replace) {
 		movegap(here);
 		char *xgap = gap;
+		/* CB-1 Have we come full circle? */
+		if (replace_all and search_wrapped and search_start < here) {
+			here -= matches[0].rm_so;
+			search_wrapped = 0;
+			search_start = 0;
+			match_length = 0;
+			replace_all = 0;
+			return;
+		}
 		for (const char *s = replace; *s not_eq '\0'; s++) {
 			growgap(COLS);
 			if (*s == '$' and isdigit(s[1])) {
@@ -1658,29 +1665,26 @@ search_next(void)
 			}
 			*gap++ = *s;
 		}
+		/* Delete the match. */
+		undo_save(UNDO_DEL_A, here, egap, match_length);
+		egap += match_length;
+		/* Replacement string length. */
+		undo_save(UNDO_INS_B, here, xgap, gap-xgap);
+		adjmarks(match_length-undo_list->next->size);
+		/* Position at end of replacement. */
+		here = pos(egap);
+		chg = CHANGED;
 		/* CB-1 Adjust search_start to maintain origin position
 		 * by preceeding replacements.
 		 */
 		if (search_wrapped and here < search_start) {
 			search_start += (gap-xgap)-match_length;
 		}
-		/* Delete the match. */
-		undo_save(UNDO_DEL_A, here, egap, match_length);
-		egap += match_length;
-		/* Replacement string length. */
-		match_length = gap-xgap;
-		undo_save(UNDO_INS_B, here, xgap, match_length);
-		adjmarks(match_length-undo_list->next->size);
-		/* Advance the next search by one, not the match length.
-		 * Consider initial match, undo, then match next where
-		 * we want to ignore the last match/undo and continue.
-		 * See regexec(&ere, ptr(here+match_length)... above.
-		 */
-		match_length = 1;
-		chg = CHANGED;
 	}
 #else /* IOCCC */
 #endif /* IOCCC */
+	/* CB-1 an empty match, ie. /$/, needs advance on next search. */
+	match_length += ere_dollar_only;
 	/* Position match in the centre of the screen.*/
 	scrollup(here, LINES/2-TOP_LINE);
 }

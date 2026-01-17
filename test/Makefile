@@ -494,7 +494,7 @@ ere1:
 	${A_OUT}
 	-${PASS}
 
-# Start of lines.
+# Start of lines (no NL at EOL).
 ere2:
 	-${TITLE}
 	printf "/^\nnnnnnnnnnQ" | ${PROG} test/short-nonl.txt >a.out
@@ -510,7 +510,7 @@ ere3:
 	${A_OUT}
 	-${PASS}
 
-# End of lines.
+# End of lines (no NL at EOL)
 ere4:
 	-${TITLE}
 	printf "/$$\nnnnnnnnnnnQ" | ${PROG} test/short-nonl.txt >a.out
@@ -526,7 +526,7 @@ ere5:
 	${A_OUT}
 	-${PASS}
 
-# Last character of line.
+# Last character of line (no NL at EOL).
 ere6:
 	-${TITLE}
 	printf "/.$$\nnnnnnnnnQ" | ${PROG} test/short-nonl.txt >a.out
@@ -542,7 +542,7 @@ ere7:
 	${A_OUT}
 	-${PASS}
 
-# Blank lines.
+# Blank lines (no NL at EOL).
 ere8:
 	-${TITLE}
 	printf "/^$$\nnnQ" | ${PROG} test/short-nonl.txt >a.out

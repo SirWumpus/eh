@@ -24,87 +24,59 @@ tab indent<11;1>
 <1;1>
 /<EL>
 ^/plugh!/a<1;1>
-<SMSO>a.txt 125B 44% *                                                                <RMSO>
+<SMSO>a.txt 125B 48% *                                                                <RMSO>
 <5;1>
-plugh!empty line<CR><1;8>
-<SMSO>31<RMSO>
-  <SMSO>5<RMSO>
-<6;1>
-plugh!<CR><1;9>
-<SMSO>7<RMSO>
-   <SMSO>7<RMSO>
-<7;1>
-plugh!blank line<CR><1;8>
-<SMSO>43<RMSO>
-  <SMSO>6<RMSO>
-<8;1>
-plugh!<CR><1;9>
-<SMSO>9<RMSO>
-  <SMSO>71<RMSO>
-<9;1>
-plugh!qwerty butt<CR><1;8>
-<SMSO>55<RMSO>
-  <SMSO>80<RMSO>
-<10;1>
-plugh!<CR><1;8>
-<SMSO>61<RMSO>
-   <SMSO>8<RMSO>
-<11;1>
-plugh!-last line-<CR><1;9>
-<SMSO>7<RMSO>
-  <SMSO>96<RMSO>
-<2;1>
-this file might be a<3;1>
-little rude fart face<4;1>
-plugh!empty line <EL>
-<5;7>
-<EL>
-<6;7>
-blank line<7;7>
-<EL>
-<8;7>
-qwerty butt<9;7>
-  tab indent<10;7>
--last line-<EL>
-<11;7>
-<EL>
-<12;1>
-<SMSO>^D<RMSO>
-<13;1>
-<EL>
-<11;1>
+plugh!empty line<5;7>
 <1;8>
+<SMSO>31<RMSO>
+  <SMSO>59<RMSO>
+<6;1>
+plugh!<1;9>
+<SMSO>7<RMSO>
+  <SMSO>62<RMSO>
+<7;1>
+plugh!blank line<7;7>
+<1;8>
+<SMSO>43<RMSO>
+  <SMSO>71<RMSO>
+<8;1>
+plugh!<1;9>
+<SMSO>9<RMSO>
+   <SMSO>5<RMSO>
+<9;1>
+plugh!qwerty butt<9;7>
+<1;8>
+<SMSO>55<RMSO>
+  <SMSO>84<RMSO>
+<10;1>
+plugh!<1;8>
+<SMSO>61<RMSO>
+  <SMSO>92<RMSO>
+<11;1>
+plugh!-last line-<11;7>
+<1;9>
+<SMSO>7<RMSO>
+  <SMSO>100% *<RMSO>
+<12;1>
+plugh!<1;8>
 <SMSO>73<RMSO>
-  <SMSO>0% * <RMSO>
+  <SMSO>3% *<RMSO>
+ <SMSO> <RMSO>
 <2;1>
-plugh!hello     world<3;1>
-this file might be a<EL>
-<4;1>
-little rude fart face<5;7>
-empty line<6;7>
-<EL>
-<7;7>
-blank line<8;7>
-<EL>
-<9;7>
-qwerty butt<EL>
-<10;7>
-  tab indent<11;7>
--last line-<12;1>
-plugh!<13;1>
-<SMSO>^D<RMSO>
-<2;1>
+plugh!hello     world<2;7>
 <1;9>
 <SMSO>9<RMSO>
-  <SMSO>10% *<RMSO>
+  <SMSO>13% *<RMSO>
 <3;1>
-plugh!this file might be a<CR><1;8>
+plugh!this file might be a<3;7>
+<1;8>
 <SMSO>85<RMSO>
-  <SMSO>24<RMSO>
+  <SMSO>27<RMSO>
 <4;1>
-plugh!little rude fart face<CR>p<1;1>
+plugh!little rude fart face<4;7>
+<1;1>
 ><EL>
 a.txt<1;1>
-<SMSO>a.txt 185B 24%                                                                  <RMSO>
-<4;2>
+<SMSO>a.txt 185B 27%                                                                  <RMSO>
+<4;7>
 <24;1>
