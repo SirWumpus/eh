@@ -870,6 +870,11 @@ getsigch(void)
 	int ch;
 	while ((ch = getch()) == CTRL_Z) {
 		(void) raise(SIGTSTP);
+		/* If you go to background, while in the middle of
+		 * numeric input or a partial command, then when you
+		 * return you'll have likely forgotten where you are.
+		 */
+		ch = ERR;
 	}
 	return ch;
 }
@@ -956,7 +961,7 @@ insert(void)
 	undo_save(UNDO_INS, here-len, gap-len, len);
 	adjmarks(len);
 #else /* IOCCC */
-	while ((ch = getsigch()) not_eq CTRL_C and ch not_eq ESC) {
+	while ((ch = getch()) not_eq CTRL_C and ch not_eq ESC) {
 		mbl = mblength(ch);
 		if (ch == '\b') {
 			/* Move to previous (multibyte) character. */
@@ -1263,7 +1268,7 @@ void
 setmark(void)
 {
 	/* ASCII characters ` a..z are the allowed marks. */
-	int i = getsigch() - '`';
+	int i = getch() - '`';
 	if (0 <= i and i < MARKS) {
 		marks[i] = here;
 	}
@@ -1273,7 +1278,7 @@ void
 gomark(void)
 {
 	/* ASCII characters ` a..z are the allowed marks. */
-	int i = getsigch() - '`';
+	int i = getch() - '`';
 	if (0 <= i and i < MARKS) {
 		off_t j = marks[0];
 		SET_PREVIOUS_MARK(here);
@@ -1285,7 +1290,7 @@ gomark(void)
 void
 lnmark(void)
 {
-	int ch = getsigch();
+	int ch = getch();
 	if (ch == '\'') {
 		ch = '`';
 	}
