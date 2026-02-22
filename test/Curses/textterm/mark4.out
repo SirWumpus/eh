@@ -25,17 +25,20 @@ butt<1;1>
 rude<1;1>
 <SMSO>test/short.txt 119B 33%                                                         <RMSO>
 <4;8>
+<1;21>
+<SMSO>42<RMSO>
+<4;18>
 <1;17>
 <SMSO>2<RMSO>
-    <SMSO>8<RMSO>
+    <SMSO>6<RMSO>
   <SMSO>*<RMSO>
 <4;18>
-rude fart face<4;18>
+rude fart face<4;28>
 <1;17>
 <SMSO>3<RMSO>
-   <SMSO>43<RMSO>
+   <SMSO>50<RMSO>
 <4;28>
-rude fart face<4;28>
+rude fart face<4;38>
 <1;21>
 <SMSO>79<RMSO>
 <9;8>
@@ -44,10 +47,10 @@ rude fart face<4;28>
 <10;9>
 <1;17>
 <SMSO>2<RMSO>
-   <SMSO>38<RMSO>
+   <SMSO>46<RMSO>
 <4;28>
 face <EL>
-<4;18>
+<4;28>
 <1;21>
 <SMSO>77<RMSO>
 <9;8>

@@ -267,8 +267,8 @@ s/(^|[^[:alnum:]_])match_length([^[:alnum:]_]|$)/\1l\2/g
 s/(^|[^[:alnum:]_])matches([^[:alnum:]_]|$)/\1p\2/g
 s/(^|[^[:alnum:]_])marks([^[:alnum:]_]|$)/\1m\2/g
 s/(^|[^[:alnum:]_])marker([^[:alnum:]_]|$)/\1d\2/g
-s/(^|[^[:alnum:]_])scrap_length([^[:alnum:]_]|$)/\1Q\2/g
-s/(^|[^[:alnum:]_])scrap([^[:alnum:]_]|$)/\1q\2/g
+s/(^|[^[:alnum:]_])yank_length([^[:alnum:]_]|$)/\1Q\2/g
+s/(^|[^[:alnum:]_])yank_text([^[:alnum:]_]|$)/\1q\2/g
 s/(^|[^[:alnum:]_])pipein([^[:alnum:]_]|$)/\1x\2/g
 s/(^|[^[:alnum:]_])pipeout([^[:alnum:]_]|$)/\1y\2/g
 s/(^|[^[:alnum:]_])child_in([^[:alnum:]_]|$)/\1x\2/g

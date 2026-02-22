@@ -979,7 +979,7 @@ select2:
 	${A_OUT}
 	-${PASS}
 
-# Select some words right, yank, paste.
+# Select some words right, yank, paste. Selction is extended.
 select3:
 	-${TITLE}
 	cp test/short.txt a.txt

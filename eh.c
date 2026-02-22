@@ -58,19 +58,19 @@
 
 static char chg = NOCHANGE;
 static int cur_row, cur_col, count, ere_dollar_only, ere_carat_only, search_wrapped, replace_all;
-static char *filename, *scrap, *replace;
+static char *filename, *yank_text, *replace;
 static char *buf, *gap, *egap, *ebuf;
 static const char ins[] = "INS", cmd[] = "   ", *mode = cmd;
-static off_t here, page, epage, match_length, scrap_length, marks[MARKS], marker = -1, search_start;
+static off_t here, page, epage, match_length, yank_here, yank_length, marks[MARKS], marker = -1, search_start;
 static regex_t ere;
 #else /* IOCCC */
 #define MATCHES		1
 #define MOTION_CMDS	14
 
 static int cur_row, cur_col, count, ere_carat_only, ere_dollar_only;
-static char *filename, *scrap;
+static char *filename, *yank_text;
 static char buf[BUF], *gap = buf, *egap, *ebuf, *ugap, *uegap;
-static off_t here, uhere, page, epage, match_length, scrap_length, marker = -1;
+static off_t here, uhere, page, epage, match_length, yank_length, marker = -1;
 static regex_t ere;
 #endif /* IOCCC */
 
@@ -326,7 +326,7 @@ void
 undo_redo(UndoOp op, struct ubuf *obj)
 {
 	movegap(obj->off);
-	if (op) {
+	if (op == UNDO_INS) {
 		/* Insert. */
 		growgap(obj->size);
 		egap -= obj->size;
@@ -997,11 +997,14 @@ yanky(void)
 		mark = here;
 		getcmd(MOTION_CMDS);
 	}
-	if (mark < here) {
-		mark xor_eq here;
-		here xor_eq mark;
-		mark xor_eq here;
+	yank_here = here;
+	if (mark < yank_here) {
+		/* Swap. */
+		mark xor_eq yank_here;
+		yank_here xor_eq mark;
+		mark xor_eq yank_here;
 	}
+	assert(yank_here <= mark);
 	/* SUS 2018 vi(1) `y` yank sets the cursor on the last column
 	 * of the first character of the yanked region; results in yank
 	 * forward leaving the cursor as-is, while yank back moves the
@@ -1012,10 +1015,9 @@ yanky(void)
 	 * or cut, and better visual feedback) or not update cursor at
 	 * all (functional but lacks visual feedback ie. did it work).
 	 */
-	free(scrap);
-	movegap(here);
-	scrap = strndup(egap, scrap_length = mark-here);
-	marker = -1;
+	free(yank_text);
+	movegap(yank_here);
+	yank_text = strndup(egap, yank_length = mark-yank_here);
 }
 
 /**
@@ -1026,13 +1028,14 @@ deld(void)
 {
 	yanky();
 #ifndef IOCCC
+	marker = -1;
 	chg = CHANGED;
-	undo_save(UNDO_DEL, here, scrap, scrap_length);
+	undo_save(UNDO_DEL, yank_here, yank_text, yank_length);
 #else /* IOCCC */
 #endif /* IOCCC */
-	egap += scrap_length;
+	egap += yank_length;
 	here = pos(egap);
-	adjmarks(-scrap_length);
+	adjmarks(-yank_length);
 }
 
 #ifndef IOCCC
@@ -1226,18 +1229,18 @@ delx(void)
 void
 pasteP(void)
 {
-	if (0 < scrap_length) {
+	if (0 < yank_length) {
 #ifndef IOCCC
 		movegap(here);
-		growgap(COLS+(count+(count == 0))*scrap_length);
-		undo_save(UNDO_INS, here, scrap, scrap_length);
-		adjmarks(scrap_length);
+		growgap(COLS+(count+(count == 0))*yank_length);
+		undo_save(UNDO_INS, here, yank_text, yank_length);
+		adjmarks(yank_length);
 		chg = CHANGED;
 #else /* IOCCC */
 		movegap(here);
 #endif /* IOCCC */
-		(void) memcpy(gap, scrap, scrap_length);
-		gap += scrap_length;
+		(void) memcpy(gap, yank_text, yank_length);
+		gap += yank_length;
 		/* SUS 2018 vi(1) `P` paste-before unnamed buffer leaves
 		 * the cursor on the last column of the last character.
 		 * Instead keep the cursor on the same character before
@@ -1451,7 +1454,7 @@ bang(void)
 					_exit(127);
 				}
 				/* Finally write text region to filter and read result. */
-				if (scrap not_eq NULL and (scrap_length == 0 or (n = write(child_in[1], scrap, scrap_length)) == scrap_length)) {
+				if (yank_text not_eq NULL and (yank_length == 0 or (n = write(child_in[1], yank_text, yank_length)) == yank_length)) {
 					/* Signal EOF write to child. */
 					(void) close(child_in[1]);
 					/* Wait for the child _before_ reading input. */
@@ -1874,10 +1877,10 @@ cleanup(void)
 	(void) endwin();
 	undo_free(undo_list);
 	undo_free(redo_list);
+	free(yank_text);
 	free(filename);
 	regfree(&ere);
 	free(replace);
-	free(scrap);
 	free(buf);
 }
 #else /* IOCCC */
