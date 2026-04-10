@@ -158,17 +158,3 @@ ioccc28/prog.c: eh.c transform.sed transform_ioccc.sed
 
 ioccc28/prog$E: ioccc28/prog.c
 	${CC} ${CFLAGS} ${CINCLUDE} ${CPPFLAGS} ${LDFLAGS} -o $@ ioccc28/prog.c ${LIBS}
-
-prog.ext.c: eh.c transform.sed transform_ext.sed
-	sed -E -f transform_ext.sed eh.c | \
-	sed -E -f transform.sed | \
-	sed -e'/) {$$/{ N;N;s/ {\(.[[:blank:]]*[^;]*;.\)[[:blank:]]*}$$/\1/; }' | \
-	sed -e'/^[[:blank:]]*$$/d' >$@
-
-prog.ext$E: prog.ext.c
-
-ioccc28/prog.alt$E: ioccc28/prog.alt.c
-	${CC} ${CFLAGS} ${CPPFLAGS} -o $@ ioccc28/prog.alt.c ${LIBS}
-
-ioccc28/prog.alt.i: ioccc28/prog.alt.c
-	${CC} ${CFLAGS} ${CPPFLAGS} -E ioccc28/prog.alt.c >$*.i
