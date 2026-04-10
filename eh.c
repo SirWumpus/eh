@@ -606,12 +606,6 @@ display(void)
 }
 
 void
-nil(void)
-{
-	/* Do nothing. */
-}
-
-void
 redraw(void)
 {
 	(void) clear();
@@ -1554,6 +1548,12 @@ quit(void)
 }
 
 void
+nil(void)
+{
+	/* Do nothing. */
+}
+
+void
 flipcase(void)
 {
 	char *p = ptr(here);
@@ -1576,6 +1576,62 @@ scrollup(off_t here, size_t n)
 		page = prevline(page);
 	}
 }
+
+void
+replace_match(regmatch_t matches[MATCHES], const char *str)
+{
+	if (NULL not_eq str) {
+		movegap(here);
+		char *xgap = gap;
+		/* CB-1 Have we come full circle? */
+		if (replace_all and search_wrapped and search_start < here) {
+			here -= matches[0].rm_so;
+			search_wrapped = 0;
+			search_start = 0;
+			match_length = 0;
+			replace_all = 0;
+			return;
+		}
+		for (const char *s = str; *s not_eq '\0'; s++) {
+			growgap(COLS);
+			if (*s == '$' and isdigit(s[1])) {
+				/* Subexpression $0..$9 */
+				int i = *++s-'0';
+				off_t n = matches[i].rm_eo - matches[i].rm_so;
+				(void) memcpy(gap, egap + (matches[i].rm_so - matches[0].rm_so), n);
+				gap += n;
+				continue;
+			} else if (*s == '\\') {
+				*gap++ = cescape(*++s);
+				continue;
+			} else if (*s == '/') {
+				/* End replacement string. */
+				if (replace_all and *++s == 'a') {
+					/* a = replace all (do it again) */
+					(void) ungetch('n');
+				}
+				break;
+			}
+			*gap++ = *s;
+		}
+		/* Delete the match. */
+		undo_save(UNDO_DEL_A, here, egap, match_length);
+		egap += match_length;
+		/* Replacement string length. */
+		undo_save(UNDO_INS_B, here, xgap, gap-xgap);
+		adjmarks(match_length-undo_list->next->size);
+		/* Position at end of replacement. */
+		here = pos(egap);
+		chg = CHANGED;
+		/* CB-1 Adjust search_start to maintain origin position
+		 * by preceeding replacements.
+		 */
+		if (search_wrapped and here < search_start) {
+			search_start += (gap-xgap)-match_length;
+		}
+	}
+}
+
 #else /* IOCCC */
 void
 writefile(void)
@@ -1591,6 +1647,8 @@ quit(void)
 {
 	filename = NULL;
 }
+
+#define replace_match(m, r)
 #endif /* IOCCC */
 
 /**
@@ -1665,59 +1723,7 @@ search_next(void)
 	}
 	/* Next search resumes after this match, see here+match_length above. */
 	match_length = matches[0].rm_eo - matches[0].rm_so;
-#ifndef IOCCC
-	if (NULL not_eq replace) {
-		movegap(here);
-		char *xgap = gap;
-		/* CB-1 Have we come full circle? */
-		if (replace_all and search_wrapped and search_start < here) {
-			here -= matches[0].rm_so;
-			search_wrapped = 0;
-			search_start = 0;
-			match_length = 0;
-			replace_all = 0;
-			return;
-		}
-		for (const char *s = replace; *s not_eq '\0'; s++) {
-			growgap(COLS);
-			if (*s == '$' and isdigit(s[1])) {
-				/* Subexpression $0..$9 */
-				int i = *++s-'0';
-				off_t n = matches[i].rm_eo - matches[i].rm_so;
-				(void) memcpy(gap, egap + (matches[i].rm_so - matches[0].rm_so), n);
-				gap += n;
-				continue;
-			} else if (*s == '\\') {
-				*gap++ = cescape(*++s);
-				continue;
-			} else if (*s == '/') {
-				/* End replacement string. */
-				if (replace_all and *++s == 'a') {
-					/* a = replace all (do it again) */
-					(void) ungetch('n');
-				}
-				break;
-			}
-			*gap++ = *s;
-		}
-		/* Delete the match. */
-		undo_save(UNDO_DEL_A, here, egap, match_length);
-		egap += match_length;
-		/* Replacement string length. */
-		undo_save(UNDO_INS_B, here, xgap, gap-xgap);
-		adjmarks(match_length-undo_list->next->size);
-		/* Position at end of replacement. */
-		here = pos(egap);
-		chg = CHANGED;
-		/* CB-1 Adjust search_start to maintain origin position
-		 * by preceeding replacements.
-		 */
-		if (search_wrapped and here < search_start) {
-			search_start += (gap-xgap)-match_length;
-		}
-	}
-#else /* IOCCC */
-#endif /* IOCCC */
+	replace_match(matches, replace);
 	/* CB-1 an empty match, ie. /$/, needs advance on next search. */
 	match_length += ere_dollar_only;
 	/* Position match in the centre of the screen.*/
