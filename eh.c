@@ -180,25 +180,6 @@ prevch(off_t cur)
 }
 
 #ifndef IOCCC
-#else /* IOCCC */
-void
-undo(void)
-{
-	char *p = ugap;
-	ugap = gap;
-	gap = p;
-	p = uegap;
-	uegap = egap;
-	egap = p;
-	/* epage gets assigned below, so we can use temporarily. */
-	epage = uhere;
-	uhere = here;
-	here = epage;
-	/* Force display() to reframe, ie. 1GdGu fails. */
-	epage = here+1;
-}
-#endif /* IOCCC */
-
 void
 movegap(off_t cur)
 {
@@ -226,15 +207,8 @@ movegap(off_t cur)
 	}
 #endif /* FAST_MOVE */
 	assert(buf <= gap and gap <= egap and egap <= ebuf);
-#ifndef IOCCC
-#else /* IOCCC */
-	ugap = gap;
-	uegap = egap;
-	uhere = here;
-#endif /* IOCCC */
 }
 
-#ifndef IOCCC
 void
 growgap(size_t min)
 {
@@ -381,9 +355,60 @@ redo(void)
 		}
 	}
 }
+
+int
+getsigch(void)
+{
+	int ch;
+	while ((ch = getch()) == CTRL_Z) {
+		(void) raise(SIGTSTP);
+		/* If you go to background, while in the middle of
+		 * numeric input or a partial command, then when you
+		 * return you'll have likely forgotten where you are.
+		 */
+		ch = ERR;
+	}
+	return ch;
+}
+
 #else /* IOCCC */
 #define growgap(n)
+#define getsigch	getch
 #define SET_PREVIOUS_MARK(x)
+
+void
+undo(void)
+{
+	char *p = ugap;
+	ugap = gap;
+	gap = p;
+	p = uegap;
+	uegap = egap;
+	egap = p;
+	/* epage gets assigned below, so we can use temporarily. */
+	epage = uhere;
+	uhere = here;
+	here = epage;
+	/* Force display() to reframe, ie. 1GdGu fails. */
+	epage = here+1;
+}
+
+void
+movegap(off_t cur)
+{
+	assert(0 <= cur and cur <= pos(ebuf));
+	char *p = ptr(cur);
+	while (p < gap) {
+		*--egap = *--gap;
+	}
+	while (egap < p) {
+		*gap++ = *egap++;
+	}
+	ugap = gap;
+	uegap = egap;
+	uhere = here;
+	assert(buf <= gap and gap <= egap and egap <= ebuf);
+}
 #endif /* IOCCC */
 
 int
@@ -856,25 +881,6 @@ lngoto(void)
 	 */
 	page = eof;
 }
-
-#ifndef IOCCC
-int
-getsigch(void)
-{
-	int ch;
-	while ((ch = getch()) == CTRL_Z) {
-		(void) raise(SIGTSTP);
-		/* If you go to background, while in the middle of
-		 * numeric input or a partial command, then when you
-		 * return you'll have likely forgotten where you are.
-		 */
-		ch = ERR;
-	}
-	return ch;
-}
-#else /* IOCCC */
-#define getsigch	getch
-#endif /* IOCCC */
 
 void
 insert(void)
@@ -1809,6 +1815,24 @@ anchor(void)
 }
 
 #ifndef IOCCC
+void
+cleanup(void)
+{
+	/* Most of these are to satisfy Valgrind or sanitisers.  The OS
+	 * reclaims memory when the program exits, making the need to
+	 * free() theoritcally unnecessary.
+	 */
+	(void) delwin(stdscr);
+	(void) endwin();
+	undo_free(undo_list);
+	undo_free(redo_list);
+	free(yank_text);
+	free(filename);
+	regfree(&ere);
+	free(replace);
+	free(buf);
+}
+
 /* NOTE A, C, and D are questionable as "good parts", more like muscle
  * memory concessions, since they are composites. X and x are supported
  * since they are so frequently used, while dh and dl are functional,
@@ -1870,27 +1894,6 @@ getcmd(int m)
 	}
 	count = 0;
 }
-
-#ifndef IOCCC
-void
-cleanup(void)
-{
-	/* Most of these are to satisfy Valgrind or sanitisers.  The OS
-	 * reclaims memory when the program exits, making the need to
-	 * free() theoritcally unnecessary.
-	 */
-	(void) delwin(stdscr);
-	(void) endwin();
-	undo_free(undo_list);
-	undo_free(redo_list);
-	free(yank_text);
-	free(filename);
-	regfree(&ere);
-	free(replace);
-	free(buf);
-}
-#else /* IOCCC */
-#endif /* IOCCC */
 
 int
 main(int argc, char **argv)
