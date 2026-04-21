@@ -1583,6 +1583,148 @@ scrollup(off_t here, size_t n)
 	}
 }
 
+/*
+ * Indent the lines *containing* a region or selection inclusive.
+ *
+ * a/ MOL to MOL (3 lines indent)
+ *	⸺⸺｜⸺⸺⸺⸺⸺⸺｜⸺⸺⸺⸺⸺⸺⸺⸺⸺｜⸺⸺⸺⸺
+ *	　　　　　　a 　　　　　　　　　　　　　　　b
+ *
+ * 	⸺⸺｜␉⸺⸺⸺⸺⸺⸺｜␉⸺⸺⸺⸺⸺⸺⸺⸺⸺｜␉⸺⸺⸺⸺
+ *	　　　　　　　a 　　　　　　　　　　　　　　　　　b
+ *
+ * b/ MOL to BOL (2 lines indent)
+ *	⸺⸺｜⸺⸺⸺⸺⸺⸺｜⸺⸺⸺⸺⸺⸺⸺⸺⸺｜⸺⸺⸺⸺
+ *	　　　　　　a 　　　　　　　　　　　　　b
+ *
+ * 	⸺⸺｜␉⸺⸺⸺⸺⸺⸺｜␉⸺⸺⸺⸺⸺⸺⸺⸺⸺｜⸺⸺⸺⸺
+ *	　　　　　　　a 　　　　　　　　　　　　　　b
+ *
+ * c/ BOL to MOL (3 lines indent)
+ *	⸺⸺｜⸺⸺⸺⸺⸺⸺｜⸺⸺⸺⸺⸺⸺⸺⸺⸺｜⸺⸺⸺⸺
+ *	　　　a 　　　　　　　　　　　　　　　　　　b
+ *
+ *	⸺⸺｜␉⸺⸺⸺⸺⸺⸺｜␉⸺⸺⸺⸺⸺⸺⸺⸺⸺｜␉⸺⸺⸺⸺
+ *	　　　　a 　　　　　　　　　　　　　　　　　　　　b
+ *
+ * d/ BOL to BOL (2 lines indent)
+ *	⸺⸺｜⸺⸺⸺⸺⸺⸺｜⸺⸺⸺⸺⸺⸺⸺⸺⸺｜⸺⸺⸺⸺
+ *	　　　a 　　　　　　　　　　　　　　　　b
+ *
+ *	⸺⸺｜␉⸺⸺⸺⸺⸺⸺｜␉⸺⸺⸺⸺⸺⸺⸺⸺⸺｜⸺⸺⸺⸺
+ *	　　　　a 　　　　　　　　　　　　　　　　　b
+ *
+ */
+void
+indent(void)
+{
+	off_t start, stop = marker;
+	if (stop < 0) {
+		stop = here;
+		getcmd(MOTION_CMDS);
+	}
+	start = here;
+	if (stop < start) {
+		/* Swap. */
+		stop xor_eq start;
+		start xor_eq stop;
+		stop xor_eq start;
+	}
+	assert(start <= stop);
+	/* We're working with line units.  If start is in middle
+	 * line, move to the beginning before editing.
+	 */
+	if (0 < start && ptr(start)[-1] != '\n') {
+		start = bol(start);
+	}
+	/* Save region before change (delete). */
+	movegap(start);
+	undo_save(UNDO_DEL_A, start, egap, stop-start);
+	/* Modify the region from stop down to start. */
+	off_t tabs = 0;
+	while (start < stop) {
+		/* Previous physical line.*/
+		stop = bol(stop-1);
+		/* Only indent non-empty lines.  Consider `>2}` repeated;
+		 * if you indent empty lines subsequent motions will be off.
+		 */
+		if (*ptr(stop) != '\n') {
+			movegap(stop);
+			/* Indent physical line.*/
+			*--egap = '\t';
+			/* Maintain cursor position accounting for inserted tabs. */
+			if (stop <= here) {
+				here++;
+			}
+			tabs++;
+		}
+	}
+	/* Treat the modified region as "insert" text. */
+	undo_save(UNDO_INS_B, start, egap, undo_list->size+tabs);
+	/* Force display() to reframe. */
+	epage = here+1;
+	adjmarks(tabs);
+	chg = CHANGED;
+	count = 0;
+}
+
+/*
+ * /^( {,7}\t| {8}//
+ */
+void
+outdent(void)
+{
+	off_t start, stop = marker;
+	if (stop < 0) {
+		stop = here;
+		getcmd(MOTION_CMDS);
+	}
+	start = here;
+	if (stop < start) {
+		/* Swap. */
+		stop xor_eq start;
+		start xor_eq stop;
+		stop xor_eq start;
+	}
+	assert(start <= stop);
+	/* We're working with line units.  If start is in middle
+	 * line, move to the beginning before editing.
+	 */
+	if (0 < start && ptr(start)[-1] != '\n') {
+		start = bol(start);
+	}
+	/* Save region before change (delete). */
+	movegap(start);
+	undo_save(UNDO_DEL_A, start, egap, stop-start);
+	/* Modify the region from stop down to start. */
+	off_t tabs = 0;
+	while (start < stop) {
+		/* Previous physical line.*/
+		stop = bol(stop-1);
+		/* Only indent non-empty lines.  Consider `>2}` repeated;
+		 * if you indent empty lines subsequent motions will be off.
+		 */
+		movegap(stop);
+		/* Indent physical line.*/
+		if (*egap == '\t') {
+			/* Outdent physical line.*/
+			*egap++;
+			/* Maintain cursor position accounting for deleting tabs. */
+			if (stop <= here) {
+				here--;
+			}
+			tabs++;
+		}
+	}
+	/* Treat the modified region as "insert" text. */
+	undo_save(UNDO_INS_B, start, egap, undo_list->size-tabs);
+	/* Force display() to reframe. */
+	epage = here+1;
+	adjmarks(tabs);
+	chg = CHANGED;
+	count = 0;
+}
+
 void
 replace_match(regmatch_t matches[MATCHES], const char *str)
 {
@@ -1839,8 +1981,8 @@ cleanup(void)
  * they're less common.
  */
 
-/*                         |---------MOTION_CMDS--------|----------edit----------|----misc-----| */
-static const char key[] = "hjklbewHJKL^$|G/n`'%\006\002{}~iIaAxXyYdDcCoOPpuU!\030\\mERWQ\003V\022";
+/*                         |---------MOTION_CMDS---------|----------edit-----------|-----misc-----| */
+static const char key[] = "hjklbewHJKL^$|G/n`'%\006\002{}~iIaAxXyYdDcCoOPpuU!<>\030\\mERWQ\003V\022";
 
 static void (*func[])(void) = {
 	/* Motion */
@@ -1852,7 +1994,7 @@ static void (*func[])(void) = {
 	/* Modify */
 	flipcase, insert, insertI, append, appendA, delx, delX,
 	yanky, yankY, deld, delD, chgc, chgC, openo, openO,
-	pasteP, pastep, undo, redo, bang, altx,
+	pasteP, pastep, undo, redo, bang, outdent, indent, altx,
 	/* Other */
 	anchor, setmark, edit, readfile, writefile, quit, quit,
 	version, redraw, nil
