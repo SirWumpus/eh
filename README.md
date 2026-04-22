@@ -59,6 +59,8 @@ The commands are similar, but not the same as `vi(1)`.  Most commands can be pre
 * `I A        ` * Insert at start of line or append at end of line, ie. `^i` or `$i`.
 * `X x        ` Delete character before or after cursor, ie. `dh` or `dl`.
 * `U u        ` Redo or undo one or more edits.
+* `< move     ` Outdent text selection or region given by motion.
+* `> move     ` Indent text selection or region given by motion.
 * `~          ` Invert character case.
 * `! move cmd ` Filter a text selection or region through shell command line, eg. `!Gfmt -w68`.  Or read only the output of a shell command line, eg. `!!ls -l`.
 * `CTRL+X     ` Toggle hex digits in the range 0..10FFFF or a Unicode character left of the cursor.
