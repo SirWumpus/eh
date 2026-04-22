@@ -1701,19 +1701,23 @@ outdent(void)
 	while (start < stop) {
 		/* Previous physical line.*/
 		stop = bol(stop-1);
-		/* Only indent non-empty lines.  Consider `>2}` repeated;
-		 * if you indent empty lines subsequent motions will be off.
-		 */
 		movegap(stop);
-		/* Indent physical line.*/
-		if (*egap == '\t') {
-			/* Outdent physical line.*/
-			*egap++;
-			/* Maintain cursor position accounting for deleting tabs. */
-			if (stop <= here) {
-				here--;
+		if (isblank(*egap)) {
+			int span;
+			if (*egap == '\t') {
+				span = 1;
+			} else {
+				span = strspn(egap, " ");
+				if (TABWIDTH < span) {
+					span = TABWIDTH;
+				}
 			}
-			tabs++;
+			egap += span;
+			tabs += span;
+			/* Maintsain cursor position accounting for deleting tabs. */
+			if (stop <= here) {
+				here -= span;
+			}
 		}
 	}
 	/* Treat the modified region as "insert" text. */
