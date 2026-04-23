@@ -47,20 +47,20 @@ The commands are similar, but not the same as `vi(1)`.  Most commands can be pre
 * `' char     ` * Goto start of line with mark `'a .. 'z` or `''` (previous), eg. `` `a^ ``.
 * `G          ` Goto line (count) number; `1G` top of file, `G` bottom, `123G` line 123.
 * `\          ` Toggle highlighted text selection.
-* `c move     ` Change text selection or region given by motion.
+* `c move     ` Change text selection or region given by motion.  If motion is `c` repeated, then change lines.
 * `C          ` * Change to end of line, ie. `c$`.
-* `d move     ` Delete text selection or region given by motion.
+* `d move     ` Delete text selection or region given by motion.  If motion is `d` repeated, then delete lines.
 * `D          ` * Delete to end of line, ie. `d$`.
 * `O o        ` * Open new line above or below the current line, ie. `kA\n` or `A\n`.
-* `y move     ` Yank (copy) text selection or region given by motion.
+* `y move     ` Yank (copy) text selection or region given by motion.  If motion is `y` repeated, then yank lines.
 * `Y          ` * Yank the current line, ie. `^yj`.
 * `P p        ` Paste last deleted or yanked text region before or after the cursor.
 * `i a        ` Insert text mode before or after the cursor, `ESC` or `CTRL+C` ends insert.  While inserting text, backspace will erase the previous character; `CTRL+V` treats the next character as a literal character.
 * `I A        ` * Insert at start of line or append at end of line, ie. `^i` or `$i`.
 * `X x        ` Delete character before or after cursor, ie. `dh` or `dl`.
 * `U u        ` Redo or undo one or more edits.
-* `< move     ` Outdent text selection or region given by motion.
-* `> move     ` Indent text selection or region given by motion.
+* `< move     ` Outdent lines spanned by a text selection or region given by motion.  If motion is `<` repeated, then outdent lines.
+* `> move     ` Indent lines spanned by a text selection or region given by motion.  If motion is `>` repeated, then indent lines.
 * `~          ` Invert character case.
 * `! move cmd ` Filter a text selection or region through shell command line, eg. `!Gfmt -w68`.  Or read only the output of a shell command line, eg. `!!ls -l`.
 * `CTRL+X     ` Toggle hex digits in the range 0..10FFFF or a Unicode character left of the cursor.
