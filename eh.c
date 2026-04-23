@@ -1653,7 +1653,8 @@ indent(void)
 			/* Indent physical line.*/
 			*--egap = '\t';
 			/* Maintain cursor position accounting for inserted tabs. */
-			if (stop <= here) {
+			if (stop < here) {
+				adjmarks(1);
 				here++;
 			}
 			tabs++;
@@ -1663,7 +1664,6 @@ indent(void)
 	undo_save(UNDO_INS_B, start, egap, undo_list->size+tabs);
 	/* Force display() to reframe. */
 	epage = here+1;
-	adjmarks(tabs);
 	chg = CHANGED;
 	count = 0;
 }
@@ -1715,7 +1715,8 @@ outdent(void)
 			egap += span;
 			tabs += span;
 			/* Maintsain cursor position accounting for deleting tabs. */
-			if (stop <= here) {
+			if (stop < here) {
+				adjmarks(-span);
 				here -= span;
 			}
 		}
@@ -1724,7 +1725,6 @@ outdent(void)
 	undo_save(UNDO_INS_B, start, egap, undo_list->size-tabs);
 	/* Force display() to reframe. */
 	epage = here+1;
-	adjmarks(tabs);
 	chg = CHANGED;
 	count = 0;
 }
