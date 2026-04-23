@@ -74,7 +74,7 @@ static off_t here, uhere, page, epage, match_length, yank_length, marker = -1;
 static regex_t ere;
 #endif /* IOCCC */
 
-void
+static off_t
 getcmd(int);
 
 /*
@@ -994,8 +994,7 @@ yanky(void)
 {
 	off_t mark = marker;
 	if (marker < 0) {
-		mark = here;
-		getcmd(MOTION_CMDS);
+		mark = getcmd(MOTION_CMDS);
 	}
 	yank_here = here;
 	if (mark < yank_here) {
@@ -1621,7 +1620,7 @@ indent(void)
 	off_t start, stop = marker;
 	if (stop < 0) {
 		stop = here;
-		getcmd(MOTION_CMDS);
+		(void) getcmd(MOTION_CMDS);
 	}
 	start = here;
 	if (stop < start) {
@@ -1677,7 +1676,7 @@ outdent(void)
 	off_t start, stop = marker;
 	if (stop < 0) {
 		stop = here;
-		getcmd(MOTION_CMDS);
+		(void) getcmd(MOTION_CMDS);
 	}
 	start = here;
 	if (stop < start) {
@@ -2022,23 +2021,45 @@ static void (*func[])(void) = {
 };
 #endif /* IOCCC */
 
-void
+static off_t
 getcmd(int m)
 {
-	int j = count, ch;
-	for (count = 0; isdigit(ch = getsigch()); ) {
-		count = count * 10 + ch - '0';
+	int j, ch;
+	off_t was_here = here;
+	for (j = 0; isdigit(ch = getsigch()); ) {
+		j = j * 10 + ch - '0';
 	}
 	/* 2dw = d2w and 2d3w = d6w */
-	count = j not_eq 0 and count not_eq 0 ? j*count : count not_eq 0 ? count : j;
+	count = j > 0 and count > 0 ? j*count : 0 < j ? j : count;
+#ifndef IOCCC
+	static int this_cmd;
+	if (ch == this_cmd and strchr("cdy<>", ch) not_eq NULL) {
+		/* These commands can operate on line units;
+		 * eg. cc, dd, yy, <<, >>, 2>>, <3<, 2d3d
+		 */
+		if (ch not_eq 'c' and ch not_eq 'd') {
+			/* yy, <<, >> maintain cursor position */
+			SET_PREVIOUS_MARK(here);
+			(void) ungetstr("``");
+		}
+		/* Operate on line units. */
+		ch = 'j';
+		lnbegin();
+	}
+#else /* IOCCC */
+#endif /* IOCCC */
 	for (j = 0; key[j] not_eq '\0' and ch not_eq key[j]; j++) {
 		;
 	}
 	if (j < m) {
+		this_cmd = ch;
+		was_here = here;
 		/* Count always defaults to 1. */
 		do (*func[j])(); while (1 < count--);
+		this_cmd = 0;
 	}
 	count = 0;
+	return was_here;
 }
 
 int
@@ -2066,7 +2087,7 @@ main(int argc, char **argv)
 	epage = 1;
 	while (mode not_eq NULL) {
 		display();
-		getcmd(ALL_CMDS);
+		(void) getcmd(ALL_CMDS);
 	}
 #else /* IOCCC */
 	egap = ebuf = buf + BUF;
@@ -2083,7 +2104,7 @@ main(int argc, char **argv)
 	while (filename not_eq NULL) {
 		(void) noecho();
 		display();
-		getcmd(ALL_CMDS);
+		(void) getcmd(ALL_CMDS);
 	}
 	(void) endwin();
 #endif /* IOCCC */

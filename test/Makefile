@@ -651,12 +651,14 @@ mark5:
 	-${PASS}
 
 
-# `dd` not supported.
+# `dd` now supported
 del7:
 	-${TITLE}
-	printf '3wddQy' | ${PROG} test/short.txt >a.out
+	cp test/short.txt a.txt
+	printf '3wddW\nQy' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
+	${A_TXT}
 	-${PASS}
 
 # Delete from cursor to same column of next line.
