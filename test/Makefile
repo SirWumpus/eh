@@ -87,7 +87,10 @@ TESTS:= tests_have_term_data \
 	replace0 replace1 replace2 write0 read0 read1 \
 	select0 select1 select2 select3 select4 select5 \
 	mb0 mb1 mb2 mb3 mb4 \
-	replace3 replace4
+	replace3 replace4 \
+	cc0 cc1 dd0 dd1 dd2 dd3 \
+	indent0 indent1 indent2 indent3 indent4 indent5 indent6 \
+	outdent0 outdent1
 
 .PHONY : ${TESTS}
 .SILENT: ${TESTS}
@@ -1055,3 +1058,153 @@ mb4:
 	${A_CORE}
 	${A_TXT}
 	${A_OUT_OR_SKIP}
+
+# Single line
+cc0:
+	-${TITLE}
+	cp test/short.txt a.txt
+	printf '3wccwhisky tango foxtrot\n\eW\nQ' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	${A_TXT}
+	-${PASS}
+
+# Count lines `count cc`
+cc1:
+	-${TITLE}
+	cp test/short.txt a.txt
+	printf '3w2ccwhisky\ntango\nfoxtrot\n\eW\nQ' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	${A_TXT}
+	-${PASS}
+
+# Single line
+dd0:
+	-${TITLE}
+	cp test/short.txt a.txt
+	printf '3wddW\nQ' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	${A_TXT}
+	-${PASS}
+
+# Count lines `count dd`
+dd1:
+	-${TITLE}
+	cp test/short.txt a.txt
+	printf '3w2ddW\nQ' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	${A_TXT}
+	-${PASS}
+
+# Count lines `d count d`
+dd2:
+	-${TITLE}
+	cp test/short.txt a.txt
+	printf '3wd2dW\nQ' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	${A_TXT}
+	-${PASS}
+
+# Count lines `count0 d count1 d`
+dd3:
+	-${TITLE}
+	cp test/short.txt a.txt
+	printf '3w2d3dW\nQ' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	${A_TXT}
+	-${PASS}
+
+# Single line
+indent0:
+	-${TITLE}
+	cp test/short.txt a.txt
+	printf 'w>>W\nQ' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	${A_TXT}
+	-${PASS}
+
+# BOL to BOL region
+indent1:
+	-${TITLE}
+	cp test/short.txt a.txt
+	printf '3>>W\nQ' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	${A_TXT}
+	-${PASS}
+
+# MOL to MOL region
+indent2:
+	-${TITLE}
+	cp test/short.txt a.txt
+	printf 'w3>>W\nQ' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	${A_TXT}
+	-${PASS}
+
+# BOL to BOL selection
+indent3:
+	-${TITLE}
+	cp test/short.txt a.txt
+	printf '\\2j>W\nQ' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	${A_TXT}
+	-${PASS}
+
+# MOL to MOL selection
+indent4:
+	-${TITLE}
+	cp test/short.txt a.txt
+	printf 'w\\2j>W\nQ' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	${A_TXT}
+	-${PASS}
+
+# BOL to MOL selection
+indent5:
+	-${TITLE}
+	cp test/short.txt a.txt
+	printf '\\2jww>W\nQ' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	${A_TXT}
+	-${PASS}
+
+# MOL to BOL selection
+indent6:
+	-${TITLE}
+	cp test/short.txt a.txt
+	printf 'w\\2j^>W\nQ' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	${A_TXT}
+	-${PASS}
+
+# Single line
+outdent0:
+	-${TITLE}
+	cp test/short.txt a.txt
+	printf 'ji\t\e<<W\nQ' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	${A_TXT}
+	-${PASS}
+
+# Count lines `count <<`
+outdent1:
+	-${TITLE}
+	cp test/short.txt a.txt
+	printf 'ji\t\ej^i\t\ek<<W\nQ' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	${A_TXT}
+	-${PASS}
