@@ -841,7 +841,7 @@ wright(void)
 		 * theory word-right treats end-of-line as its own
 		 * word.  nvi and vim do not.
 		 */
-		while (here < eof and isspace(*ptr(here))) {
+		while (here < eof and isblank(*ptr(here))) {
 			++here;
 		}
 	} else if (here < eof and ispunct(*ptr(here))) {
@@ -854,7 +854,7 @@ wright(void)
 		 * breaks, so in theory word-right treats end-of-line
 		 * word.  nvi and vim do not.
 		 */
-		while (here < eof and isspace(*ptr(here))) {
+		while (here < eof and isblank(*ptr(here))) {
 			++here;
 		}
 	} else {

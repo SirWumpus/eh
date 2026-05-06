@@ -572,7 +572,7 @@ ere10:
 # No match found.
 ere11:
 	-${TITLE}
-	printf "5w/WOOT\nQ" | ${PROG} test/short.txt >a.out
+	printf "6w/WOOT\nQ" | ${PROG} test/short.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	-${PASS}
@@ -597,13 +597,13 @@ ere13:
 # Unset set mark moves cursor to BOF.
 mark0:
 	-${TITLE}
-	printf '3w``Q' | ${PROG} test/short.txt >a.out
+	printf '4w``Q' | ${PROG} test/short.txt >a.out
 	${A_CORE}
 	${A_OUT}
-	printf '3w`aQ' | ${PROG} test/short.txt >a.out
+	printf '4w`aQ' | ${PROG} test/short.txt >a.out
 	${A_CORE}
 	${A_OUT}
-	printf '3w`zQ' | ${PROG} test/short.txt >a.out
+	printf '4w`zQ' | ${PROG} test/short.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	-${PASS}
@@ -658,7 +658,7 @@ mark5:
 del7:
 	-${TITLE}
 	cp test/short.txt a.txt
-	printf '3wddW\nQy' | ${PROG} a.txt >a.out
+	printf '4wddW\nQy' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
@@ -668,7 +668,7 @@ del7:
 del8:
 	-${TITLE}
 	cp test/short.txt a.txt
-	printf '3wdjW\nQ' | ${PROG} a.txt >a.out
+	printf '4wdjW\nQ' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
@@ -678,7 +678,7 @@ del8:
 del9:
 	-${TITLE}
 	cp test/short.txt a.txt
-	printf '3w|djW\nQ' | ${PROG} a.txt >a.out
+	printf '4w|djW\nQ' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
@@ -718,7 +718,7 @@ del12:
 del13:
 	-${TITLE}
 	cp test/short.txt a.txt
-	printf '3w2d3wW\nQ' | ${PROG} a.txt >a.out
+	printf '4w1d7wW\nQ' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
@@ -746,7 +746,7 @@ undo1:
 undo2:
 	-${TITLE}
 	cp test/short.txt a.txt
-	printf '3wd3wuUW\nQ' | ${PROG} a.txt >a.out
+	printf '4wd3wuUW\nQ' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
@@ -788,7 +788,7 @@ paste1:
 paste2:
 	-${TITLE}
 	cp test/short.txt a.txt
-	printf '3wdwj2w3PW\nQ' | ${PROG} a.txt >a.out
+	printf '4wdwj2w3PW\nQ' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
@@ -798,7 +798,7 @@ paste2:
 paste3:
 	-${TITLE}
 	cp test/short.txt a.txt
-	printf '3wdwuGPkW\nQ' | ${PROG} a.txt >a.out
+	printf '4wdwuGPkW\nQ' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
@@ -971,7 +971,7 @@ select0:
 # Select some words right.
 select1:
 	-${TITLE}
-	printf '/rude\n\\3w\\Q' | ${PROG} test/short.txt >a.out
+	printf '/rude\n\\4w\\Q' | ${PROG} test/short.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	-${PASS}
@@ -988,7 +988,7 @@ select2:
 select3:
 	-${TITLE}
 	cp test/short.txt a.txt
-	printf '/rude\n\\3wy/but\nPW\nQ' | ${PROG} a.txt >a.out
+	printf '/rude\n\\4wy/but\nPW\nQ' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
@@ -1063,7 +1063,7 @@ mb4:
 cc0:
 	-${TITLE}
 	cp test/short.txt a.txt
-	printf '3wccwhisky tango foxtrot\n\eW\nQ' | ${PROG} a.txt >a.out
+	printf '4wccwhisky tango foxtrot\n\eW\nQ' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
@@ -1073,7 +1073,7 @@ cc0:
 cc1:
 	-${TITLE}
 	cp test/short.txt a.txt
-	printf '3w2ccwhisky\ntango\nfoxtrot\n\eW\nQ' | ${PROG} a.txt >a.out
+	printf '4w2ccwhisky\ntango\nfoxtrot\n\eW\nQ' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
@@ -1083,7 +1083,7 @@ cc1:
 dd0:
 	-${TITLE}
 	cp test/short.txt a.txt
-	printf '3wddW\nQ' | ${PROG} a.txt >a.out
+	printf '4wddW\nQ' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
@@ -1093,7 +1093,7 @@ dd0:
 dd1:
 	-${TITLE}
 	cp test/short.txt a.txt
-	printf '3w2ddW\nQ' | ${PROG} a.txt >a.out
+	printf '4w2ddW\nQ' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
@@ -1103,7 +1103,7 @@ dd1:
 dd2:
 	-${TITLE}
 	cp test/short.txt a.txt
-	printf '3wd2dW\nQ' | ${PROG} a.txt >a.out
+	printf '4wd2dW\nQ' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
@@ -1113,7 +1113,7 @@ dd2:
 dd3:
 	-${TITLE}
 	cp test/short.txt a.txt
-	printf '3w2d3dW\nQ' | ${PROG} a.txt >a.out
+	printf '4w2d3dW\nQ' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
