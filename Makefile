@@ -32,7 +32,7 @@ DBG	:= -DNDEBUG
 LDDBG	:=
 CCONFIG	:= -DPLACEHOLDER -DFAST_MOVE
 
-CC	!= if test ${CC} = 'c99'; then echo gcc; else echo ${CC}; fi
+CC	!= if test ${CC} = 'c99'; then echo cc; else echo ${CC}; fi
 LDFLAGS	!= if test ${CC} = 'gcc'; then echo '-fno-ident -flto'; fi
 
 #######################################################################
