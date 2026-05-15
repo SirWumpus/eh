@@ -698,7 +698,7 @@ pairs(void)
 	if (b < 0) {
 		return;
 	}
-	if (b bitand 1 == 1) {
+	if ((b bitand 1) == 1) {
 		/* Find previous. */
 		for (mark--; 0 < mark; mark--) {
 			ch = *ptr(mark);
