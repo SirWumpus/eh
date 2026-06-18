@@ -140,7 +140,7 @@ pos(const char *s)
  * where the gap size has to be factored in.
  */
 char *
-ptr(off_t cur)
+ptr(const off_t cur)
 {
 	assert(0 <= cur and cur <= pos(ebuf));
 	return buf+cur + (buf+cur < gap ? 0 : egap-gap);
@@ -154,7 +154,7 @@ ptr(off_t cur)
  * next sequence.
  */
 int
-mblength(int ch)
+mblength(const int ch)
 {
 //	return (1+(ch > 193)+(ch > 223)+(ch > 239)) * (ch < 128 or (193 < ch and ch < 245));
 	assert(0 <= ch and ch < 245);
@@ -162,7 +162,7 @@ mblength(int ch)
 }
 
 off_t
-nextch(off_t cur)
+nextch(const off_t cur)
 {
 	/* Advance to next UTF-8 start byte.  Do not read past eof. */
 	return cur + (cur < pos(ebuf) ? mblength(*ptr(cur)) : 0);
@@ -181,7 +181,7 @@ prevch(off_t cur)
 
 #ifndef IOCCC
 void
-movegap(off_t cur)
+movegap(const off_t cur)
 {
 	assert(0 <= cur and cur <= pos(ebuf));
 #ifdef FAST_MOVE
@@ -210,7 +210,7 @@ movegap(off_t cur)
 }
 
 void
-growgap(size_t min)
+growgap(const size_t min)
 {
 	char *xbuf;
 	assert(buf <= gap and gap <= egap and egap <= ebuf);
@@ -256,7 +256,7 @@ struct ubuf *undo_list, *redo_list;
 #define SET_PREVIOUS_MARK(x)	marks[0] = (x)
 
 void
-adjmarks(off_t n)
+adjmarks(const off_t n)
 {
 	off_t p = pos(egap);
 	for (int i = 0; 0 != n and i < MARKS; i++) {
@@ -277,7 +277,7 @@ undo_free(struct ubuf *obj)
 }
 
 void
-undo_save(UndoOp op, off_t off, char *loc, size_t size)
+undo_save(const UndoOp op, const off_t off, const char * const loc, const size_t size)
 {
 	struct ubuf *obj;
 	undo_free(redo_list);
@@ -297,7 +297,7 @@ undo_save(UndoOp op, off_t off, char *loc, size_t size)
 }
 
 void
-undo_redo(UndoOp op, struct ubuf *obj)
+undo_redo(const UndoOp op, const struct ubuf * const obj)
 {
 	movegap(obj->off);
 	if (op == UNDO_INS) {
@@ -394,7 +394,7 @@ undo(void)
 }
 
 void
-movegap(off_t cur)
+movegap(const off_t cur)
 {
 	assert(0 <= cur and cur <= pos(ebuf));
 	char *p = ptr(cur);
@@ -439,7 +439,7 @@ bol(off_t cur)
  * just EOL or EOF.
  */
 off_t
-col_or_eol(off_t cur, int col, int maxcol)
+col_or_eol(off_t cur, int col, const int maxcol)
 {
 	char *p;
 	while (col < maxcol and (p = ptr(cur)) < ebuf and *p not_eq '\n') {
@@ -454,7 +454,7 @@ col_or_eol(off_t cur, int col, int maxcol)
  * Return offset to start of logical line containing offset.
  */
 off_t
-row_start(off_t cur, off_t offset)
+row_start(off_t cur, const off_t offset)
 {
 	char *p;
 	int col = 0;
@@ -475,7 +475,7 @@ row_start(off_t cur, off_t offset)
  * Return the previous logical BOL or BOF.
  */
 off_t
-prevline(off_t cur)
+prevline(const off_t cur)
 {
 	off_t s = bol(cur);		/* Current physical line. */
 	off_t t = row_start(s, cur);	/* Current logical line. */
@@ -491,7 +491,7 @@ prevline(off_t cur)
  * Return the next logical EOL or EOF.
  */
 off_t
-nextline(off_t cur)
+nextline(const off_t cur)
 {
 	return nextch(col_or_eol(cur, cur_col, COLS-1));
 }
@@ -1302,7 +1302,7 @@ lnmark(void)
 }
 
 void
-prompt(const char *msg, const char *str)
+prompt(const char * const msg, const char *str)
 {
 	(void) echo();
 	(void) noraw();
@@ -1326,7 +1326,7 @@ prompt(const char *msg, const char *str)
 }
 
 int
-filewrite(const char *fn)
+filewrite(const char * const fn)
 {
 	int fd;
 	movegap(0);
@@ -1355,7 +1355,7 @@ writefile(void)
 }
 
 int
-fileread(const char *fn)
+fileread(const char * const fn)
 {
 	int fd;
 	ssize_t n = 0;
@@ -1524,7 +1524,7 @@ altx(void)
 }
 
 int
-cescape(int ch)
+cescape(const int ch)
 {
 	for (const char *s = "a\ab\bf\fn\nr\rt\tv\ve\033?\177"; *s not_eq '\0'; s += 2) {
 		if (ch == *s) {
@@ -1575,7 +1575,7 @@ flipcase(void)
 }
 
 void
-scrollup(off_t here, size_t n)
+scrollup(const off_t here, size_t n)
 {
 	for (page = here; 0 < n--; ) {
 		page = prevline(page);
@@ -1729,7 +1729,7 @@ outdent(void)
 }
 
 void
-replace_match(regmatch_t matches[MATCHES], const char *str)
+replace_match(regmatch_t matches[MATCHES], const char * const str)
 {
 	if (NULL not_eq str) {
 		movegap(here);
@@ -2022,7 +2022,7 @@ static void (*func[])(void) = {
 #endif /* IOCCC */
 
 static off_t
-getcmd(int m)
+getcmd(const int m)
 {
 	int j, ch;
 	off_t was_here = here;
