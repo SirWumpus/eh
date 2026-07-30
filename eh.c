@@ -1424,7 +1424,7 @@ bang(void)
 {
 	ssize_t n;
 	pid_t child;
-	int child_in[2], child_out[2], ex = 74;
+	int child_in[2], child_out[2], ex = 74, flags;
 	deld();
 	prompt("!", "");
 	if (0 == pipe(child_in)) {
@@ -1460,7 +1460,8 @@ bang(void)
 					(void) waitpid(child, &ex, 0);
 					ex = WIFEXITED(ex) ? WEXITSTATUS(ex) : 127;
 					/* Avoid blocking on read() and allow for long or no output. */
-					(void) fcntl(child_out[0], F_SETFL, O_NONBLOCK);
+					if ((flags = fcntl(child_out[0], F_GETFL)) == -1) flags = 0;
+					(void) fcntl(child_out[0], F_SETFL, flags|O_NONBLOCK);
 					const off_t eof = pos(ebuf);
 					while (0 < (n = read(child_out[0], gap, egap-gap))) {
 						gap += n;
