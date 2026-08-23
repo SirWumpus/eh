@@ -419,6 +419,21 @@ charwidth(const char *s, int col)
 	return wc == '\t' ? TABSTOP(col) : (col = wcwidth(wc)) < 1 ? 1 : col;
 }
 
+#ifndef IOCCC
+/* Return the physical line containing a buffer offset. */
+off_t
+line_number(off_t cur)
+{
+	off_t line = 1;
+	while (0 < cur) {
+		if (*ptr(--cur) == '\n') {
+			line++;
+		}
+	}
+	return line;
+}
+#endif
+
 /*
  * Return the physical BOL or BOF containing cur.
  */
@@ -538,8 +553,8 @@ display(void)
 	(void) standout();
 #ifndef IOCCC
 	(void) printw(
-		"%s %ldB %ld%% %c %s", filename, eof,
-		here * 100 / (eof+(eof <= 0)), chg, mode
+		"%s %ldB L%ld %c %s", filename, eof,
+		line_number(here), chg, mode
 	);
 #else /* IOCCC */
 	(void) printw("%s %ldB", filename, here);
