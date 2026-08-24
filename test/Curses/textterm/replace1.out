@@ -1,6 +1,6 @@
 <CLEAR>
 <CLEAR>
-<SMSO>a.txt 119B 0%                                                                   <RMSO>
+<SMSO>a.txt 119B L1                                                                   <RMSO>
 <2;1>
 hello   world<3;1>
 this file might be a<4;1>
@@ -15,11 +15,11 @@ tab indent<11;1>
 <1;1>
 /<EL>
 butt/hole<1;1>
-<SMSO>a.txt 119B 78% *                                                                <RMSO>
+<SMSO>a.txt 119B L8 *                                                                 <RMSO>
 <9;8>
 hole<1;1>
 ><EL>
 a.txt<1;1>
-<SMSO>a.txt 119B 78%                                                                  <RMSO>
+<SMSO>a.txt 119B L8                                                                   <RMSO>
 <9;12>
 <24;1>

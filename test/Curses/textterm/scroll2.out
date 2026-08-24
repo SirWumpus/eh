@@ -1,6 +1,6 @@
 <CLEAR>
 <CLEAR>
-<SMSO>test/usage.md 2570B 0%                                                          <RMSO>
+<SMSO>test/usage.md 2570B L1                                                          <RMSO>
 <2;1>
 ae 1.3.0<3;1>
 ========<5;1>
@@ -18,8 +18,8 @@ ary depending on the implementation of the Curses library, `stty(1)` settings, o
 r terminal emulator.<23;1>
 Commands<24;1>
 --------<2;1>
-<1;21>
-<SMSO>26%<RMSO>
+<1;23>
+<SMSO>8<RMSO>
 <2;1>
 <EL>
 <3;1>
@@ -51,8 +51,8 @@ Commands<22;1>
 --------<23;1>
 <EL>
 <24;1>
-    h j k l   left, down, up, right cursor movement<CR><1;21>
-<SMSO>0% <RMSO>
+    h j k l   left, down, up, right cursor movement<CR><1;23>
+<SMSO> <RMSO>
 <2;1>
 ae 1.3.0<3;1>
 ========<EL>

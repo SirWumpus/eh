@@ -1,6 +1,6 @@
 <CLEAR>
 <CLEAR>
-<SMSO>a.txt 119B 0%                                                                   <RMSO>
+<SMSO>a.txt 119B L1                                                                   <RMSO>
 <2;1>
 hello   world<3;1>
 this file might be a<4;1>
@@ -12,14 +12,14 @@ tab indent<11;1>
 -last line-<13;1>
 <SMSO>^D<RMSO>
 <2;1>
-<1;12>
-<SMSO>10%<RMSO>
+<1;13>
+<SMSO>2<RMSO>
 <3;1>
 <1;1>
 !<EL>
 fmt -g68 -w40<BEL>
 <1;1>
-<SMSO>a.txt 135B 52% *                                                                <RMSO>
+<SMSO>a.txt 135B L3 *                                                                 <RMSO>
 <3;1>
 fmt: Max length (40) must be greater than goal length (68)<4;1>
 empty line<EL>
@@ -42,6 +42,6 @@ qwerty butt<9;1>
 <1;1>
 ><EL>
 a.txt<1;1>
-<SMSO>a.txt 135B 52%                                                                  <RMSO>
+<SMSO>a.txt 135B L3                                                                   <RMSO>
 <4;1>
 <24;1>

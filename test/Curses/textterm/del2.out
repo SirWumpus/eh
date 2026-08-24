@@ -1,6 +1,6 @@
 <CLEAR>
 <CLEAR>
-<SMSO>a.txt 0B 0%                                                                     <RMSO>
+<SMSO>a.txt 0B L1                                                                     <RMSO>
 <3;1>
 <SMSO>^D<RMSO>
 <2;1>
@@ -9,23 +9,18 @@
 <2;1>
 <1;7>
 <SMSO>1<RMSO>
-  <SMSO>100%<RMSO>
- <SMSO>* INS<RMSO>
+     <SMSO>*<RMSO>
 <2;1>
-Z<1;17>
+Z<1;15>
 <SMSO>   <RMSO>
 <2;2>
-<1;10>
-<SMSO>0% *<RMSO>
- <SMSO> <RMSO>
-<2;1>
-<1;7>
+<CR><1;7>
 <SMSO>0<RMSO>
 <2;1>
 <EL>
 <1;1>
 ><EL>
 a.txt<1;1>
-<SMSO>a.txt 0B 0%                                                                     <RMSO>
+<SMSO>a.txt 0B L1                                                                     <RMSO>
 <2;1>
 <24;1>

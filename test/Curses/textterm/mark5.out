@@ -1,6 +1,6 @@
 <CLEAR>
 <CLEAR>
-<SMSO>test/short.txt 119B 0%                                                          <RMSO>
+<SMSO>test/short.txt 119B L1                                                          <RMSO>
 <2;1>
 hello   world<3;1>
 this file might be a<4;1>
@@ -15,20 +15,19 @@ tab indent<11;1>
 <1;1>
 /<EL>
 butt<1;1>
-<SMSO>test/short.txt 119B 75%                                                         <RMSO>
+<SMSO>test/short.txt 119B L8                                                          <RMSO>
 <9;8>
 <1;1>
 /<EL>
 rude<1;1>
-<SMSO>test/short.txt 119B 33%                                                         <RMSO>
+<SMSO>test/short.txt 119B L3                                                          <RMSO>
 <4;8>
-<1;27>
+<1;26>
 <SMSO>INS<RMSO>
 <4;8>
 <1;17>
 <SMSO>20<RMSO>
-   <SMSO>4<RMSO>
-  <SMSO>*<RMSO>
+     <SMSO>*<RMSO>
 <4;8>
 frude fart face<4;9>
 <1;18>
@@ -37,36 +36,34 @@ frude fart face<4;9>
 urude fart face<4;10>
 <1;18>
 <SMSO>2<RMSO>
-   <SMSO>5<RMSO>
 <4;10>
 zrude fart face<4;11>
 <1;18>
 <SMSO>3<RMSO>
-<1;27>
-<SMSO>   <RMSO>
+       <SMSO>   <RMSO>
 <4;11>
 zrude fart face<4;12>
-<1;21>
-<SMSO>76<RMSO>
+<1;22>
+<SMSO>8<RMSO>
 <9;8>
 <1;17>
 <SMSO>19<RMSO>
-  <SMSO>33<RMSO>
-  <SMSO> <RMSO>
+   <SMSO>3<RMSO>
+ <SMSO> <RMSO>
 <4;8>
 rude fart face<EL>
 <4;8>
-<1;21>
-<SMSO>75<RMSO>
+<1;22>
+<SMSO>8<RMSO>
 <9;8>
 <1;17>
 <SMSO>23<RMSO>
-  <SMSO>32<RMSO>
-  <SMSO>*<RMSO>
+   <SMSO>3<RMSO>
+ <SMSO>*<RMSO>
 <4;8>
 fuzzrude fart face<4;8>
-<1;21>
-<SMSO>76<RMSO>
+<1;22>
+<SMSO>8<RMSO>
 <9;8>
 <1;1>
 Discard changes y/[n]?<EL>

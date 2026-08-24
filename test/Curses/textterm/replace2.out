@@ -1,6 +1,6 @@
 <CLEAR>
 <CLEAR>
-<SMSO>a.txt 119B 0%                                                                   <RMSO>
+<SMSO>a.txt 119B L1                                                                   <RMSO>
 <2;1>
 hello   world<3;1>
 this file might be a<4;1>
@@ -15,15 +15,15 @@ tab indent<11;1>
 <1;1>
 /<EL>
 line/plugh!<1;1>
-<SMSO>a.txt 121B 55% *                                                                <RMSO>
+<SMSO>a.txt 121B L4 *                                                                 <RMSO>
 <5;7>
 plugh!<1;9>
 <SMSO>3<RMSO>
-  <SMSO>6<RMSO>
+   <SMSO>6<RMSO>
 <7;7>
 plugh!<1;9>
 <SMSO>5<RMSO>
-  <SMSO>98<RMSO>
+   <SMSO>10 *<RMSO>
 <2;1>
 this file might be a<3;1>
 little rude fart face<4;1>
@@ -47,6 +47,6 @@ qwerty butt<9;1>
 <1;1>
 ><EL>
 a.txt<1;1>
-<SMSO>a.txt 125B 98%                                                                  <RMSO>
+<SMSO>a.txt 125B L10                                                                  <RMSO>
 <10;13>
 <24;1>

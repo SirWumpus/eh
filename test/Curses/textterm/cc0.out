@@ -1,6 +1,6 @@
 <CLEAR>
 <CLEAR>
-<SMSO>a.txt 119B 0%                                                                   <RMSO>
+<SMSO>a.txt 119B L1                                                                   <RMSO>
 <2;1>
 hello   world<3;1>
 this file might be a<4;1>
@@ -12,11 +12,11 @@ tab indent<11;1>
 -last line-<13;1>
 <SMSO>^D<RMSO>
 <2;1>
-<1;12>
-<SMSO>14%<RMSO>
+<1;13>
+<SMSO>2<RMSO>
 <3;6>
 <1;7>
-<SMSO>98B 12% *<RMSO>
+<SMSO>98B L2 *<RMSO>
  <SMSO>INS<RMSO>
 <3;1>
 little rude fart face<4;1>
@@ -39,10 +39,9 @@ qwerty butt<9;1>
 <3;1>
 <1;8>
 <SMSO>9<RMSO>
-   <SMSO>3<RMSO>
 <3;1>
 wlittle rude fart face<CR>w<1;7>
-<SMSO>100B 14% * INS<RMSO>
+<SMSO>100B L2 * INS<RMSO>
 <3;2>
 hlittle rude fart face<CR>wh<1;9>
 <SMSO>1<RMSO>
@@ -50,8 +49,8 @@ hlittle rude fart face<CR>wh<1;9>
 ilittle rude fart face<3;4>
 <1;8>
 <SMSO>19<RMSO>
-  <SMSO>27<RMSO>
-    <SMSO>   <RMSO>
+   <SMSO>3<RMSO>
+   <SMSO>   <RMSO>
 <3;4>
 sky tango foxtrot<EL>
 <4;1>
@@ -73,6 +72,6 @@ qwerty butt <EL>
 <1;1>
 ><EL>
 a.txt<1;1>
-<SMSO>a.txt 119B 27%                                                                  <RMSO>
+<SMSO>a.txt 119B L3                                                                   <RMSO>
 <4;1>
 <24;1>

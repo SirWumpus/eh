@@ -1,6 +1,6 @@
 <CLEAR>
 <CLEAR>
-<SMSO>a.txt 119B 0%                                                                   <RMSO>
+<SMSO>a.txt 119B L1                                                                   <RMSO>
 <2;1>
 hello   world<3;1>
 this file might be a<4;1>
@@ -15,10 +15,10 @@ tab indent<11;1>
 <1;1>
 /<EL>
 rude<1;1>
-<SMSO>a.txt 119B 33%                                                                  <RMSO>
+<SMSO>a.txt 119B L3                                                                   <RMSO>
 <4;8>
-<1;12>
-<SMSO>18<RMSO>
+<1;13>
+<SMSO>2<RMSO>
 <3;11>
 <SMSO>might be a<RMSO>
 <4;1>
@@ -26,8 +26,7 @@ rude<1;1>
 <3;11>
 <1;8>
 <SMSO>01<RMSO>
-  <SMSO>21<RMSO>
-  <SMSO>*<RMSO>
+     <SMSO>*<RMSO>
 <3;11>
 rude fart face<4;1>
 empty line<EL>
@@ -50,11 +49,11 @@ qwerty butt<9;1>
 <1;1>
 /<EL>
 but<1;1>
-<SMSO>a.txt 101B 71% *                                                                <RMSO>
+<SMSO>a.txt 101B L7 *                                                                 <RMSO>
 <8;8>
 <1;8>
 <SMSO>19<RMSO>
-   <SMSO>5<RMSO>
+   <SMSO>8<RMSO>
 <8;8>
 might be a<9;1>
 little butt <EL>
@@ -68,6 +67,6 @@ little butt <EL>
 <1;1>
 ><EL>
 a.txt<1;1>
-<SMSO>a.txt 119B 75%                                                                  <RMSO>
+<SMSO>a.txt 119B L8                                                                   <RMSO>
 <9;8>
 <24;1>

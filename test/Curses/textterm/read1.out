@@ -1,6 +1,6 @@
 <CLEAR>
 <CLEAR>
-<SMSO>a.txt 0B 0%                                                                     <RMSO>
+<SMSO>a.txt 0B L1                                                                     <RMSO>
 <3;1>
 <SMSO>^D<RMSO>
 <2;1>
@@ -9,8 +9,7 @@
 <2;1>
 <1;7>
 <SMSO>1<RMSO>
-  <SMSO>100%<RMSO>
- <SMSO>* INS<RMSO>
+     <SMSO>*<RMSO>
 <2;1>
 T<1;7>
 <SMSO>2<RMSO>
@@ -19,8 +18,7 @@ h<1;7>
 <SMSO>3<RMSO>
 <2;3>
 e<1;7>
-<SMSO>45B 1<RMSO>
- <SMSO>0% *   <RMSO>
+<SMSO>45B L2 *   <RMSO>
 <2;5>
 quick brown fox jumps over the lazy dog.<3;1>
 <EL>
@@ -30,12 +28,12 @@ quick brown fox jumps over the lazy dog.<3;1>
 <1;1>
 /<EL>
 fox<1;1>
-<SMSO>a.txt 45B 35% *                                                                 <RMSO>
+<SMSO>a.txt 45B L1 *                                                                  <RMSO>
 <2;17>
 <1;1>
 <<EL>
 test/short.txt<1;1>
-<SMSO>a.txt 164B 82% *                                                                <RMSO>
+<SMSO>a.txt 164B L11 *                                                                <RMSO>
 <2;17>
 hello   world<EL>
 <3;1>
@@ -52,6 +50,6 @@ fox jumps over the lazy dog.<14;1>
 <1;1>
 ><EL>
 a.txt<1;1>
-<SMSO>a.txt 164B 82%                                                                  <RMSO>
+<SMSO>a.txt 164B L11                                                                  <RMSO>
 <12;1>
 <24;1>

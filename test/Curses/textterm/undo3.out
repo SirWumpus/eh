@@ -1,6 +1,6 @@
 <CLEAR>
 <CLEAR>
-<SMSO>test/short.txt 119B 0%                                                          <RMSO>
+<SMSO>test/short.txt 119B L1                                                          <RMSO>
 <2;1>
 hello   world<3;1>
 this file might be a<4;1>
@@ -13,7 +13,7 @@ tab indent<11;1>
 <SMSO>^D<RMSO>
 <2;1>
 <1;16>
-<SMSO>0B 0% *<RMSO>
+<SMSO>0B L1 *<RMSO>
 <2;1>
 <EL>
 <3;1>
@@ -35,7 +35,7 @@ tab indent<11;1>
 <EL>
 <2;1>
 <1;16>
-<SMSO>119B 0%<RMSO>
+<SMSO>119B L1<RMSO>
 <2;1>
 hello   world<3;1>
 this file might be a<4;1>

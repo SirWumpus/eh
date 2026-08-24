@@ -1,6 +1,6 @@
 <CLEAR>
 <CLEAR>
-<SMSO>test/short.txt 119B 0%                                                          <RMSO>
+<SMSO>test/short.txt 119B L1                                                          <RMSO>
 <2;1>
 hello   world<3;1>
 this file might be a<4;1>
@@ -15,10 +15,10 @@ tab indent<11;1>
 <1;1>
 /<EL>
 rude<1;1>
-<SMSO>test/short.txt 119B 33%                                                         <RMSO>
+<SMSO>test/short.txt 119B L3                                                          <RMSO>
 <4;8>
-<1;21>
-<SMSO>18<RMSO>
+<1;22>
+<SMSO>2<RMSO>
 <3;11>
 <SMSO>might be a<RMSO>
 <4;1>

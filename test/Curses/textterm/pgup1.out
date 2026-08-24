@@ -1,6 +1,6 @@
 <CLEAR>
 <CLEAR>
-<SMSO>test/usage.md 2570B 0%                                                          <RMSO>
+<SMSO>test/usage.md 2570B L1                                                          <RMSO>
 <2;1>
 ae 1.3.0<3;1>
 ========<5;1>
@@ -18,8 +18,8 @@ ary depending on the implementation of the Curses library, `stty(1)` settings, o
 r terminal emulator.<23;1>
 Commands<24;1>
 --------<2;1>
-<1;21>
-<SMSO>26%<RMSO>
+<1;23>
+<SMSO>7<RMSO>
 <2;1>
 <EL>
 <3;1>
@@ -58,8 +58,8 @@ Testing<23;1>
 <24;1>
 <EL>
 <2;1>
-<1;21>
-<SMSO>45<RMSO>
+<1;22>
+<SMSO>40<RMSO>
 <2;1>
 This document contains a mix of short and long physical lines.<3;5>
 <EL>
@@ -87,8 +87,8 @@ Historical serial CRT terminals were 80 columns by 24 rows.  Later serial termin
 als were 80x25 to make room for a status line.  X Windows, Windows, and Mac syst<23;1>
 ems have terminal emulators (typically `xterm`, `ansi`, or `vt100`) that can be<24;1>
 resized on the fly.  Typically the column width is a multiple of eight (8) to a<2;1>
-<1;21>
-<SMSO>26<RMSO>
+<1;22>
+<SMSO>17<RMSO>
 <2;1>
 <EL>
 <3;5>
@@ -128,8 +128,8 @@ Testing<EL>
 <24;1>
 <EL>
 <2;1>
-<1;21>
-<SMSO>0% <RMSO>
+<1;23>
+<SMSO> <RMSO>
 <2;1>
 ae 1.3.0<3;1>
 ========<EL>

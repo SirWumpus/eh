@@ -1,6 +1,6 @@
 <CLEAR>
 <CLEAR>
-<SMSO>test/usage.md 2570B 0%                                                          <RMSO>
+<SMSO>test/usage.md 2570B L1                                                          <RMSO>
 <2;1>
 ae 1.3.0<3;1>
 ========<5;1>
@@ -18,8 +18,8 @@ ary depending on the implementation of the Curses library, `stty(1)` settings, o
 r terminal emulator.<23;1>
 Commands<24;1>
 --------<2;1>
-<1;21>
-<SMSO>100%<RMSO>
+<1;22>
+<SMSO>61<RMSO>
 <2;1>
 <EL>
 <3;1>
@@ -54,8 +54,8 @@ Commands<24;1>
 <24;1>
 <EL>
 <2;1>
-<1;21>
-<SMSO>8%  <RMSO>
+<1;22>
+<SMSO>7 <RMSO>
 <2;1>
 Usage<3;1>
 -----<5;5>
@@ -79,8 +79,8 @@ x<23;15>
 delete character under the cursor<24;5>
 W<24;15>
 write buffer to file<2;1>
-<1;21>
-<SMSO>0<RMSO>
+<1;22>
+<SMSO>1<RMSO>
 <2;1>
 ae 1.3.0<3;1>
 ========<5;1>

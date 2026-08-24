@@ -1,13 +1,13 @@
 <CLEAR>
 <CLEAR>
-<SMSO>a.txt 14B 0%                                                                    <RMSO>
+<SMSO>a.txt 14B L1                                                                    <RMSO>
 <2;1>
 Hello<3;9>
 world!<5;1>
 <SMSO>^D<RMSO>
 <2;1>
-<1;11>
-<SMSO>100%<RMSO>
+<1;12>
+<SMSO>3<RMSO>
 <2;1>
 <EL>
 <3;1>
@@ -16,12 +16,12 @@ world!<5;1>
 <5;1>
 <EL>
 <2;1>
-<1;18>
+<1;16>
 <SMSO>INS<RMSO>
 <2;1>
 <1;8>
 <SMSO>5<RMSO>
-       <SMSO>*<RMSO>
+     <SMSO>*<RMSO>
 <2;1>
 i<1;8>
 <SMSO>6<RMSO>
@@ -31,8 +31,8 @@ n<1;8>
 <2;3>
 s<1;7>
 <SMSO>55<RMSO>
-<1;18>
-<SMSO>   <RMSO>
+   <SMSO>6<RMSO>
+   <SMSO>   <RMSO>
 <2;4>
 ert at EOF<3;1>
 push EOF down<4;1>
@@ -42,6 +42,6 @@ each newline<6;1>
 <1;1>
 ><EL>
 a.txt<1;1>
-<SMSO>a.txt 55B 100%                                                                  <RMSO>
+<SMSO>a.txt 55B L6                                                                    <RMSO>
 <5;1>
 <24;1>

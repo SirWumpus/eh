@@ -1,6 +1,6 @@
 <CLEAR>
 <CLEAR>
-<SMSO>a.txt 119B 0%                                                                   <RMSO>
+<SMSO>a.txt 119B L1                                                                   <RMSO>
 <2;1>
 hello   world<3;1>
 this file might be a<4;1>
@@ -12,71 +12,68 @@ tab indent<11;1>
 -last line-<13;1>
 <SMSO>^D<RMSO>
 <2;1>
-<1;12>
-<SMSO>10%<RMSO>
+<1;13>
+<SMSO>2<RMSO>
 <3;1>
-<1;12>
-<SMSO>27<RMSO>
+<1;13>
+<SMSO>3<RMSO>
 <4;1>
-<1;12>
-<SMSO>33<RMSO>
 <4;8>
 <1;1>
 /<EL>
 ^/plugh!/a<1;1>
-<SMSO>a.txt 125B 48% *                                                                <RMSO>
+<SMSO>a.txt 125B L4 *                                                                 <RMSO>
 <5;1>
 plugh!empty line<5;7>
 <1;8>
 <SMSO>31<RMSO>
-  <SMSO>59<RMSO>
+   <SMSO>5<RMSO>
 <6;1>
 plugh!<1;9>
 <SMSO>7<RMSO>
-  <SMSO>62<RMSO>
+   <SMSO>6<RMSO>
 <7;1>
 plugh!blank line<7;7>
 <1;8>
 <SMSO>43<RMSO>
-  <SMSO>71<RMSO>
+   <SMSO>7<RMSO>
 <8;1>
 plugh!<1;9>
 <SMSO>9<RMSO>
-   <SMSO>5<RMSO>
+   <SMSO>8<RMSO>
 <9;1>
 plugh!qwerty butt<9;7>
 <1;8>
 <SMSO>55<RMSO>
-  <SMSO>84<RMSO>
+   <SMSO>9<RMSO>
 <10;1>
 plugh!<1;8>
 <SMSO>61<RMSO>
-  <SMSO>92<RMSO>
+   <SMSO>10 *<RMSO>
 <11;1>
 plugh!-last line-<11;7>
 <1;9>
 <SMSO>7<RMSO>
-  <SMSO>100% *<RMSO>
+    <SMSO>1<RMSO>
 <12;1>
 plugh!<1;8>
 <SMSO>73<RMSO>
-  <SMSO>3% *<RMSO>
- <SMSO> <RMSO>
+    <SMSO> * <RMSO>
 <2;1>
 plugh!hello     world<2;7>
 <1;9>
 <SMSO>9<RMSO>
-  <SMSO>13% *<RMSO>
+   <SMSO>2<RMSO>
 <3;1>
 plugh!this file might be a<3;7>
 <1;8>
 <SMSO>85<RMSO>
-  <SMSO>27<RMSO>
+   <SMSO>3<RMSO>
 <4;1>
 plugh!little rude fart face<4;7>
 <1;1>
 ><EL>
 a.txt<1;1>
-<SMSO>a.txt 185B 27%                                                                  <RMSO>
+<SMSO>a.txt 185B L3                                                                   <RMSO>
 <4;7>
 <24;1>
