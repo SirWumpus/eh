@@ -371,6 +371,18 @@ getsigch(void)
 	return ch;
 }
 
+/* Return the physical line containing a buffer offset. */
+off_t
+line_number(off_t cur)
+{
+	off_t line = 1;
+	while (0 < cur) {
+		if (*ptr(--cur) == '\n') {
+			line++;
+		}
+	}
+	return line;
+}
 #else /* IOCCC */
 #define growgap(n)
 #define getsigch	getch
@@ -418,21 +430,6 @@ charwidth(const char *s, int col)
 	(void) mbtowc(&wc, s, 4);
 	return wc == '\t' ? TABSTOP(col) : (col = wcwidth(wc)) < 1 ? 1 : col;
 }
-
-#ifndef IOCCC
-/* Return the physical line containing a buffer offset. */
-off_t
-line_number(off_t cur)
-{
-	off_t line = 1;
-	while (0 < cur) {
-		if (*ptr(--cur) == '\n') {
-			line++;
-		}
-	}
-	return line;
-}
-#endif
 
 /*
  * Return the physical BOL or BOF containing cur.
