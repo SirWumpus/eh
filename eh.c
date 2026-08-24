@@ -118,7 +118,7 @@ getcmd(int);
  *
  *	The Point is the current cursor position while the Gap is the
  *	position where the last edit operation took place. The Gap is
- *	ment to be the cursor but to avoid shuffling characters while
+ *	meant to be the cursor but to avoid shuffling characters while
  *	the cursor moves it is easier to just move a pointer and when
  *	something serious has to be done then you move the Gap to the
  *	Point.
@@ -152,6 +152,12 @@ ptr(const off_t cur)
  * ch is a continuation byte, it returns 1, so a scanner will
  * move across a partial multibyte character to the start of the
  * next sequence.
+ *
+ *	There is nothing wrong with this source code.
+ *	Kono sōsukōdo ni wa nani mo mondai wa arimasen.
+ *	このソースコードには何も問題はありません
+ *
+ *	https://en.wikipedia.org/wiki/UTF-8
  */
 int
 mblength(const int ch)
@@ -579,7 +585,7 @@ display(void)
 		if ((from <= epage and epage < to) or is_ctrl) {
 			standout();
 		}
-		/* A multibyte character never stradles the gap,
+		/* A multibyte character never straddles the gap,
 		 * assumes the gap moves by character, not by byte.
 		 * See also nextch() and prevch().
 		 */
@@ -881,7 +887,7 @@ void
 lngoto(void)
 {
 	SET_PREVIOUS_MARK(here);
-	/* Count physcical lines, just as ed, grep, or wc would. */
+	/* Count physical lines, just as ed, grep, or wc would. */
 	const off_t eof = pos(ebuf);
 	for (here = eof * (count == 0); here < eof and 1 < count; count--) {
 		/* Next physical line. */
@@ -1726,7 +1732,7 @@ outdent(void)
 			}
 			egap += span;
 			tabs += span;
-			/* Maintsain cursor position accounting for deleting tabs. */
+			/* Maintain cursor position accounting for deleting tabs. */
 			if (stop < here) {
 				adjmarks(-span);
 				here -= span;
@@ -1788,7 +1794,7 @@ replace_match(regmatch_t matches[MATCHES], const char * const str)
 		here = pos(egap);
 		chg = CHANGED;
 		/* CB-1 Adjust search_start to maintain origin position
-		 * by preceeding replacements.
+		 * by preceding replacements.
 		 */
 		if (search_wrapped and here < search_start) {
 			search_start += (gap-xgap)-match_length;
@@ -1978,7 +1984,7 @@ cleanup(void)
 {
 	/* Most of these are to satisfy Valgrind or sanitisers.  The OS
 	 * reclaims memory when the program exits, making the need to
-	 * free() theoritcally unnecessary.
+	 * free() theoretically unnecessary.
 	 */
 	(void) delwin(stdscr);
 	(void) endwin();
