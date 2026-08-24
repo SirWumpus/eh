@@ -30,23 +30,11 @@ W<1;8>
 <SMSO>7B 94<RMSO>
 <3;17>
 <SMSO><RMSO>
-O<1;8>
-<SMSO>8<RMSO>
+O<1;7>
+<SMSO>20B 95% *    <RMSO>
 <3;18>
 <SMSO><RMSO>
-O<1;8>
-<SMSO>9<RMSO>
-<3;19>
-<SMSO><RMSO>
-T<1;7>
-<SMSO>20B 95<RMSO>
-<3;20>
-<SMSO><RMSO>
-!<1;17>
-<SMSO>   <RMSO>
-<3;21>
-<SMSO><RMSO>
-<HOME>
+OT!<HOME>
 >                                                                               <1;2>
 a.txt<2;1>
 <HOME>

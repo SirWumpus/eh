@@ -16,24 +16,40 @@ tab indent<11;1>
 /                                                                               <1;2>
 line/plugh!<2;1>
 <HOME>
-<SMSO>a.txt 121B 50%                                                                  <RMSO>
+<SMSO>a.txt 121B 55% *                                                                <RMSO>
 <5;7>
-plugh!<5;7>
-<1;9>
+plugh!<1;9>
 <SMSO>3B 6<RMSO>
 <7;7>
 <SMSO><RMSO>
-plugh!<7;7>
+plugh!<13;1>
+<ED>
 <1;9>
-<SMSO>5B 93<RMSO>
-<11;7>
+<SMSO>5B 98<RMSO>
+<2;1>
 <SMSO><RMSO>
-plugh!-<11;7>
+this file might be a<3;1>
+little rude fart face<4;1>
+empty plugh!<EL>
+<5;1>
+<EL>
+<CUD1>
+blank plugh!<7;1>
+<EL>
+<CUD1>
+qwerty butt<9;1>
+        tab indent<10;1>
+-last plugh!-     <11;1>
+<EL>
+<CUD1>
+<SMSO>^D<RMSO>
+<10;13>
+<SMSO><RMSO>
 <HOME>
 >                                                                               <1;2>
 a.txt<2;1>
 <HOME>
-<SMSO>a.txt 125B 93%                                                                  <RMSO>
-<11;7>
+<SMSO>a.txt 125B 98%                                                                  <RMSO>
+<10;13>
 <24;1>
 

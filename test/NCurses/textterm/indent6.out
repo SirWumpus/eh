@@ -13,37 +13,35 @@ tab indent<11;1>
 <2;1>
 <SMSO><RMSO>
 <1;12>
-<SMSO>14%<RMSO>
-<3;6>
+<SMSO>5<RMSO>
+<2;9>
 <SMSO><RMSO>
-<13;1>
-<ED>
-<1;7>
-<SMSO>98B 12% *<RMSO>
+<1;12>
+<SMSO>34%<RMSO>
+<2;9>
+<SMSO>world<RMSO>
 <3;1>
+<SMSO>this file might be a<RMSO>
+<4;1>
+<SMSO>little r<RMSO>
+<1;12>
+<SMSO>27<RMSO>
+<4;1>
 <SMSO><RMSO>
-little rude fart face<4;1>
-empty line<EL>
-<5;1>
-<EL>
-<CUD1>
-blank line<7;1>
-<EL>
-<CUD1>
-qwerty butt<9;1>
-        tab indent<10;1>
--last line-<EL>
-<11;1>
-<EL>
-<CUD1>
-<SMSO>^D<RMSO>
+little r<CR><1;8>
+<SMSO>21B 28% *<RMSO>
+<2;1>
+<SMSO><RMSO>
+        hello<SMSO>   world<RMSO>
 <3;1>
+<SMSO>        this file might be a<RMSO>
+<4;1>
 <SMSO><RMSO>
 <HOME>
 >                                                                               <1;2>
 a.txt<2;1>
 <HOME>
-<SMSO>a.txt 98B 12%                                                                   <RMSO>
-<CUD1>
+<SMSO>a.txt 121B 28%                                                                  <RMSO>
+<4;1>
 <24;1>
 

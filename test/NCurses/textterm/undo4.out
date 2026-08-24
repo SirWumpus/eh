@@ -22,54 +22,10 @@ e<1;2>
 <CUD1>
 <SMSO><RMSO>
 s<1;2>
-<SMSO>4<RMSO>
+<SMSO>14B 100% *   <RMSO>
 <2;4>
 <SMSO><RMSO>
-t<1;2>
-<SMSO>5<RMSO>
-<2;6>
-<SMSO><RMSO>
-<1;2>
-<SMSO>6<RMSO>
-<2;6>
-<SMSO><RMSO>
-u<1;2>
-<SMSO>7<RMSO>
-<2;7>
-<SMSO><RMSO>
-n<1;2>
-<SMSO>8<RMSO>
-<2;8>
-<SMSO><RMSO>
-d<1;2>
-<SMSO>9<RMSO>
-<2;9>
-<SMSO><RMSO>
-o<1;2>
-<SMSO>10B 100% * INS<RMSO>
-<2;11>
-<SMSO><RMSO>
-<1;3>
-<SMSO>1<RMSO>
-<2;11>
-<SMSO><RMSO>
-r<1;3>
-<SMSO>2<RMSO>
-<2;12>
-<SMSO><RMSO>
-e<1;3>
-<SMSO>3<RMSO>
-<2;13>
-<SMSO><RMSO>
-d<1;3>
-<SMSO>4<RMSO>
-<2;14>
-<SMSO><RMSO>
-o<1;13>
-<SMSO>   <RMSO>
-<2;15>
-<SMSO><RMSO>
-<1;6>
+t undo redo<1;6>
 <SMSO>71% * <RMSO>
 <2;11>
 <SMSO><RMSO>
@@ -98,14 +54,10 @@ oredo<2;8>
 <SMSO><RMSO>
 oredo<2;9>
 <1;3>
-<SMSO>3B 69<RMSO>
+<SMSO>3B 69% *    <RMSO>
 <2;9>
 <SMSO><RMSO>
  redo<2;10>
-<1;12>
-<SMSO>   <RMSO>
-<2;10>
-<SMSO><RMSO>
 <1;3>
 <SMSO>4B 35<RMSO>
 <2;6>
@@ -125,5 +77,8 @@ test undo redo<CR><1;3>
 <2;6>
 <SMSO><RMSO>
 foo redo <2;6>
+<HOME>
+Discard changes y/[n]?                                                          <1;24>
+y<2;1>
 <24;1>
 

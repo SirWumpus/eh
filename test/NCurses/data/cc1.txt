@@ -1,0 +1,11 @@
+hello	world
+whisky
+tango
+foxtrot
+empty line
+
+blank line
+    
+qwerty butt
+	tab indent
+-last line-

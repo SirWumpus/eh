@@ -42,18 +42,10 @@ e<1;7>
 <2;3>
 <SMSO><RMSO>
 l<1;7>
-<SMSO>5B 80<RMSO>
+<SMSO>6B 83% *    <RMSO>
 <2;4>
 <SMSO><RMSO>
-l<1;7>
-<SMSO>6B 83<RMSO>
-<2;5>
-<SMSO><RMSO>
-o<1;16>
-<SMSO>   <RMSO>
-<2;6>
-<SMSO><RMSO>
-<1;10>
+lo<1;10>
 <SMSO>100% *<RMSO>
 <3;1>
 <SMSO><RMSO>
@@ -94,22 +86,10 @@ o<1;7>
 <3;3>
 <SMSO><RMSO>
 r<1;8>
-<SMSO>1<RMSO>
+<SMSO>3B 92% *    <RMSO>
 <3;4>
 <SMSO><RMSO>
-l<1;8>
-<SMSO>2B 91<RMSO>
-<3;5>
-<SMSO><RMSO>
-d<1;8>
-<SMSO>3B 92<RMSO>
-<3;6>
-<SMSO><RMSO>
-!<1;17>
-<SMSO>   <RMSO>
-<3;7>
-<SMSO><RMSO>
-<HOME>
+ld!<HOME>
 >                                                                               <1;2>
 a.txt<2;1>
 <HOME>

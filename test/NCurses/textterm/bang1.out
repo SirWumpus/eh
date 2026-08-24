@@ -23,5 +23,8 @@ false<2;1>
 <HOME>
 <SMSO>a.txt 119B 10% *                                                                <RMSO>
 <CUD1>
+<HOME>
+Discard changes y/[n]?                                                          <1;24>
+y<2;1>
 <24;1>
 

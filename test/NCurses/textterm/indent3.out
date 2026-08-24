@@ -12,17 +12,27 @@ tab indent<11;1>
 <SMSO>^D<RMSO>
 <2;1>
 <SMSO><RMSO>
+<1;12>
+<SMSO>27%<RMSO>
+<2;1>
+<SMSO>hello   world<RMSO>
+<3;1>
+<SMSO>this file might be a<RMSO>
+<4;1>
+<SMSO><RMSO>
+<1;8>
+<SMSO>21B 28% *<RMSO>
+<2;1>
+<SMSO>        hello   world<RMSO>
+<3;1>
+<SMSO>        this file might be a<RMSO>
+<4;1>
+<SMSO><RMSO>
 <HOME>
-/                                                                               <1;2>
-butt/hole<2;1>
-<HOME>
-<SMSO>a.txt 119B 78% *                                                                <RMSO>
-<9;8>
-hole<HOME>
 >                                                                               <1;2>
 a.txt<2;1>
 <HOME>
-<SMSO>a.txt 119B 78%                                                                  <RMSO>
-<9;12>
+<SMSO>a.txt 121B 28%                                                                  <RMSO>
+<4;1>
 <24;1>
 

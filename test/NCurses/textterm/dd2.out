@@ -12,17 +12,34 @@ tab indent<11;1>
 <SMSO>^D<RMSO>
 <2;1>
 <SMSO><RMSO>
+<1;12>
+<SMSO>14%<RMSO>
+<3;6>
+<SMSO><RMSO>
+<13;1>
+<ED>
+<1;7>
+<SMSO>76B 15% *<RMSO>
+<3;1>
+<SMSO><RMSO>
+empty line<EL>
+<4;1>
+<EL>
+<CUD1>
+blank<7;1>
+qwerty butt<8;9>
+tab indent<9;1>
+-last line-<10;9>
+<EL>
+<11;1>
+<SMSO>^D<RMSO>
+<EL>
+<3;1>
 <HOME>
-/                                                                               <1;2>
-butt/hole<2;1>
-<HOME>
-<SMSO>a.txt 119B 78% *                                                                <RMSO>
-<9;8>
-hole<HOME>
 >                                                                               <1;2>
 a.txt<2;1>
 <HOME>
-<SMSO>a.txt 119B 78%                                                                  <RMSO>
-<9;12>
+<SMSO>a.txt 76B 15%                                                                   <RMSO>
+<CUD1>
 <24;1>
 
