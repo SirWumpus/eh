@@ -414,7 +414,7 @@ movegap(const off_t cur)
 int
 charwidth(const char *s, int col)
 {
-	wint_t wc;
+	wchar_t wc;
 	(void) mbtowc(&wc, s, 4);
 	return wc == '\t' ? TABSTOP(col) : (col = wcwidth(wc)) < 1 ? 1 : col;
 }
