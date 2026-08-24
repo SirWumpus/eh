@@ -1,4 +1,4 @@
-![eh screen capture](./eh_2.png)  
+![eh screen capture](./screen0.png)  
 Primary Repository https://codeberg.org/SirWumpus/eh
 
 
