@@ -19,9 +19,10 @@ tab indent<11;1>
 !<EL>
 WOOT<BEL>
 <1;1>
-<SMSO>a.txt 157B L3 *                                                                 <RMSO>
+<SMSO>a.txt 139B L3 *                                                                 <RMSO>
 <3;1>
-mksh: WOOT: inaccessible or not found<4;1>
+sh: WOOT: not found<EL>
+<4;1>
 this file might be a<EL>
 <5;1>
 little rude fart face<6;1>
