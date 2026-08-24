@@ -1,6 +1,6 @@
 <RMSO>
 <CLEAR>
-<SMSO>test/short.txt 119B 0%                                                          <RMSO>
+<SMSO>test/short.txt 119B L1                                                          <RMSO>
 hello   world<3;1>
 this file might be a<4;1>
 little rude fart face<5;1>
@@ -16,52 +16,49 @@ tab indent<11;1>
 /                                                                               <1;2>
 butt<2;1>
 <HOME>
-<SMSO>test/short.txt 119B 75%                                                         <RMSO>
+<SMSO>test/short.txt 119B L8                                                          <RMSO>
 <9;8>
-<1;21>
-<SMSO>80<RMSO>
+<1;22>
+<SMSO>9<RMSO>
 <10;9>
 <SMSO><RMSO>
 <HOME>
 /                                                                               <1;2>
 rude<2;1>
 <HOME>
-<SMSO>test/short.txt 119B 33%                                                         <RMSO>
+<SMSO>test/short.txt 119B L3                                                          <RMSO>
 <4;8>
-<1;21>
-<SMSO>42<RMSO>
 <4;18>
-<SMSO><RMSO>
 <1;17>
-<SMSO>29B 46% *<RMSO>
+<SMSO>29B L3 *<RMSO>
 <4;18>
 <SMSO><RMSO>
 rude fart face<4;28>
 <1;17>
-<SMSO>39B 50<RMSO>
+<SMSO>3<RMSO>
 <4;28>
 <SMSO><RMSO>
 rude fart face<4;38>
-<1;21>
-<SMSO>79<RMSO>
+<1;22>
+<SMSO>8<RMSO>
 <9;8>
 <SMSO><RMSO>
-<1;21>
-<SMSO>83<RMSO>
+<1;22>
+<SMSO>9<RMSO>
 <10;9>
 <SMSO><RMSO>
 <1;17>
-<SMSO>29B 46<RMSO>
+<SMSO>29B L3<RMSO>
 <4;28>
 <SMSO><RMSO>
 face<EL>
 <4;28>
-<1;21>
-<SMSO>77<RMSO>
+<1;22>
+<SMSO>8<RMSO>
 <9;8>
 <SMSO><RMSO>
-<1;21>
-<SMSO>82<RMSO>
+<1;22>
+<SMSO>9<RMSO>
 <10;9>
 <SMSO><RMSO>
 <HOME>

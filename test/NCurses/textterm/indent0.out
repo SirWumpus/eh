@@ -1,6 +1,6 @@
 <RMSO>
 <CLEAR>
-<SMSO>a.txt 119B 0%                                                                   <RMSO>
+<SMSO>a.txt 119B L1                                                                   <RMSO>
 hello   world<3;1>
 this file might be a<4;1>
 little rude fart face<5;1>
@@ -12,24 +12,21 @@ tab indent<11;1>
 <SMSO>^D<RMSO>
 <2;1>
 <SMSO><RMSO>
-<1;12>
-<SMSO>5<RMSO>
 <2;9>
-<SMSO><RMSO>
 <1;8>
-<SMSO>20B 10% *<RMSO>
+<SMSO>20B L2 *<RMSO>
 <2;1>
 <SMSO><RMSO>
         hello   world<3;1>
-<1;12>
-<SMSO>5% * <RMSO>
-<CUD1>
+<1;13>
+<SMSO>1<RMSO>
+<2;17>
 <SMSO><RMSO>
 <HOME>
 >                                                                               <1;2>
 a.txt<2;1>
 <HOME>
-<SMSO>a.txt 120B 5%                                                                   <RMSO>
+<SMSO>a.txt 120B L1                                                                   <RMSO>
 <2;17>
 <24;1>
 

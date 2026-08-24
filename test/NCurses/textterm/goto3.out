@@ -1,6 +1,6 @@
 <RMSO>
 <CLEAR>
-<SMSO>test/usage.md 2570B 0%                                                          <RMSO>
+<SMSO>test/usage.md 2570B L1                                                          <RMSO>
 ae 1.3.0<3;1>
 ========<5;1>
 A minimalist version of `vi(1)`.  It is an example of the "Buffer Gap" method outlined in the [The Craft Of Text Editing](http://www.finseth.com/craft/) used by<7;2>
@@ -15,16 +15,16 @@ Commands<24;1>
 --------<2;1>
 <5;1>
 <ED>
-<1;21>
-<SMSO>100%<RMSO>
+<1;22>
+<SMSO>61<RMSO>
 <2;1>
 <SMSO><RMSO>
 <EL>
 <CUD1>
 <SMSO>^D<RMSO>
       <2;1>
-<1;21>
-<SMSO>99% <RMSO>
+<1;23>
+<SMSO>0<RMSO>
 <2;5>
 <SMSO><RMSO>
 $ LINES=10 ./ae file<3;1>
@@ -33,7 +33,7 @@ $ LINES=10 ./ae file<3;1>
 <2;25>
 <SMSO><RMSO>
 <1;22>
-<SMSO>8<RMSO>
+<SMSO>59<RMSO>
 <2;5>
 <SMSO><RMSO>
 <EL>
@@ -43,8 +43,8 @@ $ LINES=10 ./ae file<4;1>
 <SMSO>^D<RMSO>
 <2;1>
 <SMSO><RMSO>
-<1;22>
-<SMSO>6<RMSO>
+<1;23>
+<SMSO>8<RMSO>
 <2;1>
 <SMSO><RMSO>
 terminal window size for easier testing and debugging, eg.<3;5>

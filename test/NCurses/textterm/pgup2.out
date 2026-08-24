@@ -1,6 +1,6 @@
 <RMSO>
 <CLEAR>
-<SMSO>test/usage.md 2570B 0%                                                          <RMSO>
+<SMSO>test/usage.md 2570B L1                                                          <RMSO>
 ae 1.3.0<3;1>
 ========<5;1>
 A minimalist version of `vi(1)`.  It is an example of the "Buffer Gap" method outlined in the [The Craft Of Text Editing](http://www.finseth.com/craft/) used by<7;2>
@@ -15,16 +15,16 @@ Commands<24;1>
 --------<2;1>
 <5;1>
 <ED>
-<1;21>
-<SMSO>100%<RMSO>
+<1;22>
+<SMSO>61<RMSO>
 <2;1>
 <SMSO><RMSO>
 <EL>
 <CUD1>
 <SMSO>^D<RMSO>
       <2;1>
-<1;21>
-<SMSO>58% <RMSO>
+<1;22>
+<SMSO>45<RMSO>
 <2;1>
 <SMSO><RMSO>
 * Logical line = portion of a long line that fits on a single screen row.<3;1>
@@ -40,8 +40,8 @@ resized on the fly.  Typically the column width is a multiple of eight (8) to ac
 Curses library supports the environment variables `TERM`, `LINES`, and `COLUMNS`.  It possible to temporarily set `LINES` or `COLUMNS` or both smaller than the<22;1>
 terminal window size for easier testing and debugging, eg.<24;5>
 $ LINES=10 ./ae file<2;1>
-<1;21>
-<SMSO>39<RMSO>
+<1;22>
+<SMSO>2<RMSO>
 <2;1>
 <SMSO><RMSO>
     Q         quit<EL>
@@ -77,8 +77,8 @@ This document contains a mix of short and long physical lines.<EL>
 <22;1>
 * Long line = A physical line of text that can wrap onto two or more logical lines (screen rows) depending on the terminal width given by `COLS` factoring in tabs.<EL>
 <2;1>
-<1;21>
-<SMSO>8% <RMSO>
+<1;22>
+<SMSO>7 <RMSO>
 <2;1>
 <SMSO><RMSO>
 Usage<EL>
@@ -103,8 +103,8 @@ h j k l   left, down, up, right cursor movement<19;1>
     x         delete character under the cursor<EL>
 <24;1>
     W         write buffer to file<2;1>
-<1;21>
-<SMSO>0<RMSO>
+<1;22>
+<SMSO>1<RMSO>
 <2;1>
 <SMSO><RMSO>
 ae 1.3.0<3;1>

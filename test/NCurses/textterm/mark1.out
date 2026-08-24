@@ -1,6 +1,6 @@
 <RMSO>
 <CLEAR>
-<SMSO>test/short.txt 119B 0%                                                          <RMSO>
+<SMSO>test/short.txt 119B L1                                                          <RMSO>
 hello   world<3;1>
 this file might be a<4;1>
 little rude fart face<5;1>
@@ -12,24 +12,21 @@ tab indent<11;1>
 <SMSO>^D<RMSO>
 <2;1>
 <SMSO><RMSO>
-<1;21>
-<SMSO>5<RMSO>
 <2;9>
-<SMSO><RMSO>
-<1;21>
-<SMSO>100%<RMSO>
+<1;23>
+<SMSO>1<RMSO>
 <12;1>
 <SMSO><RMSO>
-<1;21>
-<SMSO>98% <RMSO>
+<1;23>
+<SMSO>0<RMSO>
 <11;11>
 <SMSO><RMSO>
-<1;21>
-<SMSO>5% <RMSO>
+<1;23>
+<SMSO> <RMSO>
 <2;9>
 <SMSO><RMSO>
-<1;21>
-<SMSO>98%<RMSO>
+<1;23>
+<SMSO>0<RMSO>
 <11;11>
 <SMSO><RMSO>
 <24;1>

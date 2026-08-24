@@ -1,6 +1,6 @@
 <RMSO>
 <CLEAR>
-<SMSO> 0B 0%                                                                          <RMSO>
+<SMSO> 0B L1                                                                          <RMSO>
 <CUD1>
 <SMSO>^D<RMSO>
 <2;1>
@@ -10,7 +10,7 @@
 <2;1>
 <SMSO><RMSO>
 <1;2>
-<SMSO>1B 100% * INS<RMSO>
+<SMSO>1B L1 *<RMSO>
 <2;1>
 <SMSO><RMSO>
 t<1;2>
@@ -22,58 +22,52 @@ e<1;2>
 <CUD1>
 <SMSO><RMSO>
 s<1;2>
-<SMSO>14B 100% *   <RMSO>
+<SMSO>14B L1 *   <RMSO>
 <2;4>
 <SMSO><RMSO>
-t undo redo<1;6>
-<SMSO>71% * <RMSO>
-<2;11>
-<SMSO><RMSO>
-<1;6>
-<SMSO>35<RMSO>
+t undo redo<2;11>
 <2;6>
-<SMSO><RMSO>
 <1;2>
-<SMSO>9B 55% * INS<RMSO>
+<SMSO>9B L1 * INS<RMSO>
 <2;6>
 <SMSO><RMSO>
 redo     <2;6>
 <1;2>
-<SMSO>10B 60% * INS<RMSO>
+<SMSO>10B L1 * INS<RMSO>
 <2;6>
 <SMSO><RMSO>
 fredo<2;7>
 <1;3>
-<SMSO>1B 63<RMSO>
+<SMSO>1<RMSO>
 <2;7>
 <SMSO><RMSO>
 oredo<2;8>
 <1;3>
-<SMSO>2B 66<RMSO>
-<CUD1>
+<SMSO>2<RMSO>
+<2;8>
 <SMSO><RMSO>
 oredo<2;9>
 <1;3>
-<SMSO>3B 69% *    <RMSO>
+<SMSO>3B L1 *    <RMSO>
 <2;9>
 <SMSO><RMSO>
  redo<2;10>
 <1;3>
-<SMSO>4B 35<RMSO>
+<SMSO>4<RMSO>
 <2;6>
 <SMSO><RMSO>
 undo redo<2;6>
 <1;2>
-<SMSO>0B 0%    <RMSO>
+<SMSO>0B L1   <RMSO>
 <2;1>
 <SMSO><RMSO>
 <EL>
 <1;2>
-<SMSO>14B 0%<RMSO>
+<SMSO>14B L1<RMSO>
 <2;1>
 <SMSO><RMSO>
 test undo redo<CR><1;3>
-<SMSO>3B 38% *<RMSO>
+<SMSO>3B L1 *<RMSO>
 <2;6>
 <SMSO><RMSO>
 foo redo <2;6>

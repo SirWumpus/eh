@@ -1,6 +1,6 @@
 <RMSO>
 <CLEAR>
-<SMSO>a.txt 119B 0%                                                                   <RMSO>
+<SMSO>a.txt 119B L1                                                                   <RMSO>
 hello   world<3;1>
 this file might be a<4;1>
 little rude fart face<5;1>
@@ -12,21 +12,18 @@ tab indent<11;1>
 <SMSO>^D<RMSO>
 <2;1>
 <SMSO><RMSO>
-<1;12>
-<SMSO>2<RMSO>
 <2;4>
-<SMSO><RMSO>
 <1;17>
 <SMSO>INS<RMSO>
 <2;4>
 <SMSO><RMSO>
 <1;8>
-<SMSO>20B 3% *<RMSO>
+<SMSO>20B L1 *<RMSO>
 <2;4>
 <SMSO><RMSO>
 Wlo<2;5>
 <1;9>
-<SMSO>1B 4<RMSO>
+<SMSO>1<RMSO>
 <2;5>
 <SMSO><RMSO>
 Olo<2;6>
@@ -36,18 +33,18 @@ Olo<2;6>
 <SMSO><RMSO>
 Olo        world<2;7>
 <1;9>
-<SMSO>4B 6% *    <RMSO>
+<SMSO>4B L1 *    <RMSO>
 <2;7>
 <SMSO><RMSO>
 T!lo<2;9>
 <1;8>
-<SMSO>19B 2%  <RMSO>
+<SMSO>19B L1  <RMSO>
 <2;4>
 <SMSO><RMSO>
 lo   world<EL>
 <2;4>
 <1;8>
-<SMSO>24B 2% *<RMSO>
+<SMSO>24B L1 *<RMSO>
 <2;4>
 <SMSO><RMSO>
 WOOT!lo      world<2;4>
@@ -55,7 +52,7 @@ WOOT!lo      world<2;4>
 >                                                                               <1;2>
 a.txt<2;1>
 <HOME>
-<SMSO>a.txt 124B 2%                                                                   <RMSO>
+<SMSO>a.txt 124B L1                                                                   <RMSO>
 <2;4>
 <24;1>
 

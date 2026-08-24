@@ -1,6 +1,6 @@
 <RMSO>
 <CLEAR>
-<SMSO>test/usage.md 2570B 0%                                                          <RMSO>
+<SMSO>test/usage.md 2570B L1                                                          <RMSO>
 ae 1.3.0<3;1>
 ========<5;1>
 A minimalist version of `vi(1)`.  It is an example of the "Buffer Gap" method outlined in the [The Craft Of Text Editing](http://www.finseth.com/craft/) used by<7;2>
@@ -15,16 +15,16 @@ Commands<24;1>
 --------<2;1>
 <5;1>
 <ED>
-<1;21>
-<SMSO>100%<RMSO>
+<1;22>
+<SMSO>61<RMSO>
 <2;1>
 <SMSO><RMSO>
 <EL>
 <CUD1>
 <SMSO>^D<RMSO>
       <2;1>
-<1;21>
-<SMSO>8%  <RMSO>
+<1;22>
+<SMSO>7 <RMSO>
 <2;1>
 <SMSO><RMSO>
 Usage<3;1>
@@ -42,8 +42,8 @@ G         goto line number; 1G top of file, G bottom<22;5>
 i         enter insert mode, FF or ESC to quit<23;5>
 x         delete character under the cursor<24;5>
 W         write buffer to file<2;1>
-<1;21>
-<SMSO>0<RMSO>
+<1;22>
+<SMSO>1<RMSO>
 <2;1>
 <SMSO><RMSO>
 ae 1.3.0<3;1>

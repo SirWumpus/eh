@@ -1,6 +1,6 @@
 <RMSO>
 <CLEAR>
-<SMSO>a.txt 0B 0%                                                                     <RMSO>
+<SMSO>a.txt 0B L1                                                                     <RMSO>
 <CUD1>
 <SMSO>^D<RMSO>
 <2;1>
@@ -10,7 +10,7 @@
 <2;1>
 <SMSO><RMSO>
 <1;7>
-<SMSO>1B 100% * INS<RMSO>
+<SMSO>1B L1 *<RMSO>
 <2;1>
 <SMSO><RMSO>
 1<1;7>
@@ -22,15 +22,12 @@
 <2;3>
 <SMSO><RMSO>
 3<1;7>
-<SMSO>4B 100% *    <RMSO>
+<SMSO>4B L1 *    <RMSO>
 <2;4>
 <SMSO><RMSO>
-Z<1;10>
-<SMSO>75% * <RMSO>
-<2;4>
-<SMSO><RMSO>
+Z<CUB1>
 <1;7>
-<SMSO>3B 100% *<RMSO>
+<SMSO>3<RMSO>
 <2;4>
 <SMSO><RMSO>
  <CUB1>
@@ -38,7 +35,7 @@ Z<1;10>
 >                                                                               <1;2>
 a.txt<2;1>
 <HOME>
-<SMSO>a.txt 3B 100%                                                                   <RMSO>
+<SMSO>a.txt 3B L1                                                                     <RMSO>
 <2;4>
 <24;1>
 

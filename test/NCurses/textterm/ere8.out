@@ -1,6 +1,6 @@
 <RMSO>
 <CLEAR>
-<SMSO>test/short-nonl.txt 118B 0%                                                     <RMSO>
+<SMSO>test/short-nonl.txt 118B L1                                                     <RMSO>
 hello   world<3;1>
 this file might be a<4;1>
 little rude fart face<5;1>
@@ -16,7 +16,7 @@ tab indent<11;1>
 /                                                                               <1;2>
 ^$<2;1>
 <HOME>
-<SMSO>test/short-nonl.txt 118B 55%                                                    <RMSO>
+<SMSO>test/short-nonl.txt 118B L5                                                     <RMSO>
 <6;1>
 <24;1>
 

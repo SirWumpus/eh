@@ -1,6 +1,6 @@
 <RMSO>
 <CLEAR>
-<SMSO>a.txt 0B 0%                                                                     <RMSO>
+<SMSO>a.txt 0B L1                                                                     <RMSO>
 <CUD1>
 <SMSO>^D<RMSO>
 <2;1>
@@ -10,7 +10,7 @@
 <2;1>
 <SMSO><RMSO>
 <1;7>
-<SMSO>1B 100% * INS<RMSO>
+<SMSO>1B L1 *<RMSO>
 <2;1>
 <SMSO><RMSO>
 H<1;7>
@@ -22,38 +22,31 @@ e<1;7>
 <2;3>
 <SMSO><RMSO>
 l<1;7>
-<SMSO>12B 100% *   <RMSO>
+<SMSO>12B L1 *   <RMSO>
 <2;4>
 <SMSO><RMSO>
-lo world!<1;11>
-<SMSO>0% *  <RMSO>
-<2;1>
-<SMSO><RMSO>
-<1;11>
-<SMSO>50% *<RMSO>
-<2;7>
-<SMSO><RMSO>
-<1;17>
+lo world!<CR><2;7>
+<1;16>
 <SMSO>INS<RMSO>
 <2;7>
 <SMSO><RMSO>
 <1;8>
-<SMSO>3B 53<RMSO>
+<SMSO>3<RMSO>
 <2;7>
 <SMSO><RMSO>
 Wworld!<2;8>
 <1;8>
-<SMSO>4B 57<RMSO>
+<SMSO>4<RMSO>
 <2;8>
 <SMSO><RMSO>
 Oworld!<2;9>
 <1;8>
-<SMSO>5B 60<RMSO>
-<2;9>
+<SMSO>5<RMSO>
+<CUD1>
 <SMSO><RMSO>
 Oworld!<2;10>
 <1;8>
-<SMSO>8B 66% *    <RMSO>
+<SMSO>8B L1 *    <RMSO>
 <2;10>
 <SMSO><RMSO>
 T! world!<2;13>
@@ -61,7 +54,7 @@ T! world!<2;13>
 >                                                                               <1;2>
 a.txt<2;1>
 <HOME>
-<SMSO>a.txt 18B 66%                                                                   <RMSO>
+<SMSO>a.txt 18B L1                                                                    <RMSO>
 <2;13>
 <24;1>
 

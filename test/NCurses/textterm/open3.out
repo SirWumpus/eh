@@ -1,6 +1,6 @@
 <RMSO>
 <CLEAR>
-<SMSO>a.txt 0B 0%                                                                     <RMSO>
+<SMSO>a.txt 0B L1                                                                     <RMSO>
 <CUD1>
 <SMSO>^D<RMSO>
 <2;1>
@@ -10,19 +10,19 @@
 <2;1>
 <SMSO><RMSO>
 <1;7>
-<SMSO>1B 100% * INS<RMSO>
+<SMSO>1B L2 *<RMSO>
 <3;1>
 <SMSO><RMSO>
   <4;1>
 <SMSO>^D<RMSO>
 <3;1>
 <SMSO><RMSO>
-<1;17>
+<1;15>
 <SMSO>   <RMSO>
 <3;1>
 <SMSO><RMSO>
-<1;10>
-<SMSO>0% *  <RMSO>
+<1;11>
+<SMSO>1<RMSO>
 <2;1>
 <SMSO><RMSO>
 <1;15>
@@ -30,31 +30,27 @@
 <2;1>
 <SMSO><RMSO>
 <1;7>
-<SMSO>2B 50% * INS<RMSO>
+<SMSO>2<RMSO>
 <2;1>
 <SMSO><RMSO>
 w<1;7>
-<SMSO>3B 66<RMSO>
+<SMSO>3<RMSO>
 <2;2>
 <SMSO><RMSO>
 o<1;7>
-<SMSO>4B 75<RMSO>
+<SMSO>4<RMSO>
 <2;3>
 <SMSO><RMSO>
 r<1;7>
-<SMSO>7B 85% *    <RMSO>
+<SMSO>7B L1 *    <RMSO>
 <2;4>
 <SMSO><RMSO>
-ld!<1;10>
-<SMSO>0% * <RMSO>
-<2;1>
-<SMSO><RMSO>
-<1;15>
+ld!<CR><1;15>
 <SMSO>INS<RMSO>
 <2;1>
 <SMSO><RMSO>
 <1;7>
-<SMSO>8B 12% * INS<RMSO>
+<SMSO>8B L2<RMSO>
 <2;1>
 <SMSO><RMSO>
       <3;1>
@@ -63,12 +59,12 @@ world!<4;1>
 <SMSO>^D<RMSO>
 <3;1>
 <SMSO><RMSO>
-<1;16>
+<1;15>
 <SMSO>   <RMSO>
 <3;1>
 <SMSO><RMSO>
-<1;10>
-<SMSO>0% * <RMSO>
+<1;11>
+<SMSO>1<RMSO>
 <2;1>
 <SMSO><RMSO>
 <1;15>
@@ -76,26 +72,26 @@ world!<4;1>
 <2;1>
 <SMSO><RMSO>
 <1;7>
-<SMSO>9B 11% * INS<RMSO>
+<SMSO>9<RMSO>
 <2;1>
 <SMSO><RMSO>
 H<1;7>
-<SMSO>10B 20% * INS<RMSO>
+<SMSO>10B L1 * INS<RMSO>
 <2;2>
 <SMSO><RMSO>
 e<1;8>
-<SMSO>1B 27<RMSO>
+<SMSO>1<RMSO>
 <2;3>
 <SMSO><RMSO>
 l<1;8>
-<SMSO>3B 38% *    <RMSO>
+<SMSO>3B L1 *    <RMSO>
 <2;4>
 <SMSO><RMSO>
 lo<HOME>
 >                                                                               <1;2>
 a.txt<2;1>
 <HOME>
-<SMSO>a.txt 13B 38%                                                                   <RMSO>
+<SMSO>a.txt 13B L1                                                                    <RMSO>
 <2;6>
 <24;1>
 

@@ -1,6 +1,6 @@
 <RMSO>
 <CLEAR>
-<SMSO>a.txt 14B 0%                                                                    <RMSO>
+<SMSO>a.txt 14B L1                                                                    <RMSO>
 Hello<3;9>
 world!<5;1>
 <SMSO>^D<RMSO>
@@ -8,16 +8,16 @@ world!<5;1>
 <SMSO><RMSO>
 <5;1>
 <ED>
-<1;11>
-<SMSO>100%<RMSO>
+<1;12>
+<SMSO>3<RMSO>
 <2;1>
 <SMSO><RMSO>
      <3;1>
 <SMSO>^D<RMSO>
 <EL>
 <2;1>
-<1;11>
-<SMSO>42% <RMSO>
+<1;12>
+<SMSO>2<RMSO>
 <2;9>
 <SMSO><RMSO>
 world!<3;1>
@@ -26,7 +26,7 @@ world!<3;1>
 <2;1>
 <SMSO><RMSO>
 <1;7>
-<SMSO>8B 75% *<RMSO>
+<SMSO>8B L2 *<RMSO>
 <2;1>
 <SMSO><RMSO>
 !<EL>
@@ -34,6 +34,6 @@ world!<3;1>
 >                                                                               <1;2>
 a.txt<2;1>
 <HOME>
-<SMSO>a.txt 8B 75%                                                                    <RMSO>
+<SMSO>a.txt 8B L2                                                                     <RMSO>
 <24;1>
 

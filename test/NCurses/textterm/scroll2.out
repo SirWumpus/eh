@@ -1,6 +1,6 @@
 <RMSO>
 <CLEAR>
-<SMSO>test/usage.md 2570B 0%                                                          <RMSO>
+<SMSO>test/usage.md 2570B L1                                                          <RMSO>
 ae 1.3.0<3;1>
 ========<5;1>
 A minimalist version of `vi(1)`.  It is an example of the "Buffer Gap" method outlined in the [The Craft Of Text Editing](http://www.finseth.com/craft/) used by<7;2>
@@ -13,8 +13,8 @@ lines of printable text, tabs, or newline characters.  A physical line can be of
 stops are every eight columns.  The behaviour of non-printable characters may vary depending on the implementation of the Curses library, `stty(1)` settings, or terminal emulator.<23;1>
 Commands<24;1>
 --------<2;1>
-<1;21>
-<SMSO>26%<RMSO>
+<1;23>
+<SMSO>8<RMSO>
 <2;1>
 <SMSO><RMSO>
 <EL>
@@ -41,8 +41,8 @@ Commands<22;1>
 --------<23;1>
 <EL>
 <CUD1>
-    h j k l   left, down, up, right cursor movement<CR><1;21>
-<SMSO>0% <RMSO>
+    h j k l   left, down, up, right cursor movement<CR><1;23>
+<SMSO> <RMSO>
 <2;1>
 <SMSO><RMSO>
 ae 1.3.0<3;1>

@@ -1,6 +1,6 @@
 <RMSO>
 <CLEAR>
-<SMSO>a.txt 57B 0%                                                                    <RMSO>
+<SMSO>a.txt 57B L1                                                                    <RMSO>
 Hello(int arg) {<3;9>
 world();<4;9>
 xyzzy(arg);<5;9>
@@ -13,33 +13,30 @@ cave(lost());<6;1>
 /                                                                               <1;2>
 \)<2;1>
 <HOME>
-<SMSO>a.txt 57B 22%                                                                   <RMSO>
+<SMSO>a.txt 57B L1                                                                    <RMSO>
 <2;14>
-<1;11>
-<SMSO>4<RMSO>
+<1;12>
+<SMSO>2<RMSO>
 <3;15>
 <SMSO><RMSO>
-<1;11>
-<SMSO>64<RMSO>
+<1;12>
+<SMSO>3<RMSO>
 <4;18>
 <SMSO><RMSO>
-<1;11>
-<SMSO>89<RMSO>
+<1;12>
+<SMSO>4<RMSO>
 <5;19>
 <SMSO><RMSO>
-<1;11>
-<SMSO>91<RMSO>
 <5;20>
-<SMSO><RMSO>
-<1;11>
-<SMSO>22<RMSO>
+<1;12>
+<SMSO>1<RMSO>
 <2;14>
 <SMSO><RMSO>
 <HOME>
 /                                                                               <1;2>
 \}<2;1>
 <HOME>
-<SMSO>a.txt 57B 96%                                                                   <RMSO>
+<SMSO>a.txt 57B L5                                                                    <RMSO>
 <6;1>
 <24;1>
 

@@ -1,6 +1,6 @@
 <RMSO>
 <CLEAR>
-<SMSO>a.txt 0B 0%                                                                     <RMSO>
+<SMSO>a.txt 0B L1                                                                     <RMSO>
 <CUD1>
 <SMSO>^D<RMSO>
 <2;1>
@@ -10,7 +10,7 @@
 <2;1>
 <SMSO><RMSO>
 <1;7>
-<SMSO>1B 100% * INS<RMSO>
+<SMSO>1B L1 *<RMSO>
 <2;1>
 <SMSO><RMSO>
 H<1;7>
@@ -22,23 +22,15 @@ e<1;7>
 <2;3>
 <SMSO><RMSO>
 l<1;7>
-<SMSO>12B 100% *   <RMSO>
+<SMSO>12B L1 *   <RMSO>
 <2;4>
 <SMSO><RMSO>
-lo World!<1;11>
-<SMSO>0% *  <RMSO>
-<2;1>
-<SMSO><RMSO>
-<1;11>
-<SMSO>100% *<RMSO>
-<2;1>
-<SMSO><RMSO>
-hELLO wORLD<2;13>
+lo World!<CR>hELLO wORLD<2;13>
 <HOME>
 >                                                                               <1;2>
 a.txt<2;1>
 <HOME>
-<SMSO>a.txt 12B 100%                                                                  <RMSO>
+<SMSO>a.txt 12B L1                                                                    <RMSO>
 <2;13>
 <24;1>
 

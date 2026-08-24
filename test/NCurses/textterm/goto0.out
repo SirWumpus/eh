@@ -1,6 +1,6 @@
 <RMSO>
 <CLEAR>
-<SMSO>test/usage.md 2570B 0%                                                          <RMSO>
+<SMSO>test/usage.md 2570B L1                                                          <RMSO>
 ae 1.3.0<3;1>
 ========<5;1>
 A minimalist version of `vi(1)`.  It is an example of the "Buffer Gap" method outlined in the [The Craft Of Text Editing](http://www.finseth.com/craft/) used by<7;2>
@@ -13,8 +13,8 @@ lines of printable text, tabs, or newline characters.  A physical line can be of
 stops are every eight columns.  The behaviour of non-printable characters may vary depending on the implementation of the Curses library, `stty(1)` settings, or terminal emulator.<23;1>
 Commands<24;1>
 --------<2;1>
-<1;21>
-<SMSO>8<RMSO>
+<1;22>
+<SMSO>7<RMSO>
 <2;1>
 <SMSO><RMSO>
 Usage   <3;1>
@@ -42,8 +42,8 @@ G         goto line number; 1G top of file, G bottom<22;5>
 i         enter insert mode, FF or ESC to quit<23;1>
     x         delete character under the cursor<24;1>
     W         write buffer to file<2;1>
-<1;21>
-<SMSO>25%<RMSO>
+<1;22>
+<SMSO>15<RMSO>
 <2;1>
 <SMSO><RMSO>
 Commands<3;6>
@@ -83,8 +83,8 @@ Testing<EL>
 <2;1>
 <24;1>
 <ED>
-<1;21>
-<SMSO>0% <RMSO>
+<1;22>
+<SMSO>2 <RMSO>
 <2;1>
 <SMSO><RMSO>
 ========<3;1>
@@ -112,6 +112,10 @@ lines of printable text, tabs, or newline characters.  A physical line can be of
 <CUD1>
 Commands<23;1>
 --------<2;1>
+<1;22>
+<SMSO>1<RMSO>
+<2;1>
+<SMSO><RMSO>
 ae 1.3.0<3;1>
 ========<4;1>
 <EL>
