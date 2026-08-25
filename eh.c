@@ -32,11 +32,14 @@
 # define MODE		0600
 #endif
 
+#define CTRL_B		'\002'
 #define CTRL_C		'\003'
+#define CTRL_F		'\006'
 #define CTRL_R		'\022'
 #define CTRL_U		'\025'
 #define CTRL_V		'\026'
 #define CTRL_W		'\027'
+#define CTRL_X		'\030'
 #define CTRL_Z		'\032'
 #define ESC		'\033'
 
@@ -54,7 +57,7 @@
 
 #ifndef IOCCC
 #define MATCHES		10
-#define MOTION_CMDS	24
+#define MOTION_CMDS	32
 
 static char chg = NOCHANGE;
 static int cur_row, cur_col, count, ere_dollar_only, ere_carat_only, search_wrapped, replace_all;
@@ -1997,30 +2000,92 @@ cleanup(void)
 	free(buf);
 }
 
+struct binding {
+	int key;
+	void (*func)(void);
+};
+
 /* NOTE A, C, and D are questionable as "good parts", more like muscle
  * memory concessions, since they are composites. X and x are supported
  * since they are so frequently used, while dh and dl are functional,
  * they're less common.
  */
 
-/*                         |---------MOTION_CMDS---------|----------edit-----------|-----misc-----| */
-static const char key[] = "hjklbewHJKL^$|G/n`'%\006\002{}~iIaAxXyYdDcCoOPpuU!<>\030\\mERWQ\003V\022";
-
-static void (*func[])(void) = {
+static struct binding cmds[] = {
 	/* Motion */
-	left, down, up, right, wleft, wend, wright,
-	pgtop, pgdown, pgup, pgbottom,
-	lnbegin, lnend, column, lngoto,
-	search, search_next, gomark, lnmark,
-	pairs, pgdown, pgup, paraup, paradown,
-	/* Modify */
-	flipcase, insert, insertI, append, appendA, delx, delX,
-	yanky, yankY, deld, delD, chgc, chgC, openo, openO,
-	pasteP, pastep, undo, redo, bang, outdent, indent, altx,
+	{ KEY_LEFT,	left },
+	{ KEY_DOWN,	down },
+	{ KEY_UP,	up },
+	{ KEY_RIGHT,	right },
+	{ KEY_NPAGE,	pgdown },
+	{ KEY_PPAGE,	pgup },
+	{ KEY_HOME,	lnbegin },
+	{ KEY_END,	lnend },
+	{ 'h',		left },
+	{ 'j',		down },
+	{ 'k',		up },
+	{ 'l',		right },
+	{ 'b',		wleft },
+	{ 'e',		wend },
+	{ 'w',		wright },
+	{ 'H',		pgtop },
+	{ 'J',		pgdown },
+	{ 'K',		pgup },
+	{ 'L',		pgbottom },
+	{ '^',		lnbegin },
+	{ '$',		lnend },
+	{ '|',		column },
+	{ 'G',		lngoto },
+	{ '/',		search },
+	{ 'n',		search_next },
+	{ '`',		gomark },
+	{ '\'',		lnmark },
+	{ '%',		pairs },
+	{ CTRL_F,	pgdown },
+	{ CTRL_B,	pgup },
+	{ '{',		paraup },
+	{ '}',		paradown },
+
+	/* Edit */
+	{ KEY_DC,	delx },
+	{ KEY_BACKSPACE, delX },
+	{ '~',		flipcase },
+	{ 'i',		insert },
+	{ 'I',		insertI },
+	{ 'a',		append },
+	{ 'A',		appendA },
+	{ 'x',		delx },
+	{ 'X',		delX },
+	{ 'y',		yanky },
+	{ 'Y',		yankY },
+	{ 'd',		deld },
+	{ 'D',		delD },
+	{ 'c',		chgc },
+	{ 'C',		chgC },
+	{ 'o',		openo },
+	{ 'O',		openO },
+	{ 'P',		pasteP },
+	{ 'p',		pastep },
+	{ 'u',		undo },
+	{ 'U',		redo },
+	{ '!',		bang },
+	{ '<',		outdent },
+	{ '>',		indent },
+	{ CTRL_X,	altx },
+
 	/* Other */
-	anchor, setmark, edit, readfile, writefile, quit, quit,
-	version, redraw, nil
+	{ '\\',		anchor },
+	{ 'm',		setmark },
+	{ 'E',		edit },
+	{ 'R',		readfile },
+	{ 'W',		writefile },
+	{ 'V',		version },
+	{ 'Q',		quit },
+	{ CTRL_C,	quit },
+	{ CTRL_R,	redraw },
+	{ -1,		nil }
 };
+
 #else /* IOCCC */
 /*                        |-MOTION_CMDS-|-edit-|--misc-| */
 static const char key[] = "hjklbwHJKL|G/nixydPu\\WQ\003";
@@ -2065,8 +2130,17 @@ getcmd(const int m)
 		ch = 'j';
 		lnbegin();
 	}
+	for (j = 0; cmds[j].key not_eq -1 and ch not_eq cmds[j].key; j++) {
+		;
+	}
+	if (j < m) {
+		this_cmd = ch;
+		was_here = here;
+		/* Count always defaults to 1. */
+		do (*cmds[j].func)(); while (1 < count--);
+		this_cmd = 0;
+	}
 #else /* IOCCC */
-#endif /* IOCCC */
 	for (j = 0; key[j] not_eq '\0' and ch not_eq key[j]; j++) {
 		;
 	}
@@ -2077,6 +2151,7 @@ getcmd(const int m)
 		do (*func[j])(); while (1 < count--);
 		this_cmd = 0;
 	}
+#endif /* IOCCC */
 	count = 0;
 	return was_here;
 }
@@ -2095,6 +2170,7 @@ main(int argc, char **argv)
 	(void) raw();
 #ifndef IOCCC
 	(void) noecho();
+	(void) keypad(stdscr, 1);
 	(void) atexit(cleanup);
 	growgap(BUF);
 	filename = strdup(argv[1] == NULL ? "" : *++argv);
