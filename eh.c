@@ -171,10 +171,14 @@ mblength(const int ch)
 }
 
 off_t
-nextch(const off_t cur)
+nextch(off_t cur)
 {
+	const off_t eof = pos(ebuf);
 	/* Advance to next UTF-8 start byte.  Do not read past eof. */
-	return cur + (cur < pos(ebuf) ? mblength(*ptr(cur)) : 0);
+	while (cur < eof and (192 bitand *ptr(++cur)) == 128) {
+		;
+	}
+	return cur;
 }
 
 off_t
@@ -268,7 +272,7 @@ void
 adjmarks(const off_t n)
 {
 	off_t p = pos(egap);
-	for (int i = 0; 0 != n and i < MARKS; i++) {
+	for (int i = 0; 0 not_eq n and i < MARKS; i++) {
 		if (p < marks[i]) {
 			marks[i] += n;
 		}
@@ -435,9 +439,15 @@ movegap(const off_t cur)
 int
 charwidth(const char *s, int col)
 {
-	wchar_t wc;
-	(void) mbtowc(&wc, s, 4);
-	return wc == '\t' ? TABSTOP(col) : (col = wcwidth(wc)) < 1 ? 1 : col;
+	char32_t wc;
+	mbstate_t mbs = { 0 };	/* Do NOT track state. */
+	ssize_t mbl = mbrtoc32(&wc, s, 4, &mbs);
+	/* Invalid MB sequence or MB continuation byte, count
+	 * width one ASCII character (see display() '~' place
+	 * holder), or a control count one highlighted ASCII
+	 * character, otherwise TAB offset or character width.
+	 */
+	return mbl <= 0 or (127 < *s and *s < 194) ? 1 : wc == '\t' ? TABSTOP(col) : (col = wcwidth(wc)) < 1 ? 1 : col;
 }
 
 /*
@@ -592,34 +602,33 @@ display(void)
 		 * assumes the gap moves by character, not by byte.
 		 * See also nextch() and prevch().
 		 */
-		int mbl = mblength(*p);
+		int mbl;
 		if (is_ctrl) {
 			/* Display control characters as a single byte
 			 * highlighted upper case letter (instead of two
 			 * byte ^X).
 			 */
 			(void) mvaddch(i, j, *p+'@');
+			mbl = 1;
 		} else {
-#ifdef PLACEHOLDER
 			char32_t wc;
-			(void) mbrtoc32(&wc, p, mbl, NULL);
-			if (0 < wcwidth(wc) or iswspace(wc)) {
-				/* Use addnstr() family that already handles UTF8
-				 * instead of add_wch() to avoid all the complexity
-				 * of using cchar_t.
+			mbstate_t mbs = { 0 };	/* Do NOT track state. */
+			mbl = mbrtoc32(&wc, p, 4, &mbs);
+			if (0 < mbl and (0 < wcwidth(wc) or iswspace(wc))) {
+				/* Use addnstr() family that already handles
+				 * UTF8 instead of add_wch() to avoid all the
+				 * complexity of using cchar_t.
 				 */
 				(void) mvaddnstr(i, j, p, mbl);
 			} else {
-				/* Place holder for non-printable. */
+				/* Place holder for non-printable, invalid MB
+				 * sequence or MB continuation byte; each byte
+				 * of the invalid sequence becomes inverse '~'.
+				 */
 				(void) mvaddch(i, j, A_REVERSE|'~');
+				/* Force byte size. */
+				mbl = 1;
 			}
-#else
-			/* Use addnstr() family that already handles UTF8
-			 * instead of add_wch() to avoid all the complexity
-			 * of using cchar_t.
-			 */
-			(void) mvaddnstr(i, j, p, mbl);
-#endif
 		}
 		epage += mbl;
 #else /* IOCCC */
@@ -938,10 +947,10 @@ insert(void)
 			break;
 		case CTRL_W:
 			/* Erase previous bigword. */
-			while (start < gap && isspace(gap[-1])) {
+			while (start < gap and isspace(gap[-1])) {
 				gap--;
 			}
-			while (start < gap && !isspace(gap[-1])) {
+			while (start < gap and !isspace(gap[-1])) {
 				gap--;
 			}
 			break;
@@ -962,7 +971,7 @@ insert(void)
 				do {
 					*gap++ = ch;
 					epage++;
-				} while (0 < --mbl and (ch = getch()) != ERR);
+				} while (0 < --mbl and (ch = getch()) not_eq ERR);
 			}
 		}
 		here = pos(egap);
@@ -1207,7 +1216,7 @@ paraup(void)
 		here--;
 	}
 	while (0 < here and i < 2) {
-		if (*ptr(--here) != '\n') {
+		if (*ptr(--here) not_eq '\n') {
 			i = 0;
 		} else {
 			i++;
@@ -1333,7 +1342,7 @@ prompt(const char * const msg, const char *str)
 	(void) mvaddstr(0, 0, msg);
 	clr_to_eol();
 	/* Limit the input to a phrase no wider than COLS, not lines. */
-	if (str == NULL or strchr(str, '\n') != NULL) {
+	if (str == NULL or strchr(str, '\n') not_eq NULL) {
 		str = "";
 	}
 	/* Prime the input with initial input. */
@@ -1519,6 +1528,7 @@ altx(void)
 	int i;
 	char *p;
 	char32_t wc;
+	mbstate_t mbs = { 0 };	/* Do NOT track state. */
 	movegap(here);
 	assert(gap < egap);
 	/* Scan backwards at most 5 hex digits. */
@@ -1529,13 +1539,13 @@ altx(void)
 	if (gap == p) {
 		/* Erase UTF-8 character, insert code point. */
 		gap -= here-prevch(here);
-		i = mbrtoc32(&wc, gap, 4, NULL);
+		i = mbrtoc32(&wc, gap, 4, &mbs);
 		if (0 < i) {
 			gap += snprintf(gap, 9, "%06X", wc);
 		}
 	} else if (wc <= 0x10FFFF) {
 		/* Erase code point, insert printable UTF-8 character. */
-		gap += c32rtomb(gap, wc, NULL);
+		gap += c32rtomb(gap, wc, &mbs);
 	} else {
 		/* Restore state, nothing converted. */
 		gap += i;
@@ -1567,7 +1577,7 @@ quit(void)
 {
 	if (chg == CHANGED) {
 		prompt("Discard changes y/[n]? ", "");
-		if (*gap != 'y') {
+		if (*gap not_eq 'y') {
 			return;
 		}
 	}
@@ -1655,7 +1665,7 @@ indent(void)
 	/* We're working with line units.  If start is in middle
 	 * line, move to the beginning before editing.
 	 */
-	if (0 < start && ptr(start)[-1] != '\n') {
+	if (0 < start and ptr(start)[-1] not_eq '\n') {
 		start = bol(start);
 	}
 	/* Save region before change (delete). */
@@ -1669,7 +1679,7 @@ indent(void)
 		/* Only indent non-empty lines.  Consider `>2}` repeated;
 		 * if you indent empty lines subsequent motions will be off.
 		 */
-		if (*ptr(stop) != '\n') {
+		if (*ptr(stop) not_eq '\n') {
 			movegap(stop);
 			/* Indent physical line.*/
 			*--egap = '\t';
@@ -1711,7 +1721,7 @@ outdent(void)
 	/* We're working with line units.  If start is in middle
 	 * line, move to the beginning before editing.
 	 */
-	if (0 < start && ptr(start)[-1] != '\n') {
+	if (0 < start and ptr(start)[-1] not_eq '\n') {
 		start = bol(start);
 	}
 	/* Save region before change (delete). */
