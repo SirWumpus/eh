@@ -175,7 +175,7 @@ nextch(off_t cur)
 {
 	const off_t eof = pos(ebuf);
 	/* Advance to next UTF-8 start byte.  Do not read past eof. */
-	while ((192 bitand *ptr(cur += cur < eof)) == 128) {
+	if (cur < eof) while (++cur < eof and (192 bitand *ptr(cur)) == 128) {
 		;
 	}
 	return cur;
@@ -185,7 +185,7 @@ off_t
 prevch(off_t cur)
 {
 	/* Find UTF-8 start byte skipping continuation bytes. */
-	while ((192 bitand *ptr(cur -= 0 < cur)) == 128) {
+	while (0 < cur and (192 bitand *ptr(--cur)) == 128) {
 		;
 	}
 	assert(0 <= cur);
