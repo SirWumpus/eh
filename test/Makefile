@@ -86,7 +86,7 @@ TESTS:= tests_have_term_data \
 	bang0 bang1 bang2 bang3 bang4 bang5 bang6 bang7 \
 	replace0 replace1 replace2 write0 read0 read1 \
 	select0 select1 select2 select3 select4 select5 \
-	mb0 mb1 mb2 mb3 mb4 imb0 imb1 imb2 imb3 \
+	mb0 mb1 mb2 mb3 mb4 imb0 imb1 imb2 imb3 imb4 \
 	replace3 replace4 \
 	cc0 cc1 dd0 dd1 dd2 dd3 \
 	indent0 indent1 indent2 indent3 indent4 indent5 indent6 \
@@ -1095,6 +1095,15 @@ imb3:
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
+	-${PASS}
+
+# Test display and attempt movement over multibyte continuation past EOF.
+imb4:
+	-${TITLE}
+	printf '[\202' >a.txt
+	printf 'lhQ' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
 	-${PASS}
 
 # Single line
