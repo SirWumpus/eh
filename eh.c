@@ -135,7 +135,9 @@ off_t
 pos(const char *s)
 {
 	assert(buf <= s and s <= ebuf);
-	return s-buf - (s < egap ? 0 : egap-gap);
+// Factor out the implied jumps.
+// 	return s-buf - (s < egap ? 0 : egap-gap);
+	return s-buf - (s >= egap) * (egap-gap);
 }
 
 /*
@@ -146,7 +148,9 @@ char *
 ptr(const off_t cur)
 {
 	assert(0 <= cur and cur <= pos(ebuf));
-	return buf+cur + (buf+cur < gap ? 0 : egap-gap);
+// Factor out the implied jumps.
+// 	return buf+cur + (buf+cur < gap ? 0 : egap-gap);
+	return buf+cur + (buf+cur >= gap) * (egap-gap);
 }
 
 /**
