@@ -385,10 +385,10 @@ getsigch(void)
 }
 
 /* Return the physical line containing a buffer offset. */
-off_t
+unsigned long
 line_number(off_t cur)
 {
-	off_t line = 1;
+	unsigned long line = 1;
 	while (0 < cur) {
 		if (*ptr(--cur) == '\n') {
 			line++;
@@ -569,7 +569,7 @@ display(void)
 	(void) standout();
 #ifndef IOCCC
 	(void) printw(
-		"%s %ldB L%ld %c %s", filename, eof,
+		"%s %ldB L%lu %c %s", filename, eof,
 		line_number(here), chg, mode
 	);
 #else /* IOCCC */
