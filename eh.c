@@ -966,6 +966,10 @@ insert(void)
 			(void) nl();    /* CR -> LF */
 			/*@fallthrough@*/
 		default:
+			if (ch < 0 || 255 < ch) {
+				/* Ignore other KEY_s. */
+				continue;
+			}
 			/* Input (multibyte) character. */
 			mbl = mblength(ch);
 			if (gap+mbl < egap) {
