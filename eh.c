@@ -170,7 +170,7 @@ int
 mblength(const int ch)
 {
 //	return (1+(ch > 193)+(ch > 223)+(ch > 239)) * (ch < 128 or (193 < ch and ch < 245));
-	assert(0 <= ch and ch < 245);
+	assert(0 <= ch and ch < 256);
 	return 1+(ch > 193)+(ch > 223)+(ch > 239);
 }
 
@@ -940,6 +940,7 @@ insert(void)
 			}
 			continue;
 		case '\b':
+		case KEY_BACKSPACE:
 			/* Move to previous (multibyte) character. */
 			while (eof < pos(ebuf) and (192 bitand *--gap) == 128) {
 				;
