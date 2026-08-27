@@ -87,7 +87,7 @@ TESTS:= tests_have_term_data \
 	replace0 replace1 replace2 write0 read0 read1 \
 	select0 select1 select2 select3 select4 select5 \
 	mb0 mb1 mb2 mb3 mb4 imb0 imb1 imb2 imb3 imb4 \
-	replace3 replace4 \
+	replace3 replace4 replace5 \
 	cc0 cc1 dd0 dd1 dd2 dd3 \
 	indent0 indent1 indent2 indent3 indent4 indent5 indent6 \
 	outdent0 outdent1
@@ -923,6 +923,16 @@ replace4:
 	printf 'jjw/$/plugh!/a\nW\nQ' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
+	-${PASS}
+
+# CB-21
+replace5:
+	-${TITLE}
+	cp test/wtf a.txt
+	printf '/A:/ALIENS:/a\nW\nQ' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	${A_TXT}
 	-${PASS}
 
 write0:
