@@ -970,6 +970,8 @@ insert(void)
 				/* Ignore other KEY_s. */
 				continue;
 			}
+			/*@fallthrough@*/
+		case KEY_BTAB:
 			/* Input (multibyte) character. */
 			mbl = mblength(ch);
 			if (gap+mbl < egap) {
