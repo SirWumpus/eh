@@ -1778,7 +1778,7 @@ replace_match(regmatch_t matches[MATCHES], const char * const str)
 		movegap(here);
 		char *xgap = gap;
 		/* CB-1 Have we come full circle? */
-		if (replace_all and search_wrapped and search_start <= here) {
+		if (replace_all and search_wrapped and search_start < here) {
 			here -= matches[0].rm_so;
 			search_wrapped = 0;
 			search_start = 0;
@@ -1901,11 +1901,11 @@ search_next(void)
 	 * matching at the cursor.
 	 */
 	off_t next = here + (replace == NULL ? match_length : 0);
-	if (next < eof and 0 == regexec(&ere, ptr(next), MATCHES, matches, REG_NOTBOL)) {
+	if ((next < eof or next < search_start) and 0 == regexec(&ere, ptr(next), MATCHES, matches, REG_NOTBOL)) {
 		here = next + matches[0].rm_so;
 	}
 	/* Wrap-around search. */
-	else if (0 == regexec(&ere, buf, MATCHES, matches, 0)) {
+	else if (not search_wrapped and 0 == regexec(&ere, buf, MATCHES, matches, 0)) {
 		here = matches[0].rm_so;
 		search_wrapped = 1;
 	}
