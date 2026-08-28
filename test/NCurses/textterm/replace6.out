@@ -1,0 +1,56 @@
+<RMSO>
+<CLEAR>
+<SMSO>a.txt 0B L1                                                                     <RMSO>
+<CUD1>
+<SMSO>^D<RMSO>
+<2;1>
+<SMSO><RMSO>
+<1;15>
+<SMSO>INS<RMSO>
+<2;1>
+<SMSO><RMSO>
+<1;7>
+<SMSO>1B L1 *<RMSO>
+<2;1>
+<SMSO><RMSO>
+t<1;7>
+<SMSO>2<RMSO>
+<2;2>
+<SMSO><RMSO>
+e<1;7>
+<SMSO>3<RMSO>
+<2;3>
+<SMSO><RMSO>
+s<1;7>
+<SMSO>10B L3 *   <RMSO>
+<2;4>
+<SMSO><RMSO>
+t<3;1>
+test<5;1>
+<SMSO>^D<RMSO>
+<4;1>
+<SMSO><RMSO>
+<HOME>
+/                                                                               <1;2>
+test/testy/a<2;1>
+<HOME>
+<SMSO>a.txt 11B L1 *                                                                  <RMSO>
+<2;5>
+y<5;1>
+<ED>
+<1;8>
+<SMSO>2B L2<RMSO>
+<3;1>
+<SMSO><RMSO>
+    <4;1>
+<SMSO>^D<RMSO>
+<2;6>
+<SMSO><RMSO>
+<HOME>
+>                                                                               <1;2>
+a.txt<2;1>
+<HOME>
+<SMSO>a.txt 12B L2                                                                    <RMSO>
+<2;6>
+<24;1>
+
