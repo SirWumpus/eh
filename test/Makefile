@@ -87,7 +87,7 @@ TESTS:= tests_have_term_data \
 	replace0 replace1 replace2 write0 read0 read1 \
 	select0 select1 select2 select3 select4 select5 \
 	mb0 mb1 mb2 mb3 mb4 imb0 imb1 imb2 imb3 imb4 \
-	replace3 replace4 replace5 \
+	replace3 replace4 replace5 replace6 replace7 \
 	cc0 cc1 dd0 dd1 dd2 dd3 \
 	indent0 indent1 indent2 indent3 indent4 indent5 indent6 \
 	outdent0 outdent1
@@ -930,6 +930,24 @@ replace5:
 	-${TITLE}
 	cp test/wtf a.txt
 	printf '/A:/ALIENS:/a\nW\nQ' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	${A_TXT}
+	-${PASS}
+
+# CB-24
+replace6:
+	-${TITLE}
+	printf 'itest\ntest\n\e/test/testy/a\nW\nQ' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	${A_TXT}
+	-${PASS}
+
+# CB-1, 24
+replace7:
+	-${TITLE}
+	printf 'itest\ntest\n\e/^/XYZ/a\nW\nQ' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
