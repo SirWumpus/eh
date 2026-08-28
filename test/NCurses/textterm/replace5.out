@@ -1,0 +1,52 @@
+<RMSO>
+<CLEAR>
+<SMSO>a.txt 29B L1                                                                    <RMSO>
+whiskey<3;1>
+A:<4;1>
+A:<5;1>
+A:<6;1>
+A:<7;1>
+tango<8;1>
+A:<10;1>
+<SMSO>^D<RMSO>
+<2;1>
+<SMSO><RMSO>
+<HOME>
+/                                                                               <1;2>
+A:/ALIENS:/a<2;1>
+<HOME>
+<SMSO>a.txt 34B L2 *                                                                  <RMSO>
+<3;2>
+LIENS:<1;8>
+<SMSO>9B L3<RMSO>
+<4;2>
+<SMSO><RMSO>
+LIENS:<1;7>
+<SMSO>44B L4<RMSO>
+<5;2>
+<SMSO><RMSO>
+LIENS:<1;8>
+<SMSO>9B L5<RMSO>
+<6;2>
+<SMSO><RMSO>
+LIENS:<10;1>
+<ED>
+<1;7>
+<SMSO>54B L7<RMSO>
+<2;1>
+<SMSO><RMSO>
+ALIENS:<6;1>
+tango  <7;1>
+ALIENS:<8;1>
+  <9;1>
+<SMSO>^D<RMSO>
+<7;8>
+<SMSO><RMSO>
+<HOME>
+>                                                                               <1;2>
+a.txt<2;1>
+<HOME>
+<SMSO>a.txt 54B L7                                                                    <RMSO>
+<7;8>
+<24;1>
+

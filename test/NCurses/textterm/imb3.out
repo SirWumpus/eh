@@ -1,0 +1,27 @@
+<RMSO>
+<CLEAR>
+<SMSO>a.txt 3B L1                                                                     <RMSO>
+[~]<3;1>
+<SMSO>^D<RMSO>
+<2;1>
+<SMSO><RMSO>
+<1;7>
+<SMSO>1B L1 *<RMSO>
+<2;1>
+<SMSO><RMSO>
+]  <CR><1;7>
+<SMSO>3B L1  <RMSO>
+<2;1>
+<SMSO><RMSO>
+[~]<CR><2;3>
+<1;7>
+<SMSO>1B L1 *<RMSO>
+<2;1>
+<SMSO><RMSO>
+]  <CR><HOME>
+>                                                                               <1;2>
+a.txt<2;1>
+<HOME>
+<SMSO>a.txt 1B L1                                                                     <RMSO>
+<24;1>
+
