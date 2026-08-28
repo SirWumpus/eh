@@ -1901,10 +1901,11 @@ search_next(void)
 	 * matching at the cursor.
 	 */
 	off_t next = here + (replace == NULL ? match_length : 0);
+	/* From cursor to EOF or after a wrap around from BOF to start point. */
 	if ((next < eof or next < search_start) and 0 == regexec(&ere, ptr(next), MATCHES, matches, REG_NOTBOL)) {
 		here = next + matches[0].rm_so;
 	}
-	/* Wrap-around search. */
+	/* Wrap-around search only once. */
 	else if (not search_wrapped and 0 == regexec(&ere, buf, MATCHES, matches, 0)) {
 		here = matches[0].rm_so;
 		search_wrapped = 1;
