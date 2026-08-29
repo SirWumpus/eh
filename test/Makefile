@@ -11,7 +11,7 @@
 all: test
 
 clean:
-	-rm -f *.core *.stackdump a.out a.txt b.txt
+	-rm -f *.core *.stackdump a.out a.txt b.txt *.bak
 	-rm -rf test/terminfo.cdb
 
 distclean clobber: clean
@@ -32,6 +32,10 @@ distclean clobber: clean
 # NCurses can reorder escape sequences to produce the same visual result.
 # Similarly library upgrades might reorder escape sequences as seen between
 # NetBSD 9.3 and 10.0.
+#
+# /bin/sh is assumed be a Bourne Shell to avoid `ksh` vs `bash` differences.
+#
+# FreeBSD `printf(1)` does not support GNU `printf` `\e`, instead of `\033`.
 #
 #######################################################################
 
@@ -805,11 +809,14 @@ paste3:
 	-${PASS}
 
 # Command not found.
+#
+# NOTE the sed hack handles output differences on FreeBSD.
 bang0:
 	-${TITLE}
 	cp test/short.txt a.txt
 	printf 'j!!WOOT\nQy' | ${PROG} a.txt >a.out
 	${A_CORE}
+	sed -i.bak -E -e'/WOOT/s/.*(WOOT:).*(not found).*/\1 \2/' a.out
 	${A_OUT}
 	-${PASS}
 
