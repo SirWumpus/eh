@@ -808,16 +808,18 @@ paste3:
 	${A_TXT}
 	-${PASS}
 
-# Command not found.
+# Command not found error inserted at cursor.
 #
 # NOTE the sed hack handles output differences on FreeBSD.
+# As a result we now only test for the error message and
+# ignore the rest of terminal output.
 bang0:
 	-${TITLE}
 	cp test/short.txt a.txt
-	printf 'j!!WOOT\nQy' | ${PROG} a.txt >a.out
+	printf 'j!!WOOT\nW\nQy' | ${PROG} a.txt >a.out
 	${A_CORE}
-	sed -i.bak -E -e'/WOOT/s/.*(WOOT:).*(not found).*/\1 \2/' a.out
-	${A_OUT}
+	grep 'WOOT:.*not found' a.txt >/dev/null
+	grep '^hello' a.txt >/dev/null
 	-${PASS}
 
 # Command fail.
