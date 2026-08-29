@@ -144,7 +144,7 @@ test:
 	${MAKE} -f test/Makefile PROG=${PROG} $@
 
 predefines:
-	gcc ${CPPFLAGS} -dM -E -xc /dev/null
+	${CC} ${CPPFLAGS} -dM -E -xc /dev/null
 
 #######################################################################
 # Generated files.

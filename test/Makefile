@@ -170,7 +170,7 @@ empty3:
 
 flip0:
 	-${TITLE}
-	printf "iHELLO world!\e|~~~~~~~~~~~~W\nQ" | ${PROG} a.txt >a.out
+	printf "iHELLO world!\033|~~~~~~~~~~~~W\nQ" | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
@@ -178,7 +178,7 @@ flip0:
 
 flip1:
 	-${TITLE}
-	printf "iHello World!\e|12~W\nQ" | ${PROG} a.txt >a.out
+	printf "iHello World!\033|12~W\nQ" | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
@@ -187,7 +187,7 @@ flip1:
 # Start, insert nothing, and stop.
 ins0:
 	-${TITLE}
-	printf "i\eQ" | ${PROG} a.txt >a.out
+	printf "i\033Q" | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	-${PASS}
@@ -195,7 +195,7 @@ ins0:
 # Insert newline terminated, write, and stop.
 ins1:
 	-${TITLE}
-	printf "iHello\n\tworld!\n\eW\nQ" | ${PROG} a.txt >a.out
+	printf "iHello\n\tworld!\n\033W\nQ" | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
@@ -207,7 +207,7 @@ ins1:
 #   remain unchanged, newline pushes `^D` down a row.
 ins2:
 	-${TITLE}
-	printf "iHello\n\twoot!\eW\nQ" | ${PROG} a.txt >a.out
+	printf "iHello\n\twoot!\033W\nQ" | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
@@ -217,7 +217,7 @@ ins2:
 #   right of cursor should shift as new text inserted.
 ins3:
 	-${TITLE}
-	printf "iHello world!\e|wiWOOT! \eW\nQ" | ${PROG} a.txt >a.out
+	printf "iHello world!\033|wiWOOT! \033W\nQ" | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
@@ -228,7 +228,7 @@ ins3:
 ins4:
 	-${TITLE}
 	printf "Hello\n\tworld!\n" >a.txt
-	printf "Giinsert at EOF\npush EOF down\neach newline\n\eW\nQ" | ${PROG} a.txt >a.out
+	printf "Giinsert at EOF\npush EOF down\neach newline\n\033W\nQ" | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
@@ -237,7 +237,7 @@ ins4:
 ins5:
 	-${TITLE}
 	printf "Hello\n\tworld!\n" >a.txt
-	printf 'j99|i WOOT!\eW\nQ' | ${PROG} a.txt >a.out
+	printf 'j99|i WOOT!\033W\nQ' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
@@ -245,7 +245,7 @@ ins5:
 
 open0:
 	-${TITLE}
-	printf 'o123\eW\nQ' | ${PROG} a.txt >a.out
+	printf 'o123\033W\nQ' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
@@ -253,7 +253,7 @@ open0:
 
 open1:
 	-${TITLE}
-	printf 'O123\eW\nQ' | ${PROG} a.txt >a.out
+	printf 'O123\033W\nQ' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
@@ -261,7 +261,7 @@ open1:
 
 open2:
 	-${TITLE}
-	printf 'oHello\eoworld!\eW\nQ' | ${PROG} a.txt >a.out
+	printf 'oHello\033oworld!\033W\nQ' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
@@ -269,7 +269,7 @@ open2:
 
 open3:
 	-${TITLE}
-	printf 'Oworld!\eOHello\eW\nQ' | ${PROG} a.txt >a.out
+	printf 'Oworld!\033OHello\033W\nQ' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
@@ -286,7 +286,7 @@ del0:
 # Insert nothing, delete from empty buffer.
 del1:
 	-${TITLE}
-	printf "i\exQy" | ${PROG} a.txt >a.out
+	printf "i\033xQy" | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	-${PASS}
@@ -294,7 +294,7 @@ del1:
 # Insert single character, delete from buffer.
 del2:
 	-${TITLE}
-	printf "iZ\ehxW\nQy" | ${PROG} a.txt >a.out
+	printf "iZ\033hxW\nQy" | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	diff -u ${DATA}/empty.txt a.txt
@@ -303,7 +303,7 @@ del2:
 # Insert some characters, delete last from buffer.
 del3:
 	-${TITLE}
-	printf "i123Z\ehxW\nQ" | ${PROG} a.txt >a.out
+	printf "i123Z\033hxW\nQ" | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
@@ -312,7 +312,7 @@ del3:
 # Insert some characters with newline, delete newline from buffer.
 del4:
 	-${TITLE}
-	printf "i123Z\n\ehxW\nQy" | ${PROG} a.txt >a.out
+	printf "i123Z\n\033hxW\nQy" | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
@@ -625,7 +625,7 @@ mark1:
 # Set some marks, edit before the marks, marks remain unchanged.
 mark2:
 	-${TITLE}
-	printf '/butt\nmajmb/rude\nifuzz\e`a`bu`a`bQ' | ${PROG} test/short.txt >a.out
+	printf '/butt\nmajmb/rude\nifuzz\033`a`bu`a`bQ' | ${PROG} test/short.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	-${PASS}
@@ -648,7 +648,7 @@ mark4:
 # marks above the `gap`, _not_ `here`.
 mark5:
 	-${TITLE}
-	printf '/butt\nma/rude\nifuzz\e`au`aU`aQy' | ${PROG} test/short.txt >a.out
+	printf '/butt\nma/rude\nifuzz\033`au`aU`aQy' | ${PROG} test/short.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	-${PASS}
@@ -736,7 +736,7 @@ undo0:
 undo1:
 	-${TITLE}
 	cp test/short.txt a.txt
-	printf '3liWOOT!\euUW\nQ' | ${PROG} a.txt >a.out
+	printf '3liWOOT!\033uUW\nQ' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
@@ -763,7 +763,7 @@ undo3:
 # Fix bug with paired undo operations.
 undo4:
 	-${TITLE}
-	printf 'itest undo redo\ebbcwfoo \euuUUQy' | ${PROG} >a.out
+	printf 'itest undo redo\033bbcwfoo \033uuUUQy' | ${PROG} >a.out
 	${A_CORE}
 	${A_OUT}
 	-${PASS}
@@ -938,7 +938,7 @@ replace5:
 # CB-24
 replace6:
 	-${TITLE}
-	printf 'itest\ntest\n\e/test/testy/a\nW\nQ' | ${PROG} a.txt >a.out
+	printf 'itest\ntest\n\033/test/testy/a\nW\nQ' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
@@ -947,7 +947,7 @@ replace6:
 # CB-1, 24
 replace7:
 	-${TITLE}
-	printf 'itest\ntest\n\e/^/XYZ/a\nW\nQ' | ${PROG} a.txt >a.out
+	printf 'itest\ntest\n\033/^/XYZ/a\nW\nQ' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
@@ -955,7 +955,7 @@ replace7:
 
 write0:
 	-${TITLE}
-	printf 'iThe quick brown fox jumps over the lazy dog.\n\eWa.txt\nQ' | ${PROG} >a.out
+	printf 'iThe quick brown fox jumps over the lazy dog.\n\033Wa.txt\nQ' | ${PROG} >a.out
 	${A_CORE}
 	${A_OUT}
 	-${PASS}
@@ -967,7 +967,7 @@ write0:
 # appears correct.
 write1:
 	-${TITLE}
-	printf 'iThe quick brown fox jumps over the lazy dog.\n\eWa.txt\nW\025b.txt\nQ' | ${PROG} >a.out
+	printf 'iThe quick brown fox jumps over the lazy dog.\n\033Wa.txt\nW\025b.txt\nQ' | ${PROG} >a.out
 	${A_CORE}
 	${A_OUT}
 	-${PASS}
@@ -983,7 +983,7 @@ read0:
 # Add text, then read a file into the middle, and save.
 read1:
 	-${TITLE}
-	printf 'iThe quick brown fox jumps over the lazy dog.\n\e/fox\nRtest/short.txt\nW\nQ' | ${PROG} a.txt >a.out
+	printf 'iThe quick brown fox jumps over the lazy dog.\n\033/fox\nRtest/short.txt\nW\nQ' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	-${PASS}
@@ -1045,7 +1045,7 @@ select5:
 # Insert multibyte character.
 mb0:
 	-${TITLE}
-	printf 'i🔥\n\eW\nQ' | ${PROG} a.txt >a.out
+	printf 'i🔥\n\033W\nQ' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_TXT}
 	${A_OUT_OR_SKIP}
@@ -1082,7 +1082,7 @@ mb3:
 # Insert and erase multibyte character.
 mb4:
 	-${TITLE}
-	printf 'i🔥\b\n\eW\nQ' | ${PROG} a.txt >a.out
+	printf 'i🔥\b\n\033W\nQ' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_TXT}
 	${A_OUT_OR_SKIP}
@@ -1138,7 +1138,7 @@ imb4:
 cc0:
 	-${TITLE}
 	cp test/short.txt a.txt
-	printf '4wccwhisky tango foxtrot\n\eW\nQ' | ${PROG} a.txt >a.out
+	printf '4wccwhisky tango foxtrot\n\033W\nQ' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
@@ -1148,7 +1148,7 @@ cc0:
 cc1:
 	-${TITLE}
 	cp test/short.txt a.txt
-	printf '4w2ccwhisky\ntango\nfoxtrot\n\eW\nQ' | ${PROG} a.txt >a.out
+	printf '4w2ccwhisky\ntango\nfoxtrot\n\033W\nQ' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
@@ -1268,7 +1268,7 @@ indent6:
 outdent0:
 	-${TITLE}
 	cp test/short.txt a.txt
-	printf 'ji\t\e<<W\nQ' | ${PROG} a.txt >a.out
+	printf 'ji\t\033<<W\nQ' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
@@ -1278,7 +1278,7 @@ outdent0:
 outdent1:
 	-${TITLE}
 	cp test/short.txt a.txt
-	printf 'ji\t\ej^i\t\ek<<W\nQ' | ${PROG} a.txt >a.out
+	printf 'ji\t\033j^i\t\033k<<W\nQ' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
