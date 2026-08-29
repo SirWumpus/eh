@@ -882,7 +882,7 @@ bang5:
 bang6:
 	-${TITLE}
 	cp test/short.txt a.txt
-	printf 'j!2jfmt -w40\nW\nQ' | ${PROG} a.txt >a.out
+	printf 'j!2jfmt -g68 -w40\nW\nQ' | ${PROG} a.txt >a.out
 	${A_CORE}
 	grep '^fmt:' a.txt >/dev/null
 	-${PASS}
