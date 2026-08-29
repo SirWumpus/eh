@@ -246,8 +246,11 @@ growgap(const size_t min)
 			(void) beep();
 			return;
 		}
-		egap = ebuf = xbuf+buflen+BUF;
+		/* Ensure space for a sentinel byte. */
+		egap = ebuf = xbuf+buflen+BUF-1;
 		gap = xbuf+gap_off;
+		/* Asssign a sentinel byte. */
+		*ebuf = '\0';
 		buf = xbuf;
 		/* Restore gap's previous location. */
 		movegap(xhere);
