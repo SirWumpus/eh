@@ -111,7 +111,7 @@ Notes
 
 * `u` and `U` do not behave as in historical `vi(1)`; they now provide multi undo and redo respectively.
 
-* CRLF newlines (DOS, Windows) should be converted to LF newlines  Consider converting newlines using SUS tools like `awk(1)` or `sed(1)`:
+* CRLF newlines (DOS, Windows) should be converted to LF newlines.  Consider converting newlines using SUS tools like `awk(1)` or `sed(1)`:
 
         $ sed -e's/^V^M$//' dos.txt > unix.txt
         $ sed -e's/$/^V^M/' unix.txt > dos.txt
@@ -119,6 +119,14 @@ Notes
   `^V` is the default `stty(1)` insert literal prefix key.
 
 * Cygwin builds may be bugged with respect to `wcwidth()`, since `wchar_t` reflects UTF-16 to match Windows and there is no equivalent `c32width()` nor means to determine cell width of surrogate pairs, such as emoji.
+
+
+### Tested Platforms
+
+* NetBSD (primary), FreeBSD, Rocky Linux (secondary), SlackWare, Cygwin all work.  Please beware of differences in the shell tool chains of different platforms, eg. `/bin/sh`, GNU `printf(1)` `\e` vs FreeBSD `printf(1)` `\033`; tool error response messages seen with `fmt(1)` that can affect the regression testing.
+
+* OpenBSD oddly has major issues that are being investigated.
+
 
 
 References

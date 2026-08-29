@@ -872,14 +872,19 @@ bang5:
 	test $$(wc -c <b.txt) -eq 43
 	-${PASS}
 
-# Command format region fails.
+# Command format region fails; check for error message.
+#
+# NOTE NetBSD, Rocky, Slackware, FreeBSD all have different `fmt(1)`
+# that yield different messages for the same error; with FreeBSD they
+# do not implement the `-g` option.  SUS Issue 8 does not include `fmt`,
+# which was typically used with `mail(1)` and `vi(1)` to format
+# paragraphs of text.
 bang6:
 	-${TITLE}
 	cp test/short.txt a.txt
 	printf 'j!2jfmt -g68 -w40\nW\nQ' | ${PROG} a.txt >a.out
 	${A_CORE}
-	${A_OUT}
-	${A_TXT}
+	grep '^fmt:' a.txt >/dev/null
 	-${PASS}
 
 # Command format region succeeds.
