@@ -1,6 +1,5 @@
 hello	world
-this file might be a little
-rude fart face empty line
+this file might be a little rude fart face empty line
 
 blank line
     
