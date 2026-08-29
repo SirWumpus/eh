@@ -23,7 +23,7 @@ WOOT<2;1>
 <HOME>
 <SMSO>a.txt 155B L3 *                                                                 <RMSO>
 <CUD1>
-sh: line 1: WOOT: command not found<4;1>
+WOOT: not found
 this file might be a <5;1>
 little rude fart face<6;1>
 empty line<7;1>
