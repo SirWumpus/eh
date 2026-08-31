@@ -57,7 +57,7 @@
 
 #ifndef IOCCC
 #define MATCHES		10
-#define MOTION_CMDS	32
+#define MOTION_CMDS	34
 
 static char chg = NOCHANGE;
 static int cur_row, cur_col, count, ere_dollar_only, ere_carat_only, search_wrapped, replace_all;
@@ -705,6 +705,26 @@ down(void)
 }
 
 #ifndef IOCCC
+/**
+ * Down one physical line.  The cursor moves to column 1.
+ * Physical line column is not tracked.
+ */
+void
+lnplus(void)
+{
+	here = col_or_eol(here, 0, MAX_COLS)+(here < pos(ebuf));
+}
+
+/**
+ * Up one physical line.  The cursor moves to column 1.
+ * Physical line column is not tracked.
+ */
+void
+lnminus(void)
+{
+	here = bol(bol(here)-(0 < here));
+}
+
 /*
  * Beginning of physical line.
  */
@@ -2071,6 +2091,8 @@ static struct binding cmds[] = {
 	{ CTRL_B,	pgup },
 	{ '{',		paraup },
 	{ '}',		paradown },
+	{ '+',		lnplus },
+	{ '-',		lnminus },
 
 	/* Edit */
 	{ KEY_DC,	delx },
@@ -2152,8 +2174,8 @@ getcmd(const int m)
 			SET_PREVIOUS_MARK(here);
 			(void) ungetstr("``");
 		}
-		/* Operate on line units. */
-		ch = 'j';
+		/* Operate on physical line units. */
+		ch = '+';
 		lnbegin();
 	}
 	for (j = 0; cmds[j].key not_eq -1 and ch not_eq cmds[j].key; j++) {

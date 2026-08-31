@@ -33,6 +33,7 @@ The commands are similar, but not the same as `vi(1)`.  Most commands can be pre
 * `h j k l    ` Left, down, up, right cursor movement.
 * `H J K L    ` Page top, page down, page up, page bottom.
 * `^F ^B      ` Page down (forward), page up (back).
+* `- +        ` Up or down one physical line.
 * `b e w      ` Word left, word end, word right.
 * `{ }        ` Paragraph up, paragraph down.
 * `^ $        ` Start and end of line, ie. `0|` or `999|`.
