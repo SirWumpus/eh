@@ -466,13 +466,49 @@ charwidth(const char *s, int col)
  * Return the physical BOL or BOF containing cur.
  */
 off_t
-bol(off_t cur)
+bol(const off_t off)
 {
+	/* Clip out of bounds index.  TODO can we fix where bol(-1) occurs */
+	off_t cur = off * (0 < off);
 	while (0 < cur and *ptr(--cur) not_eq '\n') {
 		;
 	}
-	assert(-1 <= cur);
-	return (cur+1) * (0 < cur);
+	/* End of previous physical line or BOF. */
+	assert(*ptr(cur) == '\n' or cur == 0);
+	/* Add one if stopped at newline of previous line
+	 * AND we started above zero.
+	 *
+	 * BOL to BOL should not move
+	 *
+	 *	|⸺⸺⸺⸺⸺⸺␊⸺⸺⸺⸺⸺⸺␊⸺⸺⸺⸺⸺
+	 *	　　　　　　　 ba
+	 *
+	 * MOL to BOL
+	 *
+	 *	|⸺⸺⸺⸺⸺⸺␊⸺⸺⸺⸺⸺⸺␊⸺⸺⸺⸺⸺
+	 *	　　　　　　　 b 　　　a
+	 *
+	 * EOL to BOL
+	 *
+	 *	|⸺⸺⸺⸺⸺⸺␊⸺⸺⸺⸺⸺⸺␊⸺⸺⸺⸺⸺
+	 *	　　　 　　　　b　　　　　 a
+	 *
+	 * MOL to BOF
+	 *
+	 *	|⸺⸺⸺⸺⸺⸺␊⸺⸺⸺⸺⸺⸺␊⸺⸺⸺⸺⸺
+	 *	 b　　 a
+	 *
+	 * MOL to BOL with an empty first line (CB-29)
+	 *
+	 *	|␊⸺⸺⸺⸺⸺␊⸺⸺⸺⸺⸺⸺␊⸺⸺⸺⸺⸺
+	 *	   b　　 a
+	 *
+	 * EOL to BOF with an empty first line
+	 *
+	 *	|␊⸺⸺⸺⸺⸺␊⸺⸺⸺⸺⸺⸺␊⸺⸺⸺⸺⸺
+	 *	 ba
+	 */
+	return cur+(0 < off and *ptr(cur) == '\n');
 }
 
 /*
@@ -1711,9 +1747,9 @@ indent(void)
 	}
 	assert(start <= stop);
 	/* We're working with line units.  If start is in middle
-	 * line, move to the beginning before editing.
+	 * of line, move to the beginning before editing.
 	 */
-	if (0 < start and ptr(start)[-1] not_eq '\n') {
+	if (0 < start and *ptr(start-1) not_eq '\n') {
 		start = bol(start);
 	}
 	/* Save region before change (delete). */
@@ -1767,9 +1803,9 @@ outdent(void)
 	}
 	assert(start <= stop);
 	/* We're working with line units.  If start is in middle
-	 * line, move to the beginning before editing.
+	 * of line, move to the beginning before editing.
 	 */
-	if (0 < start and ptr(start)[-1] not_eq '\n') {
+	if (0 < start and *ptr(start-1) not_eq '\n') {
 		start = bol(start);
 	}
 	/* Save region before change (delete). */
