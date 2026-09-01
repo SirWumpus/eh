@@ -41,9 +41,6 @@ LDFLAGS	!= if test ${CC} = 'gcc'; then echo '-fno-ident -flto'; fi
 
 PROG	?= ./eh$E
 
-BUILT	!= date -u +'%a, %d %b %Y %H:%M:%SZ'
-COMMIT	!= git describe --tags
-
 # Common C compiler warnings to silence
 #
 # -Wno-char-subscripts			ctypes macros
@@ -80,7 +77,7 @@ CINCLUDE := -include curses.h -include ctype.h -include string.h \
 CFLAGS	:= -std=gnu17 -Os -funsigned-char -Wall -Wextra ${CSILENCE} ${DBG}
 
 # Frack need extra #define to enable SUS standard strdup(), strndup().
-CPPFLAGS:= -DBUF=${BUF} -DMODE=${MODE} -DBUILT="\"${BUILT}\"" -DCOMMIT="\"${COMMIT}\"" \
+CPPFLAGS:= -DBUF=${BUF} -DMODE=${MODE} -DBUILT="\"$$(cat BUILT)\"" -DCOMMIT="\"$$(cat COMMIT)\"" \
 	-D_XOPEN_SOURCE=700 ${CCONFIG}
 
 LDFLAGS	:=
@@ -117,6 +114,7 @@ clean:
 
 distclean clobber: clean
 	-rm -f eh$E ioccc28/prog$E prog.ext$E prog.ext.c typescript
+	-rm -f BUILT COMMIT
 
 nuke: distclean
 	-rm ioccc28/prog.c
@@ -133,7 +131,13 @@ install: README.md eh$E
 	install ${INSTALL_FLAGS} -d ${MANDIR}/cat1
 	install ${INSTALL_FLAGS} -p -m 444 README.md ${MANDIR}/cat1/eh.0
 
-eh$E : eh.c
+BUILT: eh.c
+	date -u +'%a, %d %b %Y %H:%M:%SZ' >BUILT
+
+COMMIT: eh.c
+	git describe --tags >COMMIT
+
+eh$E : BUILT COMMIT
 	${CC} ${CFLAGS} ${CPPFLAGS} ${LDFLAGS} -o  $@ eh.c ${LIBS}
 
 debug: clean
