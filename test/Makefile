@@ -94,7 +94,7 @@ TESTS:= tests_have_term_data \
 	replace3 replace4 replace5 replace6 replace7 \
 	cc0 cc1 dd0 dd1 dd2 dd3 \
 	indent0 indent1 indent2 indent3 indent4 indent5 indent6 \
-	outdent0 outdent1
+	outdent0 outdent1 list0
 
 .PHONY : ${TESTS}
 .SILENT: ${TESTS}
@@ -1294,4 +1294,14 @@ outdent1:
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
+	-${PASS}
+
+# List-All should highlight tabs and newlines; other control
+# characters are always highlighted regardless.
+list0:
+	-${TITLE}
+	cp test/short.txt a.txt
+	printf '\014Q' | ${PROG} a.txt >a.out
+	${A_CORE}
+	grep '<SMSO>[IJ]<RMSO>' a.out >/dev/null
 	-${PASS}

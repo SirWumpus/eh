@@ -35,6 +35,7 @@
 #define CTRL_B		'\002'
 #define CTRL_C		'\003'
 #define CTRL_F		'\006'
+#define CTRL_L		'\014'
 #define CTRL_R		'\022'
 #define CTRL_U		'\025'
 #define CTRL_V		'\026'
@@ -59,6 +60,7 @@
 #define MATCHES		10
 #define MOTION_CMDS	34
 
+static int show_all;
 static char chg = NOCHANGE;
 static int cur_row, cur_col, count, ere_dollar_only, ere_carat_only, search_wrapped, replace_all;
 static char *filename, *yank_text, *replace;
@@ -454,7 +456,10 @@ charwidth(const char *s, int col)
 	 * holder), or a control count one highlighted ASCII
 	 * character, otherwise TAB offset or character width.
 	 */
-	return mbl <= 0 or (127 < *s and *s < 194) ? 1 : wc == '\t' ? TABSTOP(col) : (col = wcwidth(wc)) < 1 ? 1 : col;
+	return mbl <= 0 or (127 < *s and *s < 194)
+		? 1 : (wc == '\t' and not show_all)
+		? TABSTOP(col) : (col = wcwidth(wc)) < 1
+		? 1 : col;
 }
 
 /*
@@ -601,7 +606,7 @@ display(void)
 			break;
 		}
 #ifndef IOCCC
-		bool is_ctrl = iscntrl(*p) and *p not_eq '\t' and *p not_eq '\n';
+		bool is_ctrl = iscntrl(*p) and (show_all or (*p not_eq '\t' and *p not_eq '\n'));
 		if ((from <= epage and epage < to) or is_ctrl) {
 			standout();
 		}
@@ -616,6 +621,9 @@ display(void)
 			 * byte ^X).
 			 */
 			(void) mvaddch(i, j, *p+'@');
+			if (*p == '\n') {
+				(void) addch('\n');
+			}
 			mbl = 1;
 		} else {
 			char32_t wc;
@@ -1619,6 +1627,12 @@ quit(void)
 }
 
 void
+list(void)
+{
+	show_all = !show_all;
+}
+
+void
 nil(void)
 {
 	/* Do nothing. */
@@ -2119,6 +2133,7 @@ static struct binding cmds[] = {
 	{ '!',		bang },
 	{ '<',		outdent },
 	{ '>',		indent },
+	{ CTRL_L,	list },
 	{ CTRL_X,	altx },
 
 	/* Other */
