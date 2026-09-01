@@ -24,6 +24,7 @@ BUF	:= 131072
 MODE	:= 0600
 USER	:= 0
 GROUP	:= 0
+MD5SUM	:= md5
 
 INSTALL_FLAGS != if test ${MAKE_OS} != 'Cygwin'; then echo "-o ${USER} -g ${GROUP}"; fi
 
@@ -149,6 +150,16 @@ test:
 
 predefines:
 	${CC} ${CPPFLAGS} -dM -E -xc /dev/null
+
+snapshot: BUILT COMMIT
+	@echo
+	@echo '***************************************************************'
+	git archive --format=tar.gz --prefix=${PROG}-$$(cat COMMIT)/ $$(cat COMMIT) \
+		--add-file=BUILT --add-file=COMMIT >../${PROG}-$$(cat COMMIT).tar.gz
+	@echo '***************************************************************'
+	@${MD5SUM} ../${PROG}-$$(cat COMMIT).tar.gz | tee ../${PROG}-$$(cat COMMIT).md5
+	@echo '***************************************************************'
+	@echo
 
 #######################################################################
 # Generated files.
