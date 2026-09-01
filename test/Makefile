@@ -93,7 +93,8 @@ TESTS:= tests_have_term_data \
 	mb0 mb1 mb2 mb3 mb4 imb0 imb1 imb2 imb3 imb4 \
 	replace3 replace4 replace5 replace6 replace7 \
 	cc0 cc1 dd0 dd1 dd2 dd3 \
-	indent0 indent1 indent2 indent3 indent4 indent5 indent6 \
+	indent0 indent1 indent2 indent3 indent4 indent5 \
+	indent6 indent7 indent8 \
 	outdent0 outdent1 list0
 
 .PHONY : ${TESTS}
@@ -101,7 +102,7 @@ TESTS:= tests_have_term_data \
 
 tests: $T/terminfo.cdb ${TESTS} clean
 
-tests_skipped: empty2 write1
+tests_skipped: empty2 write1 indent9
 
 # While the terminal definition will probably contain definitions for
 # the number of hardware `lines` and `columns`, we explicitly override
@@ -1271,6 +1272,33 @@ indent6:
 	-${TITLE}
 	cp test/short.txt a.txt
 	printf 'w\\2j^>W\nQ' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	${A_TXT}
+	-${PASS}
+
+# CB-29
+indent7:
+	-${TITLE}
+	printf 'i\n123\nabc\n\0331G3>>W\nQ' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	${A_TXT}
+	-${PASS}
+
+# CB-29
+indent8:
+	-${TITLE}
+	printf 'i\n123\n\0331G2>>W\nQ' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	${A_TXT}
+	-${PASS}
+
+# CB-29, CB-30
+indent9:
+	-${TITLE}
+	printf 'i\n123\0331G2>>W\nQ' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
