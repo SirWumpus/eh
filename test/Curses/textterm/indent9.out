@@ -1,0 +1,44 @@
+<CLEAR>
+<CLEAR>
+<SMSO>a.txt 0B L1                                                                     <RMSO>
+<3;1>
+<SMSO>^D<RMSO>
+<2;1>
+<1;15>
+<SMSO>INS<RMSO>
+<2;1>
+<1;7>
+<SMSO>1<RMSO>
+   <SMSO>2<RMSO>
+ <SMSO>*<RMSO>
+<3;1>
+<EL>
+<4;1>
+<SMSO>^D<RMSO>
+<3;1>
+<1;7>
+<SMSO>2<RMSO>
+<3;1>
+1<1;7>
+<SMSO>3<RMSO>
+<3;2>
+2<1;7>
+<SMSO>4<RMSO>
+       <SMSO>   <RMSO>
+<3;3>
+3<1;11>
+<SMSO>1<RMSO>
+<2;1>
+<1;7>
+<SMSO>5<RMSO>
+   <SMSO>2<RMSO>
+<3;1>
+        123<1;11>
+<SMSO>1<RMSO>
+<2;1>
+<1;1>
+><EL>
+a.txt<1;1>
+<SMSO>a.txt 5B L1                                                                     <RMSO>
+<2;1>
+<24;1>
