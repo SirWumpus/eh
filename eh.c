@@ -1317,16 +1317,13 @@ wend(void)
 void
 paraup(void)
 {
-	int i = 0;
+	int nl = 0;
 	while (0 < here and *ptr(here-1) == '\n') {
 		here--;
 	}
-	while (0 < here and i < 2) {
-		if (*ptr(--here) not_eq '\n') {
-			i = 0;
-		} else {
-			i++;
-		}
+	while (0 < here and nl < 2) {
+		/* Count consecutive newlines or reset to zero. */
+		nl = (nl+1) * (*ptr(--here) == '\n');
 	}
 	here += 0 < here;
 }
@@ -1334,17 +1331,14 @@ paraup(void)
 void
 paradown(void)
 {
-	int i = 0;
+	int nl = 0;
 	const off_t eof = pos(ebuf);
 	while (here < eof and *ptr(++here) == '\n') {
 		;
 	}
-	while (here < eof and i < 2) {
-		if (*ptr(++here) == '\n') {
-			i++;
-		} else {
-			i = 0;
-		}
+	while (here < eof and nl < 2) {
+		/* Count consecutive newlines or reset to zero. */
+		nl = (nl+1) * (*ptr(++here) == '\n');
 	}
 }
 #else /* IOCCC */
