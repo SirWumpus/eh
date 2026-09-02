@@ -5,6 +5,8 @@
  *
  * For TextPad suggest this Unicode font...
  * https://www.unifoundry.com/pub/unifont/unifont-16.0.03/font-builds/unifont-16.0.03.otf
+ *
+ * Commit $Id$
  */
 
 #ifndef IOCCC
@@ -1648,7 +1650,7 @@ cescape(const int ch)
 void
 version(void)
 {
-	mode = BUILT " " COMMIT;
+	mode = BUILT " " VERSION;
 }
 
 void

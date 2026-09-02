@@ -42,6 +42,9 @@ LDFLAGS	!= if test ${CC} = 'gcc'; then echo '-fno-ident -flto'; fi
 
 PROG	?= ./eh$E
 
+BUILT	!= date -u +'%a, %d %b %Y %H:%M:%SZ'
+COMMIT	!= if [ -d .git ]; then git describe --tags; fi
+
 # Common C compiler warnings to silence
 #
 # -Wno-char-subscripts			ctypes macros
@@ -78,8 +81,8 @@ CINCLUDE := -include curses.h -include ctype.h -include string.h \
 CFLAGS	:= -std=gnu17 -Os -funsigned-char -Wall -Wextra ${CSILENCE} ${DBG}
 
 # Frack need extra #define to enable SUS standard strdup(), strndup().
-CPPFLAGS:= -DBUF=${BUF} -DMODE=${MODE} -DBUILT="\"$$(cat BUILT)\"" -DCOMMIT="\"$$(cat COMMIT)\"" \
-	-D_XOPEN_SOURCE=700 ${CCONFIG}
+CPPFLAGS:= -DBUF=${BUF} -DMODE=${MODE} -DBUILT="\"${BUILT}\"" \
+	-DVERSION="\"$$(cat VERSION)\"" -D_XOPEN_SOURCE=700 ${CCONFIG}
 
 LDFLAGS	:=
 
@@ -115,7 +118,6 @@ clean:
 
 distclean clobber: clean
 	-rm -f eh$E ioccc28/prog$E prog.ext$E prog.ext.c typescript
-	-rm -f BUILT COMMIT
 
 nuke: distclean
 	-rm ioccc28/prog.c
@@ -132,14 +134,9 @@ install: README.md eh$E
 	install ${INSTALL_FLAGS} -d ${MANDIR}/cat1
 	install ${INSTALL_FLAGS} -p -m 444 README.md ${MANDIR}/cat1/eh.0
 
-BUILT: eh.c
-	date -u +'%a, %d %b %Y %H:%M:%SZ' >BUILT
-
-COMMIT: eh.c
-	git describe --tags >COMMIT
-
-eh$E : BUILT COMMIT
-	${CC} ${CFLAGS} ${CPPFLAGS} ${LDFLAGS} -o  $@ eh.c ${LIBS}
+eh$E : eh.c
+	if [ -d .git ]; then git describe --tags > VERSION; fi
+	${CC} ${CFLAGS} ${CPPFLAGS} ${LDFLAGS} -o $@ eh.c ${LIBS}
 
 debug: clean
 	${MAKE} DBG='-O0 -g -fsanitize=address -fsanitize=pointer-subtract -fsanitize=pointer-compare -lasan' build
@@ -151,13 +148,22 @@ test:
 predefines:
 	${CC} ${CPPFLAGS} -dM -E -xc /dev/null
 
-snapshot: BUILT COMMIT
+next-major:
+	./semver.sh -f ./VERSION -u major
+
+next-minor:
+	./semver.sh -f ./VERSION -u minor
+
+next-patch:
+	./semver.sh -f ./VERSION -u patch
+
+snapshot:
 	@echo
 	@echo '***************************************************************'
-	git archive --format=tar.gz --prefix=${PROG}-$$(cat COMMIT)/ $$(cat COMMIT) \
-		--add-file=BUILT --add-file=COMMIT >../${PROG}-$$(cat COMMIT).tar.gz
+	git archive --format=tar.gz --prefix=${PROG}-${COMMIT}/ \
+		${COMMIT} >../${PROG}-${COMMIT}.tar.gz
 	@echo '***************************************************************'
-	@${MD5SUM} ../${PROG}-$$(cat COMMIT).tar.gz | tee ../${PROG}-$$(cat COMMIT).md5
+	@${MD5SUM} ../${PROG}-${COMMIT}.tar.gz | tee ../${PROG}-${COMMIT}.md5
 	@echo '***************************************************************'
 	@echo
 

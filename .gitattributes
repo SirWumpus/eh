@@ -13,3 +13,7 @@
 makefile linguist-documentation
 Makefile linguist-documentation
 reference/** linguist-documentation
+
+eh.c ident
+*.md diff=markdown
+*.sh diff=bash
