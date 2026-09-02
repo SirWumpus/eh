@@ -106,7 +106,8 @@ MANDIR  != if test "${MANDIR}" = '.'; then echo /usr/local/share/man; else echo 
 #
 #######################################################################
 
-.PHONY: all clean clobber distclean nuke install strip size test tests
+.PHONY: all build clean clobber debug distclean nuke install
+.PHONY: strip size test tests snapshot tag
 
 all: build
 
@@ -166,6 +167,12 @@ snapshot:
 	@${MD5SUM} ../${PROG}-${COMMIT}.tar.gz | tee ../${PROG}-${COMMIT}.md5
 	@echo '***************************************************************'
 	@echo
+
+tag:
+	@./semver.sh -u -f VERSION prompt
+	git commit -m "$$(cat VERSION)" VERSION
+	git tag $$(cat VERSION)
+
 
 #######################################################################
 # Generated files.

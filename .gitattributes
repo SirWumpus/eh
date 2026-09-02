@@ -9,11 +9,10 @@
 *.wsa binary
 *.cdb binary
 
-*.md linguist-documentation
+*.md linguist-documentation diff=markdown
 makefile linguist-documentation
 Makefile linguist-documentation
 reference/** linguist-documentation
 
 eh.c ident
-*.md diff=markdown
 *.sh diff=bash

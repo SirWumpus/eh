@@ -34,7 +34,7 @@ __file="VERSION.TXT"
 
 usage()
 {
-	echo 'usage: semver.sh [-u][-f file] [major|minor|patch|$VERSION]'
+	echo 'usage: semver.sh [-u][-f file] [major|minor|patch|prompt|$VERSION]'
 	exit 2
 }
 
@@ -81,6 +81,11 @@ if ! $__update ; then
 	(patch)	echo $patch ;;
 	esac
 	exit 0
+fi
+
+if [ "$1" = 'prompt' ]; then
+	printf "Version? "; read cmd
+	set -- "$cmd"
 fi
 
 case "$1" in
