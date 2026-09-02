@@ -58,6 +58,12 @@
 
 #define ALL_CMDS	99
 
+#ifdef NDEBUG
+#define OFF_DEC(var)	(var-1)			/* See bol() */
+#else /* NDEBUG */
+#define OFF_DEC(var)	(var-(0 < var))
+#endif /* NDEBUG */
+
 #ifndef IOCCC
 #define MATCHES		10
 #define MOTION_CMDS	34
@@ -470,7 +476,25 @@ charwidth(const char *s, int col)
 off_t
 bol(const off_t off)
 {
-	/* Clip out of bounds index.  TODO can we fix where bol(-1) occurs */
+	/* Catch any bol(-1), which used to happen. 2026-09-02
+	 * Use OFF_DEC(x) for known safe instances.
+	 */
+	assert(0 <= off);
+	/* Clip out of bounds index.  There are some calls that do
+	 * not handle bounds checking, expecting `bol()` to handle.
+	 * Typically these are instance of moving to the end of
+	 * the previous line, which might mean going off the BOF,
+	 * eg. `bol(here-1)` where `here` is already at BOF.  Ideally
+	 * this should be `bol(here-(0 < here))`, but these extra
+	 * checks be handled in `bol()` allowing the simpler version
+	 * and reduce code size.  (I knew I did this for a clear
+	 * reason).
+	 *
+	 * Of MORE concern is when an loop index or some other position
+	 * calculation went out of bounds.  Was it intentional, in
+	 * which case should have a comment saying so, or not in which
+	 * case can it be fixed.
+	 */
 	off_t cur = off * (0 < off);
 	while (0 < cur and *ptr(--cur) not_eq '\n') {
 		;
@@ -565,7 +589,7 @@ prevline(const off_t cur)
 		return row_start(s, t-1);
 	}
 	/* Previous physical line, find last logical line. */
-	return row_start(bol(s-1), s-1);
+	return row_start(bol(OFF_DEC(s)), s-1);
 }
 
 /*
@@ -769,7 +793,8 @@ lnplus(void)
 void
 lnminus(void)
 {
-	here = bol(bol(here)-(0 < here));
+	here = bol(here);
+	here = bol(OFF_DEC(here));
 }
 
 /*
@@ -857,7 +882,7 @@ void
 pgbottom(void)
 {
 	SET_PREVIOUS_MARK(here);
-	here = row_start(bol(epage-1), epage-1);
+	here = row_start(bol(OFF_DEC(epage)), epage-1);
 }
 
 /*
@@ -1762,7 +1787,7 @@ indent(void)
 	off_t tabs = 0;
 	while (start < stop) {
 		/* Previous physical line.*/
-		stop = bol(stop-1);
+		stop = bol(OFF_DEC(stop));
 		/* Only indent non-empty lines.  Consider `>2}` repeated;
 		 * if you indent empty lines subsequent motions will be off.
 		 */
@@ -1818,7 +1843,7 @@ outdent(void)
 	off_t tabs = 0;
 	while (start < stop) {
 		/* Previous physical line.*/
-		stop = bol(stop-1);
+		stop = bol(OFF_DEC(stop));
 		movegap(stop);
 		if (isblank(*egap)) {
 			int span;
