@@ -95,7 +95,8 @@ TESTS:= tests_have_term_data \
 	cc0 cc1 dd0 dd1 dd2 dd3 dd4 dd5 \
 	indent0 indent1 indent2 indent3 indent4 indent5 \
 	indent6 indent7 indent8 indent9 \
-	outdent0 outdent1 list0
+	outdent0 outdent1 list0 \
+	word0 word1 word2
 
 .PHONY : ${TESTS}
 .SILENT: ${TESTS}
@@ -1350,4 +1351,31 @@ list0:
 	printf '\014Q' | ${PROG} a.txt >a.out
 	${A_CORE}
 	grep '<SMSO>[IJ]<RMSO>' a.out >/dev/null
+	-${PASS}
+
+# CB-20 Word motion over Unicode characters.
+word0:
+	-${TITLE}
+	cp test/utf8.txt a.txt
+	printf 'jww13w/Cent\nbb11b/Kono\nee12eQ' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	-${PASS}
+
+# CB-20 Word motion over unused Unicode characters.
+word1:
+	-${TITLE}
+	cp test/utf8.txt a.txt
+	printf '/Cent\n5w4b7eQ' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	-${PASS}
+
+# CB-20 Word motion from mid-string over Unicode characters.
+word2:
+	-${TITLE}
+	cp test/utf8.txt a.txt
+	printf '2j4lwb4le3hbQ' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
 	-${PASS}
