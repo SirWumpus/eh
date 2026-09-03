@@ -927,27 +927,40 @@ pgup(void)
 	here = col_or_eol(here, 0, cur_col);
 }
 
-int
-isword(int ch)
+char32_t
+c32at(const off_t cur)
 {
-	return isalnum(ch) or ch == '_';
+	char *s = ptr(cur);
+	mbstate_t mbs = { 0 };		/* Do NOT track state. */
+	char32_t wc = (char32_t)*s;	/* Assume ASCI or invalid MB value. */
+	(void) mbrtoc32(&wc, s, 4, &mbs);
+	return wc;
+}
+
+int
+isword(wint_t ch)
+{
+	/* Include unused Unicode as word characters for
+	 * the purpose of movement.
+	 */
+	return iswalnum(ch) or ch == '_' or 0xE0000 <= ch;
 }
 
 void
 wleft(void)
 {
-	while (0 < here and isspace(*ptr(here-1))) {
-		--here;
+	while (0 < here and iswspace(c32at(prevch(here)))) {
+		here = prevch(here);
 	}
-	if (0 < here and isword(*ptr(here-1))) {
+	if (0 < here and isword(c32at(prevch(here)))) {
 		/* Move backwards to start of previous word. */
-		while (0 < here and isword(*ptr(here-1))) {
-			--here;
+		while (0 < here and isword(c32at(prevch(here)))) {
+			here = prevch(here);
 		}
 	} else {
 		/* Move backwards to end of previous word. */
-		while (0 < here and ispunct(*ptr(here-1))) {
-			--here;
+		while (0 < here and iswpunct(c32at(prevch(here)))) {
+			here = prevch(here);
 		}
 	}
 }
@@ -960,36 +973,36 @@ void
 wright(void)
 {
 	const off_t eof = pos(ebuf);
-	if (here < eof and isword(*ptr(here))) {
+	if (here < eof and isword(c32at(here))) {
 		/* Move forwards to end of current word. */
-		while (here < eof and isword(*ptr(here))) {
-			++here;
+		while (here < eof and isword(c32at(here))) {
+			here = nextch(here);
 		}
 		/* Skip blanks and newlines.
 		 * ACH: SUS says end-of-line are word breaks, so in
 		 * theory word-right treats end-of-line as its own
 		 * word.  nvi and vim do not.
 		 */
-		while (here < eof and isblank(*ptr(here))) {
-			++here;
+		while (here < eof and iswblank(c32at(here))) {
+			here = nextch(here);
 		}
-	} else if (here < eof and ispunct(*ptr(here))) {
+	} else if (here < eof and iswpunct(c32at(here))) {
 		/* Move forwards to start of next word. */
-		while (here < eof and ispunct(*ptr(here))) {
-			++here;
+		while (here < eof and iswpunct(c32at(here))) {
+			here = nextch(here);
 		}
 		/* Skip blanks and newlines.
 		 * ACH: SUS standard says begin/end-of-line are word
 		 * breaks, so in theory word-right treats end-of-line
 		 * word.  nvi and vim do not.
 		 */
-		while (here < eof and isblank(*ptr(here))) {
-			++here;
+		while (here < eof and iswblank(c32at(here))) {
+			here = nextch(here);
 		}
 	} else {
 		/* Skip over all whitespace. */
-		while (here < eof and isspace(*ptr(here))) {
-			++here;
+		while (here < eof and iswspace(c32at(here))) {
+			here = nextch(here);
 		}
 	}
 }
@@ -1297,21 +1310,21 @@ void
 wend(void)
 {
 	const off_t eof = pos(ebuf);
-	while (here < eof and isspace(*ptr(++here))) {
+	while (here < eof and iswspace(c32at(here = nextch(here)))) {
 		;
 	}
-	if (here < eof and isword(*ptr(here))) {
+	if (here < eof and isword(c32at(here))) {
 		/* Move forwards to end of current word. */
-		while (here < eof and isword(*ptr(here))) {
-			here++;
+		while (here < eof and isword(c32at(here))) {
+			here = nextch(here);
 		}
 	} else {
 		/* Move forwards to start of next word. */
-		while (here < eof and ispunct(*ptr(here))) {
-			here++;
+		while (here < eof and iswpunct(c32at(here))) {
+			here = nextch(here);
 		}
 	}
-	here--;
+	here = prevch(here);
 }
 
 void
