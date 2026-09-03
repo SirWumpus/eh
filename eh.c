@@ -940,10 +940,11 @@ c32at(const off_t cur)
 int
 isword(wint_t ch)
 {
-	/* Include unused Unicode as word characters for
-	 * the purpose of movement.
+	/* Include undefined and unused Unicode as word
+	 * characters for the purpose of movement.
+	 * https://symbl.cc/en/unicode-table/
 	 */
-	return iswalnum(ch) or ch == '_' or 0xE0000 <= ch;
+	return iswalnum(ch) or ch == '_' or 0x33480 <= ch;
 }
 
 void
