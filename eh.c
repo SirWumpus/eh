@@ -419,7 +419,19 @@ line_number(off_t cur)
 	}
 	return line;
 }
+
+void
+ungetstr(const char *str)
+{
+	ssize_t n = strlen(str);
+	assert(n < COLS and COLS <= egap-gap);
+	while (0 < n and 0 == ungetch(str[--n])) {
+		;
+	}
+}
+
 #else /* IOCCC */
+
 #define growgap(n)
 #define getsigch	getch
 #define SET_PREVIOUS_MARK(x)
@@ -1054,6 +1066,18 @@ insert(void)
 				pause = 1;
 			}
 			continue;
+		case KEY_LEFT:
+			ungetstr("\033hi");
+			continue;
+		case KEY_RIGHT:
+			ungetstr("\033li");
+			continue;
+		case KEY_DOWN:
+			ungetstr("\033ji");
+			continue;
+		case KEY_UP:
+			ungetstr("\033ki");
+			continue;
 		case '\b':
 		case KEY_BACKSPACE:
 			/* Move to previous (multibyte) character. */
@@ -1114,7 +1138,9 @@ insert(void)
 	(void) timeout(-1);
 	mode = cmd;
 	off_t len = pos(ebuf)-eof;
-	undo_save(UNDO_INS, here-len, gap-len, len);
+	if (0 < len) {
+		undo_save(UNDO_INS, here-len, gap-len, len);
+	}
 	adjmarks(len);
 #else /* IOCCC */
 	while ((ch = getch()) not_eq CTRL_C and ch not_eq ESC) {
@@ -1194,16 +1220,6 @@ deld(void)
 }
 
 #ifndef IOCCC
-void
-ungetstr(const char *str)
-{
-	ssize_t n = strlen(str);
-	assert(n < COLS and COLS <= egap-gap);
-	while (0 < n and 0 == ungetch(str[--n])) {
-		;
-	}
-}
-
 /**
  * Yank current line.
  */
