@@ -84,7 +84,7 @@ TESTS:= tests_have_term_data \
 	ere0 ere1 ere2 ere3 ere4 ere5 ere6 ere7 ere8 ere9 \
 	ere10 ere11 ere12 ere13 \
 	mark0 mark1 mark2 mark3 mark4 mark5 \
-	del7 del8 del9 del10 del11 del12 del13 \
+	del7 del8 del9 del10 del11 del12 del13 del14 \
 	undo0 undo1 undo2 undo3 undo4 \
 	paste0 paste1 paste2 paste3 \
 	bang0 bang1 bang2 bang3 bang4 bang5 bang6 bang7 \
@@ -728,6 +728,15 @@ del13:
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
+	-${PASS}
+
+# CB-35 Delete from an empty buffer should not crash (OpenBSD).
+del14:
+	-${TITLE}
+	cp test/utf8.txt a.txt
+	printf 'deQy\n' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
 	-${PASS}
 
 # Undo read file.
