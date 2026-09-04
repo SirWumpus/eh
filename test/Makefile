@@ -74,7 +74,7 @@ test:
 	SHELL=/bin/sh ${MAKE} -f $T/Makefile PROG=${PROG} TERM=textterm LINES=24 COLUMNS=80 TERMINFO=$${PWD}/$T/terminfo.cdb tests
 
 TESTS:= tests_have_term_data \
-	arg0 term0 empty0 empty1 empty3 redraw0 flip0 flip1 \
+	arg0 term0 empty0 empty1 empty3 redraw0 flip0 flip1 flip2 \
 	ins0 ins1 ins2 ins3 ins4 ins5 \
 	open0 open1 open2 open3 \
 	del0 del1 del2 del3 del4 del5 del6 \
@@ -185,6 +185,15 @@ flip0:
 flip1:
 	-${TITLE}
 	printf "iHello World!\033|12~W\nQ" | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	${A_TXT}
+	-${PASS}
+
+# CB-36
+flip2:
+	-${TITLE}
+	printf "ia 1f0f\033\030^3~\030W\nQ" | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
