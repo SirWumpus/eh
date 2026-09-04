@@ -46,6 +46,12 @@
 #define CTRL_Z		'\032'
 #define ESC		'\033'
 
+/* Start of undefined and yet unused Unicode values.
+ * They are not part of an ctype set yet.
+ * https://symbl.cc/en/unicode-table/
+ */
+#define BEYOND_HERE_BE_	0x33480
+
 #define CHANGED		'*'
 #define NOCHANGE	' '
 #define MARKS		27
@@ -931,8 +937,8 @@ char32_t
 c32at(const off_t cur)
 {
 	char *s = ptr(cur);
-	mbstate_t mbs = { 0 };		/* Do NOT track state. */
-	char32_t wc = (char32_t)*s;	/* Assume ASCI or invalid MB value. */
+	mbstate_t mbs = { 0 };          /* Do NOT track state. */
+	char32_t wc = (char32_t)*s;     /* Assume ASCI or invalid MB value. */
 	(void) mbrtoc32(&wc, s, 4, &mbs);
 	return wc;
 }
@@ -944,7 +950,7 @@ isword(wint_t ch)
 	 * characters for the purpose of movement.
 	 * https://symbl.cc/en/unicode-table/
 	 */
-	return iswalnum(ch) or ch == '_' or 0x33480 <= ch;
+	return iswalnum(ch) or ch == '_' or BEYOND_HERE_BE_ <= ch;
 }
 
 void
@@ -1713,17 +1719,17 @@ nil(void)
 void
 flipcase(void)
 {
-	char *p = ptr(here);
-	if (p < ebuf) {
-		undo_save(UNDO_DEL_A, here, p, mblength(*p));
-		/* Skip moving the gap and modify in place.
-		 * Does NOT support (yet) non-ASCII alphabetics.
-		 */
-		*p = islower(*p) ? toupper(*p) : tolower(*p);
-		undo_save(UNDO_INS_B, here, p, mblength(*p));
+	char32_t wc;
+	movegap(here);
+	mbstate_t mbs = { 0 };          /* Do NOT track state. */
+	ssize_t mbl = mbrtoc32(&wc, egap, 4, &mbs);
+	if (iswalpha(wc)) {
+		undo_save(UNDO_DEL_A, here, egap, mbl);
+		wc = iswlower(wc) ? towupper(wc) : towlower(wc);
+		undo_save(UNDO_INS_B, here, egap, c32rtomb(egap, wc, &mbs));
 		chg = CHANGED;
-		right();
 	}
+	right();
 }
 
 void
