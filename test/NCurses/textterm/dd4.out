@@ -1,0 +1,30 @@
+<RMSO>
+<CLEAR>
+<SMSO>a.txt 0B L1                                                                     <RMSO>
+<CUD1>
+<SMSO>^D<RMSO>
+<2;1>
+<SMSO><RMSO>
+<1;15>
+<SMSO>INS<RMSO>
+<2;1>
+<SMSO><RMSO>
+<1;7>
+<SMSO>1B L1 *<RMSO>
+<2;1>
+<SMSO><RMSO>
+a<1;15>
+<SMSO>   <RMSO>
+<2;2>
+<SMSO><RMSO>
+<1;7>
+<SMSO>0<RMSO>
+<2;1>
+<SMSO><RMSO>
+ <CR><HOME>
+>                                                                               <1;2>
+a.txt<2;1>
+<HOME>
+<SMSO>a.txt 0B L1                                                                     <RMSO>
+<24;1>
+
