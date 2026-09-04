@@ -1,0 +1,44 @@
+<RMSO>
+<CLEAR>
+<SMSO>a.txt 0B L1                                                                     <RMSO>
+<CUD1>
+<SMSO>^D<RMSO>
+<2;1>
+<SMSO><RMSO>
+<1;15>
+<SMSO>INS<RMSO>
+<2;1>
+<SMSO><RMSO>
+<1;7>
+<SMSO>1B L1 *<RMSO>
+<2;1>
+<SMSO><RMSO>
+a<1;7>
+<SMSO>2<RMSO>
+<2;3>
+<SMSO><RMSO>
+<1;7>
+<SMSO>3<RMSO>
+<2;3>
+<SMSO><RMSO>
+1<1;7>
+<SMSO>6B L1 *    <RMSO>
+<2;4>
+<SMSO><RMSO>
+f0f<1;7>
+<SMSO>5<RMSO>
+<2;3>
+<SMSO><RMSO>
+Ἇ   <2;4>
+<CR>A ἇ<1;7>
+<SMSO>8<RMSO>
+<2;3>
+<SMSO><RMSO>
+001F07<HOME>
+>                                                                               <1;2>
+a.txt<2;1>
+<HOME>
+<SMSO>a.txt 8B L1                                                                     <RMSO>
+<2;9>
+<24;1>
+
