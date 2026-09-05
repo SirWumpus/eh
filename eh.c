@@ -37,6 +37,7 @@
 #define CTRL_B		'\002'
 #define CTRL_C		'\003'
 #define CTRL_F		'\006'
+#define CTRL_G		'\007'
 #define CTRL_L		'\014'
 #define CTRL_R		'\022'
 #define CTRL_U		'\025'
@@ -73,13 +74,14 @@
 #ifndef IOCCC
 #define MATCHES		10
 #define MOTION_CMDS	34
+#define MOST_CMDS	68
 
 static int show_all;
 static char chg = NOCHANGE;
 static int cur_row, cur_col, count, ere_dollar_only, ere_carat_only, search_wrapped, replace_all;
 static char *filename, *yank_text, *replace;
 static char *buf, *gap, *egap, *ebuf;
-static const char ins[] = "INS", cmd[] = "   ", *mode = cmd;
+static const char ins[] = "INS", cmd[] = "   ", one[] = "ONE", *mode = cmd;
 static off_t here, page, epage, match_length, yank_here, yank_length, marks[MARKS], marker = -1, search_start;
 static regex_t ere;
 #else /* IOCCC */
@@ -793,6 +795,15 @@ down(void)
 }
 
 #ifndef IOCCC
+void
+gold(void)
+{
+	mode = one;
+	display();
+	(void) getcmd(MOST_CMDS);
+	(void) ungetch('i');
+}
+
 /**
  * Down one physical line.  The cursor moves to column 1.
  * Physical line column is not tracked.
@@ -1084,6 +1095,11 @@ insert(void)
 		case CTRL_F:
 			ungetstr("\033Ji");
 			continue;
+		case CTRL_G:
+			here = pos(egap);
+			/* Transition to gold() for single command input. */
+			ungetstr("\033\007");
+			continue;
 		case '\b':
 		case KEY_BACKSPACE:
 			/* Move to previous (multibyte) character. */
@@ -1144,8 +1160,8 @@ insert(void)
 	off_t len = pos(ebuf)-eof;
 	if (0 < len) {
 		undo_save(UNDO_INS, here-len, gap-len, len);
+		adjmarks(len);
 	}
-	adjmarks(len);
 #else /* IOCCC */
 /* The IOCCC entry does NOT support growgap(); see #define stub above. */
 	while ((ch = getch()) not_eq CTRL_C and ch not_eq ESC) {
@@ -2241,10 +2257,12 @@ static struct binding cmds[] = {
 	{ 'E',		edit },
 	{ 'R',		readfile },
 	{ 'W',		writefile },
-	{ 'V',		version },
 	{ 'Q',		quit },
 	{ CTRL_C,	quit },
 	{ CTRL_R,	redraw },
+
+	{ 'V',		version },
+	{ CTRL_G,	gold },
 	{ -1,		nil }
 };
 
