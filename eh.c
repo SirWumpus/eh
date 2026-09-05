@@ -1113,16 +1113,14 @@ insert(void)
 		case KEY_BTAB:
 			/* Input (multibyte) character. */
 			mbl = mblength(ch);
-			if (gap+mbl < egap) {
-				/* Read the remainder of a multibyte
-				 * character BEFORE updating the display.
-				 */
-				growgap(mbl);
-				do {
-					*gap++ = ch;
-					epage++;
-				} while (0 < --mbl and (ch = getch()) not_eq ERR);
-			}
+			/* Read the remainder of a multibyte
+			 * character BEFORE updating the display.
+			 */
+			growgap(mbl);
+			do {
+				*gap++ = ch;
+				epage++;
+			} while (0 < --mbl and (ch = getch()) not_eq ERR);
 		}
 		here = pos(egap);
 		chg = CHANGED;
@@ -1481,6 +1479,7 @@ prompt(const char * const msg, const char *str)
 	if (str == NULL or strchr(str, '\n') not_eq NULL) {
 		str = "";
 	}
+	growgap(COLS);
 	/* Prime the input with initial input. */
 	ungetstr(str);
 	/* NetBSD 9.3 erase ^H works fine, but not the kill ^U character. */
