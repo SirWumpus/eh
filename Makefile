@@ -97,10 +97,10 @@ MANDIR  != if test "${MANDIR}" = '.'; then echo /usr/local/share/man; else echo 
 #######################################################################
 
 .c.i:
-	${CC} ${CFLAGS} ${CPPFLAGS} -E $*.c >$*.i
+	${CC} ${CPPFLAGS} ${CFLAGS}  -E $*.c >$*.i
 
 .c$E :
-	${CC} ${CFLAGS} ${CPPFLAGS} ${LDFLAGS} -o $@ $< ${LIBS}
+	${CC} ${CPPFLAGS} ${CFLAGS} ${LDFLAGS} -o $@ $< ${LIBS}
 
 #######################################################################
 #
@@ -137,7 +137,7 @@ install: README.md eh$E
 
 eh$E : eh.c
 	if [ -d .git ]; then git describe --tags > VERSION; fi
-	${CC} ${CFLAGS} ${CPPFLAGS} ${LDFLAGS} -o $@ eh.c ${LIBS}
+	${CC} ${CPPFLAGS} ${CFLAGS} ${LDFLAGS} -o $@ eh.c ${LIBS}
 
 debug: clean
 	${MAKE} DBG='-O0 -g -fsanitize=address -fsanitize=pointer-subtract -fsanitize=pointer-compare -lasan' build
