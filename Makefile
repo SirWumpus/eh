@@ -135,8 +135,10 @@ install: README.md eh$E
 	install ${INSTALL_FLAGS} -d ${MANDIR}/cat1
 	install ${INSTALL_FLAGS} -p -m 444 README.md ${MANDIR}/cat1/eh.0
 
-eh$E : eh.c
+VERSION: eh.c
 	if [ -d .git ]; then git describe --tags > VERSION; fi
+
+eh$E : VERSION
 	${CC} ${CPPFLAGS} ${CFLAGS} ${LDFLAGS} -o $@ eh.c ${LIBS}
 
 debug: clean
