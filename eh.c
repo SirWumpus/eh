@@ -1078,6 +1078,12 @@ insert(void)
 		case KEY_UP:
 			ungetstr("\033ki");
 			continue;
+		case CTRL_B:
+			ungetstr("\033Ki");
+			continue;
+		case CTRL_F:
+			ungetstr("\033Ji");
+			continue;
 		case '\b':
 		case KEY_BACKSPACE:
 			/* Move to previous (multibyte) character. */

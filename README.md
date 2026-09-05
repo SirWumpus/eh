@@ -56,7 +56,7 @@ The commands are similar, but not the same as `vi(1)`.  Most commands can be pre
 * `y move     ` Yank (copy) text selection or region given by motion.  If motion is `y` repeated, then yank lines.
 * `Y          ` * Yank the current line, ie. `^yj`.
 * `P p        ` Paste last deleted or yanked text region before or after the cursor.
-* `i a        ` Insert text mode before or after the cursor, `ESC` or `CTRL+C` ends insert.  While inserting text, backspace will erase the previous character; `CTRL+U` for erase input; `CTRL+V` treats the next character as a literal character; `CTRL+W` erases the previous word.
+* `i a        ` Insert text mode before or after the cursor, `ESC` or `CTRL+C` ends insert.  While inserting text, backspace will erase the previous character; `CTRL+U` for erase input; `CTRL+V` treats the next character as a literal character; `CTRL+W` erases the previous word.  Also arrow keys, `CTRL+B`, and `CTRL+F` can be used to move while in insert mode within the text.
 * `I A        ` * Insert at start of line or append at end of line, ie. `^i` or `$i`.
 * `X x        ` Delete character before or after cursor, ie. `dh` or `dl`.
 * `U u        ` Redo or undo one or more edits.
