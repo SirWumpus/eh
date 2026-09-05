@@ -1141,6 +1141,7 @@ insert(void)
 	}
 	adjmarks(len);
 #else /* IOCCC */
+/* The IOCCC entry does NOT support growgap(); see #define stub above. */
 	while ((ch = getch()) not_eq CTRL_C and ch not_eq ESC) {
 		mbl = mblength(ch);
 		if (ch == '\b') {
@@ -1152,7 +1153,6 @@ insert(void)
 			/* Read the remainder of a multibyte
 			 * character BEFORE updating the display.
 			 */
-			growgap(mbl);
 			do {
 				*gap++ = ch;
 				epage++;
