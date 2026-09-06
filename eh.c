@@ -795,6 +795,10 @@ down(void)
 }
 
 #ifndef IOCCC
+/**
+ * Insert mode command to perform a single command mode operation,
+ * not bound to an insert mode control key.
+ */
 void
 gold(void)
 {
@@ -1095,6 +1099,16 @@ insert(void)
 		case CTRL_F:
 			ungetstr("\033Ji");
 			continue;
+		/*
+		 * Reasons for using CTRL+G:
+		 *
+		 *  - `CTRL+G` is mnemonic.
+		 *  - `CTRL+G` is ASCII BEL, which no one really wants to insert into text.
+		 *  - Seen a CP/M editor (maybe DOS) that had a similar Gold Key `CTRL+G`.
+		 *  - Reluctant to use other control keys, cause might need them for more
+		 *    frequent commands, such as word motion, undo/redo, anchor/yank/put.
+		 *  - Gold Key history : https://en.wikipedia.org/wiki/Gold_key_(DEC)
+		 */
 		case CTRL_G:
 			here = pos(egap);
 			/* Transition to gold() for single command input. */
