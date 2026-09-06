@@ -1,9 +1,0 @@
-hello	world
-fmt: Max length (40) must be greater than goal length (68)
-empty line
-
-blank line
-    
-qwerty butt
-	tab indent
--last line-

@@ -1,9 +1,0 @@
-hello	world
-fmt: invalid width: ‘68’: Numerical result out of range
-empty line
-
-blank line
-    
-qwerty butt
-	tab indent
--last line-
