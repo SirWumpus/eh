@@ -71,7 +71,8 @@ A_TXT_OR_SKIP	= ( diff -u ${DATA}/$@.txt a.txt ) || ${SKIP}
 
 test:
 	@printf '###\n### YOU ARE HERE >>> %s <<<\n###\n' "$$(pwd)"
-	SHELL=/bin/sh ${MAKE} -f $T/Makefile PROG=${PROG} TERM=textterm LINES=24 COLUMNS=80 TERMINFO=$${PWD}/$T/terminfo.cdb tests
+	SHELL=/bin/sh LANG='en_CA.UTF-8' LC_ALL='en_CA.UTF-8' ${MAKE} -f $T/Makefile \
+	  PROG=${PROG} TERM=textterm LINES=24 COLUMNS=80 TERMINFO=$${PWD}/$T/terminfo.cdb tests
 
 TESTS:= tests_have_term_data \
 	arg0 term0 empty0 empty1 empty3 redraw0 flip0 flip1 flip2 \

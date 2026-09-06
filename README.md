@@ -125,9 +125,7 @@ Notes
 
 ### Tested Platforms
 
-* NetBSD (primary), FreeBSD, Rocky Linux (secondary), SlackWare, Cygwin all work.  Please beware of differences in the shell tool chains of different platforms, eg. `/bin/sh`, GNU `printf(1)` `\e` vs FreeBSD `printf(1)` `\033`; tool error response messages seen with `fmt(1)` that can affect the regression testing.
-
-* OpenBSD appears to work, but the test suite does not run yet.
+* NetBSD (primary), FreeBSD, OpenBSD, Rocky Linux (secondary), SlackWare, Cygwin all work.  Please beware of differences in the shell tool chains of different platforms, eg. `/bin/sh`, GNU `printf(1)` `\e` vs FreeBSD `printf(1)` `\033`; tool error response messages seen with `fmt(1)` that can affect the regression testing.
 
 
 References
