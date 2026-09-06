@@ -48,7 +48,7 @@ ASK	?= false
 REBUILD	?= false
 
 # Curses implementation.
-CURSES_IMP != if grep "NCURSES_VERSION" /usr/include/curses.h >/dev/null; then echo "NCurses"; else echo "Curses"; fi
+CURSES_IMP != if grep -E "NCURSES_VERSION|include.+ncurses.h" /usr/include/curses.h >/dev/null; then echo "NCurses"; else echo "Curses"; fi
 
 T		= test
 TESTTERM	= $T/${CURSES_IMP}/${TERM}
