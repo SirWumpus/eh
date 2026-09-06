@@ -52,7 +52,7 @@ CURSES_IMP != if grep -E "NCURSES_VERSION|include.+ncurses.h" /usr/include/curse
 
 T		= test
 TESTTERM	= $T/${CURSES_IMP}/${TERM}
-DATA		= $T/${CURSES_IMP}/data
+DATA		= $T/data
 RESET		= rm -f a.txt a.out *.core
 TITLE		= printf "%s      %s: " ${PROG} $@ ; ${RESET}
 PASS		= printf "\r%s -OK-\r\n" ${PROG}
