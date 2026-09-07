@@ -24,6 +24,7 @@
 #include <signal.h>
 #include <sys/wait.h>
 #include <uchar.h>
+#include <errno.h>
 #else /* IOCCC */
 #endif /* IOCCC */
 
@@ -1530,11 +1531,20 @@ int
 filewrite(const char * const fn)
 {
 	int fd;
-	movegap(0);
+	errno = 0;
 	ssize_t n = 0;
+	off_t offset = 0;
 	if (0 < (fd = creat(fn, MODE))) {
-		n = write(fd, egap, ebuf-egap);
+		const off_t eof = pos(ebuf);
+		movegap(eof);
+		while (offset < eof and 0 <= (n = write(fd, buf+offset, eof-offset))) {
+			offset += n;
+		}
 		(void) close(fd);
+	}
+	if (errno) {
+		(void) snprintf(gap, COLS-20, "write error %s (%d); written %ldB", strerror(errno), errno, offset);
+		mode = gap;
 	}
 	return fd < 0 or n < 0;
 }
@@ -1548,6 +1558,7 @@ writefile(void)
 		filename = strdup(gap);
 		if (not filewrite(filename)) {
 			chg = NOCHANGE;
+			mode = cmd;
 		}
 	} else {
 		(void) beep();
