@@ -1543,7 +1543,7 @@ filewrite(const char * const fn)
 		(void) close(fd);
 	}
 	if (errno) {
-		(void) snprintf(gap, COLS-20, "write error %s (%d); written %ldB", strerror(errno), errno, offset);
+		(void) snprintf(gap, COLS-20, "%s (%d), wrote %ldB", strerror(errno), errno, offset);
 		mode = gap;
 	}
 	return fd < 0 or n < 0;
