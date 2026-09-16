@@ -83,7 +83,7 @@ static int cur_row, cur_col, count, ere_dollar_only, ere_carat_only, search_wrap
 static char *filename, *yank_text, *replace;
 static char *buf, *gap, *egap, *ebuf;
 static const char ins[] = "INS", cmd[] = "   ", one[] = "ONE", *mode = cmd;
-static off_t here, page, epage, match_length, yank_here, yank_length, marks[MARKS], marker = -1, search_start;
+static off_t here, page, epage, match_start, match_length, yank_here, yank_length, marks[MARKS], marker = -1, search_start;
 static regex_t ere;
 #else /* IOCCC */
 #define MATCHES		1
@@ -680,6 +680,7 @@ display(void)
 		from = marker;
 		to = here;
 	}
+	off_t ematch = (match_start+match_length)*(0 <= match_start);
 	for (i = TOP_LINE, j = 0, epage = page; (void) standend(), i < LINES; ) {
 		if (here == epage) {
 			cur_row = i;
@@ -692,6 +693,9 @@ display(void)
 		bool is_ctrl = iscntrl(*p) and (show_all or (*p not_eq '\t' and *p not_eq '\n'));
 		if ((from <= epage and epage < to) or is_ctrl) {
 			standout();
+		}
+		if (here <= epage && epage < ematch) {
+			(void) attron(A_UNDERLINE);
 		}
 		/* A multibyte character never straddles the gap,
 		 * assumes the gap moves by character, not by byte.
@@ -728,6 +732,9 @@ display(void)
 				mbl = 1;
 			}
 		}
+		if (ematch <= epage) {
+			(void) attroff(A_UNDERLINE);
+		}
 		epage += mbl;
 #else /* IOCCC */
 		if (from <= epage and epage < to) {
@@ -756,6 +763,7 @@ display(void)
 	}
 	(void) move(cur_row, cur_col);
 	(void) refresh();
+	match_start = -1;
 }
 
 void
@@ -2115,6 +2123,7 @@ search_next(void)
 		match_length = 0;
 		return;
 	}
+	match_start = here;
 	/* Next search resumes after this match, see here+match_length above. */
 	match_length = matches[0].rm_eo - matches[0].rm_so;
 	replace_match(matches, replace);
