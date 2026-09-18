@@ -35,13 +35,9 @@ XYZtest<2;4>
    <SMSO>2<RMSO>
 <3;1>
 XYZtest<3;4>
-<1;8>
-<SMSO>9<RMSO>
-   <SMSO>3<RMSO>
-<4;1>
-XYZ<1;1>
+<1;1>
 ><EL>
 a.txt<1;1>
-<SMSO>a.txt 19B L3                                                                    <RMSO>
-<4;4>
+<SMSO>a.txt 16B L2                                                                    <RMSO>
+<3;4>
 <24;1>

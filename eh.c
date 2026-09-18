@@ -1955,7 +1955,7 @@ replace_match(regmatch_t matches[MATCHES], const char * const str)
 		movegap(here);
 		char *xgap = gap;
 		/* CB-1 Have we come full circle? */
-		if (replace_all and search_wrapped and search_start < here) {
+		if (replace_all and search_wrapped and search_start <= here) {
 			here -= matches[0].rm_so;
 			search_wrapped = 0;
 			search_start = 0;
@@ -2089,11 +2089,22 @@ search_next(void)
 	 */
 	off_t next = here+match_length;
 	/* From cursor to EOF or after a wrap around from BOF to start point. */
-	if ((next < eof or next < search_start) and 0 == regexec(&ere, ptr(next), MATCHES, matches, REG_NOTBOL)) {
+	if (next < eof and 0 == regexec(&ere, ptr(next), MATCHES, matches, REG_NOTBOL)) {
 		here = next + matches[0].rm_so;
 	}
-	/* Wrap-around search only once. */
-	else if (0 == regexec(&ere, buf, MATCHES, matches, 0)) {
+	/* CB-1, 4, 21, 24, 42
+	 * When search only, the user can repeat a search and cycle
+	 * through the file many times.
+	 *
+	 * Single search-replace followed by repeated search-replace
+	 * under user control can cycle through many times, especially
+	 * for anchors /^/ and /$/.
+	 *
+	 * Replace-all is special in that it should only cycle once
+	 * to avoid loops on /^/ABC/a or /$/XYZ/a (empty matches)
+	 * or /test/testy/a (prefix matches).
+	 */
+	else if ((not replace_all or not search_wrapped) and 0 == regexec(&ere, buf, MATCHES, matches, 0)) {
 		here = matches[0].rm_so;
 		search_wrapped = 1;
 	}

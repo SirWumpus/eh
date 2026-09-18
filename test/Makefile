@@ -92,8 +92,9 @@ TESTS:= tests_have_term_data \
 	replace0 replace1 replace2 write0 read0 read1 \
 	select0 select1 select2 select3 select4 select5 \
 	mb0 mb1 mb2 mb3 mb4 imb0 imb1 imb2 imb3 imb4 \
-	replace3 replace4 replace8 replace9 \
-	replace5 replace6 replace7 \
+	replace3 replace4 replace8 replace9 replace5 \
+	replace10 replace11 replace12 replace13 \
+	replace6 replace7 replace14 replace15 \
 	cc0 cc1 dd0 dd1 dd2 dd3 dd4 dd5 \
 	indent0 indent1 indent2 indent3 indent4 indent5 \
 	indent6 indent7 indent8 indent9 \
@@ -974,7 +975,7 @@ replace5:
 	${A_TXT}
 	-${PASS}
 
-# CB-24
+# CB-24 replace-all from EOF; looped forever.
 replace6:
 	-${TITLE}
 	printf 'itest\ntest\n\033/test/testy/a\nW\nQ' | ${PROG} a.txt >a.out
@@ -1009,6 +1010,60 @@ replace9:
 	${A_CORE}
 	${A_OUT}
 	${A_TXT}
+	-${PASS}
+
+# CB-24 replace-all single line file from BOF
+replace10:
+	-${TITLE}
+	printf 'itest\n\033k/test/testy/a\nW\nQ' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	${A_TXT}
+	-${PASS}
+
+# CB-24 replace-all two line file from BOF
+replace11:
+	-${TITLE}
+	printf 'itest\ntest\n\0331G/test/testy/a\nW\nQ' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	${A_TXT}
+	-${PASS}
+
+# CB-24 replace-all single line file from EOF; looped forever.
+replace12:
+	-${TITLE}
+	printf 'itest\n\033/test/testy/a\nW\nQ' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	${A_TXT}
+	-${PASS}
+
+# CB-1, 24
+replace13:
+	-${TITLE}
+	printf 'itest\ntest\nno newline\033/^/XYZ/a\nW\nQ' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	${A_TXT}
+	-${PASS}
+
+# Empty file, replace-all at BOL inserts the text once.
+replace14:
+	-${TITLE}
+	printf '/^/ABC/a\nW\nQ' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	${A_TXT}
+	-${PASS}
+
+# CB-42 search and cycle more than twice stop at L6; stalled at last match.
+replace15:
+	-${TITLE}
+	cp test/short.txt a.txt
+	printf 'jjw/line\nnnnnnnnW\nQ' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
 	-${PASS}
 
 write0:

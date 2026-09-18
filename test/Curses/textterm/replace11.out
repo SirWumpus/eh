@@ -24,6 +24,9 @@ t<3;1>
 test<5;1>
 <SMSO>^D<RMSO>
 <4;1>
+<1;12>
+<SMSO>1<RMSO>
+<2;1>
 <1;1>
 /<EL>
 test/testy/a<1;1>
@@ -33,9 +36,12 @@ y<1;8>
 <SMSO>2<RMSO>
    <SMSO>2<RMSO>
 <3;5>
-y<1;1>
+y<1;12>
+<SMSO>1<RMSO>
+<2;1>
+<1;1>
 ><EL>
 a.txt<1;1>
-<SMSO>a.txt 12B L2                                                                    <RMSO>
-<3;6>
+<SMSO>a.txt 12B L1                                                                    <RMSO>
+<2;1>
 <24;1>
