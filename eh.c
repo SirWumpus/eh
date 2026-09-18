@@ -2003,6 +2003,11 @@ replace_match(regmatch_t matches[MATCHES], const char * const str)
 		if (search_wrapped and here < search_start) {
 			search_start += (gap-xgap)-match_length;
 		}
+		/* CB-21 the cursor is already positioned at the end
+		 * of replacement, so no need to skip-match on the
+		 * start of the next search-replace.
+		 */
+		match_length = 0;
 	}
 }
 

@@ -964,7 +964,7 @@ replace4:
 	${A_TXT}
 	-${PASS}
 
-# CB-21
+# CB-21 would miss some lines.
 replace5:
 	-${TITLE}
 	cp test/wtf a.txt
