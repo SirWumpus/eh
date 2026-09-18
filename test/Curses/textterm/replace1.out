@@ -14,12 +14,12 @@ tab indent<11;1>
 <2;1>
 <1;1>
 /<EL>
-butt/hole<1;1>
-<SMSO>a.txt 119B L8 *                                                                 <RMSO>
-<9;8>
+butt/$0hole<1;1>
+<SMSO>a.txt 123B L8 *                                                                 <RMSO>
+<9;12>
 hole<1;1>
 ><EL>
 a.txt<1;1>
-<SMSO>a.txt 119B L8                                                                   <RMSO>
-<9;12>
+<SMSO>a.txt 123B L8                                                                   <RMSO>
+<9;16>
 <24;1>

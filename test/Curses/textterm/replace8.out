@@ -1,0 +1,33 @@
+<CLEAR>
+<CLEAR>
+<SMSO>a.txt 0B L1                                                                     <RMSO>
+<3;1>
+<SMSO>^D<RMSO>
+<2;1>
+<1;15>
+<SMSO>INS<RMSO>
+<2;1>
+<1;7>
+<SMSO>1<RMSO>
+     <SMSO>*<RMSO>
+<2;1>
+a<1;7>
+<SMSO>2<RMSO>
+<2;2>
+b<1;7>
+<SMSO>3<RMSO>
+<2;3>
+c<1;15>
+<SMSO>   <RMSO>
+<2;4>
+<CR><1;1>
+/<EL>
+$/XYZ/a<1;1>
+<SMSO>a.txt 6B L1 *                                                                   <RMSO>
+<2;4>
+XYZ<CR><1;1>
+><EL>
+a.txt<1;1>
+<SMSO>a.txt 6B L1                                                                     <RMSO>
+<2;1>
+<24;1>

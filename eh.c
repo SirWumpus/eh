@@ -1976,10 +1976,11 @@ replace_match(regmatch_t matches[MATCHES], const char * const str)
 				*gap++ = cescape(*++s);
 				continue;
 			} else if (*s == '/') {
-				/* End replacement string. */
-				if (replace_all and *++s == 'a') {
+				/* End of replacement string. */
+				if (*++s == 'a') {
 					/* a = replace all (do it again) */
 					(void) ungetch('n');
+					replace_all = 1;
 				}
 				break;
 			}
@@ -1993,6 +1994,8 @@ replace_match(regmatch_t matches[MATCHES], const char * const str)
 		adjmarks(match_length-undo_list->next->size);
 		/* Position at end of replacement. */
 		here = pos(egap);
+		/* Force display() to reframe. */
+		epage = here+1;
 		chg = CHANGED;
 		/* CB-1 Adjust search_start to maintain origin position
 		 * by preceding replacements.
@@ -2076,14 +2079,16 @@ search_next(void)
 	 * In all other cases need to offset by one the start of the
 	 * next search so as to avoid remaining stuck repeatedly
 	 * matching at the cursor.
+	 *
+	 * See also CB-21
 	 */
-	off_t next = here + (replace == NULL ? match_length : 0);
+	off_t next = here+match_length;
 	/* From cursor to EOF or after a wrap around from BOF to start point. */
 	if ((next < eof or next < search_start) and 0 == regexec(&ere, ptr(next), MATCHES, matches, REG_NOTBOL)) {
 		here = next + matches[0].rm_so;
 	}
 	/* Wrap-around search only once. */
-	else if (not search_wrapped and 0 == regexec(&ere, buf, MATCHES, matches, 0)) {
+	else if (0 == regexec(&ere, buf, MATCHES, matches, 0)) {
 		here = matches[0].rm_so;
 		search_wrapped = 1;
 	}
@@ -2097,7 +2102,7 @@ search_next(void)
 	/* Next search resumes after this match, see here+match_length above. */
 	match_length = matches[0].rm_eo - matches[0].rm_so;
 	replace_match(matches, replace);
-	/* CB-1 an empty match, ie. /$/, needs advance on next search. */
+	/* CB-1 an empty match (match_length == 0), ie. /$/, needs advance on next search. */
 	match_length += ere_dollar_only;
 	/* Position match in the centre of the screen.*/
 	scrollup(here, LINES/2-TOP_LINE);
@@ -2149,7 +2154,7 @@ search(void)
 	/* CB-1 Small hack to handle `/^/XYZ/a`. */
 	search_start = here;
 	search_wrapped = 0;
-	replace_all = 1;
+	replace_all = 0;
 	*s = '\0';
 #else /* IOCCC */
 	(void) echo();

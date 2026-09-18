@@ -21,12 +21,51 @@ tab indent<11;1>
 <4;8>
 <1;1>
 /<EL>
-plugh!/a<1;1>
-<SMSO>a.txt 119B L3                                                                   <RMSO>
-<4;8>
+$/plugh!/a<1;1>
+<SMSO>a.txt 125B L3 *                                                                 <RMSO>
+<4;22>
+plugh!<1;8>
+<SMSO>31<RMSO>
+   <SMSO>4<RMSO>
+<5;11>
+plugh!<1;9>
+<SMSO>7<RMSO>
+   <SMSO>5<RMSO>
+<6;1>
+plugh!<1;8>
+<SMSO>43<RMSO>
+   <SMSO>6<RMSO>
+<7;11>
+plugh!<1;9>
+<SMSO>9<RMSO>
+   <SMSO>7<RMSO>
+<8;5>
+plugh!<1;8>
+<SMSO>55<RMSO>
+   <SMSO>8<RMSO>
+<9;12>
+plugh!<1;8>
+<SMSO>61<RMSO>
+   <SMSO>9<RMSO>
+<10;19>
+plugh!<1;9>
+<SMSO>7<RMSO>
+   <SMSO>10 *<RMSO>
+<11;12>
+plugh!<1;8>
+<SMSO>73<RMSO>
+    <SMSO> * <RMSO>
+<2;14>
+plugh!<1;9>
+<SMSO>9<RMSO>
+   <SMSO>2<RMSO>
+<3;21>
+plugh!<1;13>
+<SMSO>3<RMSO>
+<4;1>
 <1;1>
 ><EL>
 a.txt<1;1>
-<SMSO>a.txt 119B L3                                                                   <RMSO>
-<4;8>
+<SMSO>a.txt 179B L3                                                                   <RMSO>
+<4;1>
 <24;1>
