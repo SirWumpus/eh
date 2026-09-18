@@ -1044,8 +1044,8 @@ replace13:
 	-${TITLE}
 	printf 'itest\ntest\nno newline\033/^/XYZ/a\nW\nQ' | ${PROG} a.txt >a.out
 	${A_CORE}
-	${A_OUT}
 	${A_TXT}
+	${A_OUT}
 	-${PASS}
 
 # Empty file, replace-all at BOL inserts the text once.
@@ -1053,15 +1053,15 @@ replace14:
 	-${TITLE}
 	printf '/^/ABC/a\nW\nQ' | ${PROG} a.txt >a.out
 	${A_CORE}
-	${A_OUT}
 	${A_TXT}
+	${A_OUT}
 	-${PASS}
 
 # CB-42 search and cycle more than twice stop at L6; stalled at last match.
 replace15:
 	-${TITLE}
 	cp test/short.txt a.txt
-	printf 'jjw/line\nnnnnnnnW\nQ' | ${PROG} a.txt >a.out
+	printf 'jjw/line\nnnnnnnnQ' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	-${PASS}
