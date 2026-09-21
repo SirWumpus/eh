@@ -695,7 +695,7 @@ display(void)
 			standout();
 		}
 		if (here <= epage && epage < ematch) {
-			(void) attron(A_UNDERLINE);
+			(void) attron(A_BOLD|A_UNDERLINE);
 		}
 		/* A multibyte character never straddles the gap,
 		 * assumes the gap moves by character, not by byte.
@@ -733,7 +733,7 @@ display(void)
 			}
 		}
 		if (ematch <= epage) {
-			(void) attroff(A_UNDERLINE);
+			(void) attroff(A_BOLD|A_UNDERLINE);
 		}
 		epage += mbl;
 #else /* IOCCC */
