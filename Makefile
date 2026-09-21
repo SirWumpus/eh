@@ -32,6 +32,7 @@ INSTALL_FLAGS != if test ${MAKE_OS} != 'Cygwin'; then echo "-o ${USER} -g ${GROU
 DBG	:= -DNDEBUG
 LDDBG	:=
 CCONFIG	:= -DPLACEHOLDER -DFAST_MOVE
+CURSES	:= false
 
 CC	!= if test ${CC} = 'c99'; then echo cc; else echo ${CC}; fi
 LDFLAGS	!= if test ${CC} = 'gcc'; then echo '-fno-ident -flto'; fi
@@ -80,14 +81,20 @@ CINCLUDE := -include curses.h -include ctype.h -include string.h \
 
 CFLAGS	:= -std=gnu17 -Os -funsigned-char -Wall -Wextra ${CSILENCE} ${DBG}
 
+# On NetBSD Ncurses package installed or use old curses.h?
+NCURSES	!= if test -f /usr/pkg/include/ncurses/ncurses.h && ! ${CURSES}; then echo 'Y'; fi
+LIBS	!= if test -n "${NCURSES}"; then echo '${LIBS} -lncurses'; else echo '-lcurses'; fi
+LDFLAGS	!= if test -n "${NCURSES}"; then echo '${LDFLAGS} -L/usr/pkg/lib'; fi
+CPPFLAGS!= if test -n "${NCURSES}"; then echo '${CPPFLAGS} -I/usr/pkg/include -I/usr/pkg/include/ncurses'; fi
+
 # Frack need extra #define to enable SUS standard strdup(), strndup().
-CPPFLAGS:= -DBUF=${BUF} -DMODE=${MODE} -DBUILT="\"${BUILT}\"" \
+CPPFLAGS+= -DBUF=${BUF} -DMODE=${MODE} -DBUILT="\"${BUILT}\"" \
 	-DVERSION="\"$$(cat VERSION)\"" -D_XOPEN_SOURCE=700 ${CCONFIG}
 
-LDFLAGS	:=
+LDFLAGS	+=
 
 # Linux & Cygwin NCurses with wide character support.
-LIBS	!= if expr "${MAKE_OS}" : '^.*BSD' >/dev/null; then echo '-lcurses'; else echo '-lncursesw'; fi
+#LIBS	:= -lncursesw
 
 MANDIR	!= dirname "$$(find /usr/local -maxdepth 3 -type d -name man1)"
 MANDIR  != if test "${MANDIR}" = '.'; then echo /usr/local/share/man; else echo ${MANDIR}; fi
