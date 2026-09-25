@@ -31,7 +31,7 @@ INSTALL_FLAGS != if test ${MAKE_OS} != 'Cygwin'; then echo "-o ${USER} -g ${GROU
 # Override from the command-line, eg. make DBG='-O0 -g'
 DBG	:= -DNDEBUG
 LDDBG	:=
-CCONFIG	:= -DPLACEHOLDER -DFAST_MOVE
+CCONFIG	:= -DBUF=${BUF} -DMODE=${MODE} -DFAST_MOVE
 CURSES	:= false
 
 CC	!= if test ${CC} = 'c99'; then echo cc; else echo ${CC}; fi
@@ -43,8 +43,17 @@ LDFLAGS	!= if test ${CC} = 'gcc'; then echo '-fno-ident -flto'; fi
 
 PROG	?= ./eh$E
 
+VERSION != cat VERSION
 BUILT	!= date -u +'%a, %d %b %Y %H:%M:%SZ'
 COMMIT	!= if [ -d .git ]; then git describe --tags; fi
+
+# Defines that are needed to compile
+#
+# Example: -Dfoo -Dbar=baz
+#
+CDEFINE := -DBUILT="\\"${BUILT}\\"" -DVERSION="\\"${VERSION}\\""
+CDEFINE += -D_XOPEN_SOURCE=800
+
 
 # Common C compiler warnings to silence
 #
@@ -81,20 +90,15 @@ CINCLUDE := -include curses.h -include ctype.h -include string.h \
 
 CFLAGS	:= -std=gnu17 -Os -funsigned-char -Wall -Wextra ${CSILENCE} ${DBG}
 
+CPPFLAGS:= ${CDEFINE} ${CCONFIG} ${CINCLUDE}
+LDFLAGS	:=
+LIBS	:=
+
 # On NetBSD Ncurses package installed or use old curses.h?
-NCURSES	!= if test -f /usr/pkg/include/ncurses/ncurses.h && ! ${CURSES}; then echo 'Y'; fi
-LIBS	!= if test -n "${NCURSES}"; then echo '${LIBS} -lncurses'; else echo '-lcurses'; fi
-LDFLAGS	!= if test -n "${NCURSES}"; then echo '${LDFLAGS} -L/usr/pkg/lib'; fi
-CPPFLAGS!= if test -n "${NCURSES}"; then echo '${CPPFLAGS} -I/usr/pkg/include -I/usr/pkg/include/ncurses'; fi
-
-# Frack need extra #define to enable SUS standard strdup(), strndup().
-CPPFLAGS+= -DBUF=${BUF} -DMODE=${MODE} -DBUILT="\"${BUILT}\"" \
-	-DVERSION="\"$$(cat VERSION)\"" -D_XOPEN_SOURCE=700 ${CCONFIG}
-
-LDFLAGS	+=
-
-# Linux & Cygwin NCurses with wide character support.
-#LIBS	:= -lncursesw
+NCURSES	!= if test -f /usr/pkg/include/ncurses/ncurses.h && ! "${CURSES}"; then echo 'Y'; fi
+LIBS	!= printf '${LIBS} '; if test -n "${NCURSES}"; then printf '-lncurses'; else printf '-lcurses'; fi
+LDFLAGS	!= printf '${LDFLAGS} '; if test -n "${NCURSES}"; then printf '-L/usr/pkg/lib'; fi
+CPPFLAGS!= printf '${CPPFLAGS} '; if test -n "${NCURSES}"; then printf '-I/usr/pkg/include -I/usr/pkg/include/ncurses'; fi
 
 MANDIR	!= dirname "$$(find /usr/local -maxdepth 3 -type d -name man1)"
 MANDIR  != if test "${MANDIR}" = '.'; then echo /usr/local/share/man; else echo ${MANDIR}; fi
