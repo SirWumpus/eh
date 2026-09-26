@@ -95,10 +95,15 @@ LDFLAGS	:=
 LIBS	:=
 
 # On NetBSD Ncurses package installed or use old curses.h?
-NCURSES	!= if test -f /usr/pkg/include/ncurses/ncurses.h && ! "${CURSES}"; then echo 'Y'; fi
-LIBS	!= echo '${LIBS} '; if test -n "${NCURSES}"; then echo '-lncurses'; else echo '-lcurses'; fi
-LDFLAGS	!= echo '${LDFLAGS} '; if test -n "${NCURSES}"; then echo '-L/usr/pkg/lib'; fi
-CPPFLAGS!= echo '${CPPFLAGS} '; if test -n "${NCURSES}"; then echo '-I/usr/pkg/include -I/usr/pkg/include/ncurses'; fi
+NCURSES	!= if test -f /usr/pkg/include/ncurses/ncurses.h && ! "${CURSES}"; then echo true; else echo false; fi
+
+CPPFLAGS!= echo '${CPPFLAGS} '; if ${NCURSES}; then echo '-I/usr/pkg/include -I/usr/pkg/include/ncurses'; fi
+LDFLAGS	!= echo '${LDFLAGS} '; if ${NCURSES}; then echo '-L/usr/pkg/lib'; fi
+
+# On Rocky Linux they have NCurses with and without wide character support.
+NCURSESW!= if find / -maxdepth 4 -name 'libncursesw*' 2>/dev/null | grep ncursesw >/dev/null ; then echo true; else echo false; fi
+
+LIBS	!= echo '${LIBS} '; if ${NCURSESW}; then echo '-lncursesw'; elif ${NCURSES}; then echo '-lncurses'; else echo '-lcurses'; fi
 
 MANDIR	!= dirname "$$(find /usr/local -maxdepth 3 -type d -name man1)"
 MANDIR  != if test "${MANDIR}" = '.'; then echo /usr/local/share/man; else echo ${MANDIR}; fi
