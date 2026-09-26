@@ -51,7 +51,7 @@ COMMIT	!= if [ -d .git ]; then git describe --tags; fi
 #
 # Example: -Dfoo -Dbar=baz
 #
-CDEFINE := -DBUILT="\\"${BUILT}\\"" -DVERSION="\\"${VERSION}\\""
+CDEFINE := -DBUILT="\"${BUILT}\"" -DVERSION="\"${VERSION}\""
 CDEFINE += -D_XOPEN_SOURCE=800
 
 
@@ -96,9 +96,9 @@ LIBS	:=
 
 # On NetBSD Ncurses package installed or use old curses.h?
 NCURSES	!= if test -f /usr/pkg/include/ncurses/ncurses.h && ! "${CURSES}"; then echo 'Y'; fi
-LIBS	!= printf '${LIBS} '; if test -n "${NCURSES}"; then printf '-lncurses'; else printf '-lcurses'; fi
-LDFLAGS	!= printf '${LDFLAGS} '; if test -n "${NCURSES}"; then printf '-L/usr/pkg/lib'; fi
-CPPFLAGS!= printf '${CPPFLAGS} '; if test -n "${NCURSES}"; then printf '-I/usr/pkg/include -I/usr/pkg/include/ncurses'; fi
+LIBS	!= echo '${LIBS} '; if test -n "${NCURSES}"; then echo '-lncurses'; else echo '-lcurses'; fi
+LDFLAGS	!= echo '${LDFLAGS} '; if test -n "${NCURSES}"; then echo '-L/usr/pkg/lib'; fi
+CPPFLAGS!= echo '${CPPFLAGS} '; if test -n "${NCURSES}"; then echo '-I/usr/pkg/include -I/usr/pkg/include/ncurses'; fi
 
 MANDIR	!= dirname "$$(find /usr/local -maxdepth 3 -type d -name man1)"
 MANDIR  != if test "${MANDIR}" = '.'; then echo /usr/local/share/man; else echo ${MANDIR}; fi
