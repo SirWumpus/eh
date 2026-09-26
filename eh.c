@@ -79,7 +79,7 @@
 
 static int show_all;
 static char chg = NOCHANGE;
-static int cur_row, cur_col, count, ere_dollar_only, ere_carat_only, search_wrapped, replace_all;
+static int cur_row, cur_col, count, ere_dollar_only, ere_carat_only, search_wrapped, replace_all, yanking;
 static char *filename, *yank_text, *replace;
 static char *buf, *gap, *egap, *ebuf;
 static const char ins[] = "INS", cmd[] = "   ", one[] = "ONE", *mode = cmd;
@@ -1219,7 +1219,12 @@ yanky(void)
 {
 	off_t mark = marker;
 	if (marker < 0) {
+		/* In case of a command like `ye` or `de`, the cursor
+		 * character should be included part of the region.
+		 */
+		yanking = 1;
 		mark = getcmd(MOTION_CMDS);
+		yanking = 0;
 	}
 	yank_here = here;
 	if (mark < yank_here) {
@@ -1390,7 +1395,9 @@ wend(void)
 			here = nextch(here);
 		}
 	}
-	here = prevch(here);
+	if (!yanking) {
+		here = prevch(here);
+	}
 }
 
 void
@@ -2380,11 +2387,9 @@ getcmd(const int m)
 		;
 	}
 	if (j < m) {
-		this_cmd = ch;
 		was_here = here;
 		/* Count always defaults to 1. */
 		do (*func[j])(); while (1 < count--);
-		this_cmd = 0;
 	}
 #endif /* IOCCC */
 	count = 0;
