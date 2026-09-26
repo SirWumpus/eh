@@ -47,11 +47,11 @@ ASK	?= false
 # Set REBUILD=true to update all the failed tests.
 REBUILD	?= false
 
-# Curses implementation.
-CURSES_IMP != if grep -E "NCURSES_VERSION|include.+ncurses.h" /usr/include/curses.h >/dev/null; then echo "NCurses"; else echo "Curses"; fi
+# Curses implementation linked with binary.
+CURSES != if ldd ${PROG} | grep ncurses >/dev/null; then echo NCurses; else echo Curses; fi
 
 T		= test
-TESTTERM	= $T/${CURSES_IMP}/${TERM}
+TESTTERM	= $T/${CURSES}/${TERM}
 DATA		= $T/data
 RESET		= rm -f a.txt a.out *.core
 TITLE		= printf "%s      %s: " ${PROG} $@ ; ${RESET}
@@ -65,6 +65,9 @@ A_OUT		= ( diff -u ${TESTTERM}/$@.out a.out || ${SAVE_OUT} )
 A_TXT		= ( diff -u ${DATA}/$@.txt a.txt || ${SAVE_TXT} )
 A_OUT_OR_SKIP	= ( ${A_OUT} >/dev/null && ${PASS} ) || ${SKIP}
 A_TXT_OR_SKIP	= ( diff -u ${DATA}/$@.txt a.txt ) || ${SKIP}
+
+# NetBSD tic vs NCurses tic
+TIC	!= if test "${CURSES}" = NCurses -a -e /usr/pkg/bin/tic; then echo '/usr/pkg/bin/tic'; else echo tic; fi
 
 # Be sure to build the target binary separately before hand.  This allows
 # testing an alternative binary by setting PROG, eg. make PROG=./boo test
@@ -113,11 +116,11 @@ tests_skipped: empty2 write1
 # them to be sure to ensure terminal emulator dimensions are ignored.
 
 $T/terminfo.cdb : $T/terminfo
-	tic -x -o $@ $T/terminfo
+	${TIC} -x -o $@ $T/terminfo
 
 tests_have_term_data:
 	@test -d ${TESTTERM}
-	@echo TERM=${TERM}
+	@echo TERM=${TERM} CURSES=${CURSES}
 
 # Allow missing filename argument.
 arg0:
