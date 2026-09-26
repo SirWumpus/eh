@@ -26,8 +26,7 @@ line <3;1>
 <CUD1>
 blank line<EL>
 <5;1>
-<EL>
-<CUD1>
+          <6;1>
 qwerty butt<7;1>
         tab indent<8;1>
 -last line-<9;1>
@@ -40,13 +39,14 @@ qwerty butt<7;1>
 <ED>
 <1;7>
 <SMSO>52<RMSO>
-<4;1>
+<3;1>
 <SMSO><RMSO>
-qwerty butt<5;9>
-tab indent<6;1>
--last line-<7;9>
+    <4;1>
+qwerty butt<5;1>
+        tab indent<6;1>
+-last line-<7;1>
 <EL>
-<8;1>
+<CUD1>
 <SMSO>^D<RMSO>
 <EL>
 <2;9>
@@ -56,5 +56,8 @@ a.txt<2;1>
 <HOME>
 <SMSO>a.txt 52B L1                                                                    <RMSO>
 <2;9>
+line<3;1>
+    <4;1>
+qwerty<2;9>
 <24;1>
 

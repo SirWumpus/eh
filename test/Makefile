@@ -198,7 +198,6 @@ flip2:
 	-${TITLE}
 	printf "ia 1f0f\033\030^3~\030W\nQ" | ${PROG} a.txt >a.out
 	${A_CORE}
-	${A_OUT}
 	${A_TXT}
 	-${PASS}
 

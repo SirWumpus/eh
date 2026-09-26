@@ -15,28 +15,38 @@ cave(lost());<6;1>
 <HOME>
 <SMSO>a.txt 57B L1                                                                    <RMSO>
 <2;14>
+)<CUB1>
 <1;12>
 <SMSO>2<RMSO>
-<3;15>
+<2;14>
 <SMSO><RMSO>
+)<CUD1>
+)<CUB1>
 <1;12>
 <SMSO>3<RMSO>
-<4;18>
+<3;15>
 <SMSO><RMSO>
+)<4;18>
+)<CUB1>
 <1;12>
 <SMSO>4<RMSO>
-<5;19>
+<4;18>
 <SMSO><RMSO>
-<5;20>
+)<CUD1>
+)<CUB1>
+))<CUB1>
 <1;12>
 <SMSO>1<RMSO>
 <2;14>
 <SMSO><RMSO>
+)<5;20>
+)<2;14>
 <HOME>
 /                                                                               <1;2>
 \}<2;1>
 <HOME>
 <SMSO>a.txt 57B L5                                                                    <RMSO>
-<6;1>
-<24;1>
+<2;14>
+)<6;1>
+}<CR><24;1>
 

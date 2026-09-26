@@ -30,6 +30,10 @@ test<5;1>
 <SMSO>^D<RMSO>
 <4;1>
 <SMSO><RMSO>
+<1;12>
+<SMSO>1<RMSO>
+<2;1>
+<SMSO><RMSO>
 <HOME>
 /                                                                               <1;2>
 test/testy/a<2;1>
@@ -40,11 +44,14 @@ y<1;8>
 <SMSO>2B L2<RMSO>
 <3;5>
 <SMSO><RMSO>
-y<HOME>
+y<1;12>
+<SMSO>1<RMSO>
+<2;1>
+<SMSO><RMSO>
+<HOME>
 >                                                                               <1;2>
 a.txt<2;1>
 <HOME>
-<SMSO>a.txt 12B L2                                                                    <RMSO>
-<3;6>
+<SMSO>a.txt 12B L1                                                                    <RMSO>
 <24;1>
 

@@ -18,16 +18,20 @@ butt<2;1>
 <HOME>
 <SMSO>test/short.txt 119B L8                                                          <RMSO>
 <9;8>
+butt<9;8>
+butt<9;8>
 <HOME>
 /                                                                               <1;2>
 rude<2;1>
 <HOME>
 <SMSO>test/short.txt 119B L3                                                          <RMSO>
 <4;8>
+rude<4;8>
 <1;26>
 <SMSO>INS<RMSO>
 <4;8>
 <SMSO><RMSO>
+rude<4;8>
 <1;17>
 <SMSO>20B L3 *<RMSO>
 <4;8>

@@ -18,6 +18,8 @@ rude<2;1>
 <HOME>
 <SMSO>a.txt 119B L3                                                                   <RMSO>
 <4;8>
+rude<4;8>
+rude<4;8>
 <1;13>
 <SMSO>4<RMSO>
 <4;8>
@@ -37,6 +39,7 @@ but<2;1>
 <SMSO>    <RMSO>
 <9;1>
 <SMSO>qwerty <RMSO>
+but<9;8>
 <1;8>
 <SMSO>34B L9 *<RMSO>
 <9;8>

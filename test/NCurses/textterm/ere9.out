@@ -18,17 +18,24 @@ line<2;1>
 <HOME>
 <SMSO>test/short.txt 119B L4                                                          <RMSO>
 <5;7>
+line<5;7>
 <1;22>
 <SMSO>6<RMSO>
-<7;7>
+<5;7>
 <SMSO><RMSO>
+line<7;7>
+line<7;7>
 <1;22>
 <SMSO>10<RMSO>
-<11;7>
+<7;7>
 <SMSO><RMSO>
+line<11;7>
+line<11;7>
 <1;22>
 <SMSO>4 <RMSO>
 <5;7>
 <SMSO><RMSO>
+line<11;7>
+line<5;7>
 <24;1>
 

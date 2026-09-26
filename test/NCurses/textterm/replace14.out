@@ -1,0 +1,20 @@
+<RMSO>
+<CLEAR>
+<SMSO>a.txt 0B L1                                                                     <RMSO>
+<CUD1>
+<SMSO>^D<RMSO>
+<2;1>
+<SMSO><RMSO>
+<HOME>
+/                                                                               <1;2>
+^/ABC/a<2;1>
+<HOME>
+<SMSO>a.txt 3B L1 *                                                                   <RMSO>
+ABC<HOME>
+>                                                                               <1;2>
+a.txt<2;1>
+<HOME>
+<SMSO>a.txt 3B L1                                                                     <RMSO>
+<2;4>
+<24;1>
+

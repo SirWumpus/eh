@@ -14,15 +14,15 @@ tab indent<11;1>
 <SMSO><RMSO>
 <HOME>
 /                                                                               <1;2>
-butt/hole<2;1>
+butt/$0hole<2;1>
 <HOME>
-<SMSO>a.txt 119B L8 *                                                                 <RMSO>
-<9;8>
+<SMSO>a.txt 123B L8 *                                                                 <RMSO>
+<9;12>
 hole<HOME>
 >                                                                               <1;2>
 a.txt<2;1>
 <HOME>
-<SMSO>a.txt 119B L8                                                                   <RMSO>
-<9;12>
+<SMSO>a.txt 123B L8                                                                   <RMSO>
+<9;16>
 <24;1>
 
