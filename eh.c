@@ -77,11 +77,16 @@
 #define MOTION_CMDS	34
 #define MOST_CMDS	68
 
+#ifdef COLOUR
+enum { CP_RED = 1, CP_YELLOW, CP_GREEN, CP_BLUE, CP_PURPLE, CP_CYAN, CP_WHITE } ;
+#endif /* COLOUR */
+
 static int show_all;
 static char chg = NOCHANGE;
 static int cur_row, cur_col, count, ere_dollar_only, ere_carat_only, search_wrapped, replace_all, yanking;
 static char *filename, *yank_text, *replace;
 static char *buf, *gap, *egap, *ebuf;
+static const char brackets[] = "()[]{}<>", operators[] = "-+*/<>!~%^&|=";
 static const char ins[] = "INS", cmd[] = "   ", one[] = "ONE", *mode = cmd;
 static off_t here, page, epage, match_start, match_length, yank_here, yank_length, marks[MARKS], marker = -1, search_start;
 static regex_t ere;
@@ -694,6 +699,13 @@ display(void)
 		if ((from <= epage and epage < to) or is_ctrl) {
 			standout();
 		}
+#ifdef COLOUR
+		if (strchr(brackets, *p) != NULL) {
+			(void) attron(COLOR_PAIR(CP_RED)|A_BOLD);
+		} else if (strchr(operators, *p) != NULL) {
+			(void) attron(COLOR_PAIR(CP_CYAN));
+		}
+#endif /* COLOUR */
 		if (here <= epage && epage < ematch) {
 			(void) attron(A_BOLD|A_UNDERLINE);
 		}
@@ -735,6 +747,13 @@ display(void)
 		if (ematch <= epage) {
 			(void) attroff(A_BOLD|A_UNDERLINE);
 		}
+#ifdef COLOUR
+		if (strchr(brackets, *p) != NULL) {
+			(void) attroff(COLOR_PAIR(CP_RED)|A_BOLD);
+		} else if (strchr(operators, *p) != NULL) {
+			(void) attroff(COLOR_PAIR(CP_CYAN));
+		}
+#endif /* COLOUR */
 #else /* IOCCC */
 		if (from <= epage and epage < to) {
 			standout();
@@ -856,8 +875,6 @@ lnend(void)
 {
 	here = col_or_eol(here, 0, MAX_COLS);
 }
-
-static const char brackets[] = "()[]{}<>";
 
 void
 pairs(void)
@@ -2396,6 +2413,19 @@ main(int argc, char **argv)
 	 * which can alter the expected test output files.
 	 */
 	(void) raw();
+#ifdef COLOUR
+	if (has_colors()) {
+		(void) start_color();
+		(void) use_default_colors();
+		(void) init_pair(CP_RED, COLOR_RED, -1);
+		(void) init_pair(CP_GREEN, COLOR_GREEN, -1);
+		(void) init_pair(CP_YELLOW, COLOR_YELLOW, -1);
+		(void) init_pair(CP_BLUE, COLOR_BLUE, -1);
+		(void) init_pair(CP_PURPLE, COLOR_MAGENTA, -1);
+		(void) init_pair(CP_CYAN, COLOR_CYAN, -1);
+		(void) init_pair(CP_WHITE, COLOR_WHITE, -1);
+	}
+#endif /* COLOUR*/
 #ifndef IOCCC
 	(void) noecho();
 	(void) keypad(stdscr, 1);
