@@ -86,7 +86,7 @@ static char chg = NOCHANGE;
 static int cur_row, cur_col, count, ere_dollar_only, ere_carat_only, search_wrapped, replace_all, yanking;
 static char *filename, *yank_text, *replace;
 static char *buf, *gap, *egap, *ebuf;
-static const char brackets[] = "()[]{}<>", operators[] = "-+*/<>!~%^&|=";
+static const char brackets[] = "()[]{}", operators[] = "-+*/<>!~%^&|=";
 static const char ins[] = "INS", cmd[] = "   ", one[] = "ONE", *mode = cmd;
 static off_t here, page, epage, match_start, match_length, yank_here, yank_length, marks[MARKS], marker = -1, search_start;
 static regex_t ere;
