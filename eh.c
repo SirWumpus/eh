@@ -47,6 +47,8 @@
 #define CTRL_X		'\030'
 #define CTRL_Z		'\032'
 #define ESC		'\033'
+#define CTRL_BSLASH	'\034'
+#define CTRL_RT_SQR	'\035'
 
 /* Start of undefined and yet unused Unicode values.
  * They are not part of an ctype set yet.
@@ -81,7 +83,7 @@
 enum { CP_RED = 1, CP_YELLOW, CP_GREEN, CP_BLUE, CP_PURPLE, CP_CYAN, CP_WHITE } ;
 #endif /* COLOUR */
 
-static int show_all;
+static int show_all, show_colour;
 static char chg = NOCHANGE;
 static int cur_row, cur_col, count, ere_dollar_only, ere_carat_only, search_wrapped, replace_all, yanking;
 static char *filename, *yank_text, *replace;
@@ -700,10 +702,12 @@ display(void)
 			standout();
 		}
 #ifdef COLOUR
-		if (strchr(brackets, *p) != NULL) {
-			(void) attron(COLOR_PAIR(CP_RED)|A_BOLD);
-		} else if (strchr(operators, *p) != NULL) {
-			(void) attron(COLOR_PAIR(CP_CYAN));
+		if (show_colour) {
+			if (strchr(brackets, *p) != NULL) {
+				(void) attron(COLOR_PAIR(CP_RED)|A_BOLD);
+			} else if (strchr(operators, *p) != NULL) {
+				(void) attron(COLOR_PAIR(CP_CYAN));
+			}
 		}
 #endif /* COLOUR */
 		if (here <= epage && epage < ematch) {
@@ -748,10 +752,12 @@ display(void)
 			(void) attroff(A_BOLD|A_UNDERLINE);
 		}
 #ifdef COLOUR
-		if (strchr(brackets, *p) != NULL) {
-			(void) attroff(COLOR_PAIR(CP_RED)|A_BOLD);
-		} else if (strchr(operators, *p) != NULL) {
-			(void) attroff(COLOR_PAIR(CP_CYAN));
+		if (show_colour) {
+			if (strchr(brackets, *p) != NULL) {
+				(void) attroff(COLOR_PAIR(CP_RED)|A_BOLD);
+			} else if (strchr(operators, *p) != NULL) {
+				(void) attroff(COLOR_PAIR(CP_CYAN));
+			}
 		}
 #endif /* COLOUR */
 #else /* IOCCC */
@@ -1793,6 +1799,12 @@ list(void)
 }
 
 void
+colour(void)
+{
+	show_colour = !show_colour;
+}
+
+void
 nil(void)
 {
 	/* Do nothing. */
@@ -2317,6 +2329,7 @@ static struct binding cmds[] = {
 	{ '>',		indent },
 	{ CTRL_L,	list },
 	{ CTRL_X,	altx },
+	{ CTRL_RT_SQR,	colour },
 
 	/* Other */
 	{ '\\',		anchor },
