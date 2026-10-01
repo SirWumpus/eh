@@ -687,6 +687,9 @@ display(void)
 		from = marker;
 		to = here;
 	}
+// #ifdef COLOUR
+// 	int quote = 0, escape = 0, close = 0;
+// #endif /* COLOUR */
 	off_t ematch = (match_start+match_length)*(0 <= match_start);
 	for (i = TOP_LINE, j = 0, epage = page; (void) standend(), i < LINES; ) {
 		if (here == epage) {
@@ -703,6 +706,19 @@ display(void)
 		}
 #ifdef COLOUR
 		if (show_colour) {
+// 	                if (escape) {
+// 	                        escape = 0;
+// 			} else if (*p == '\\') {
+// 				escape = 1;
+// 			} else if (quote == 0 && (*p == '"' || *p == '\'')) {
+// 				quote = *p;
+// 			} else if (quote == *p || *p == '\n') {
+// 				/* Turn off colour AFTER displaying the quote. */
+// 				close = 1;
+// 			}
+// 			if (quote) {
+// 				(void) attron(COLOR_PAIR(CP_GREEN));
+// 			} else
 			if (strchr(brackets, *p) != NULL) {
 				(void) attron(COLOR_PAIR(CP_RED)|A_BOLD);
 			} else if (strchr(operators, *p) != NULL) {
@@ -753,12 +769,17 @@ display(void)
 		}
 #ifdef COLOUR
 		if (show_colour) {
+// 			if (close) {
+// 				(void) attroff(COLOR_PAIR(CP_GREEN));
+// 				close = quote = 0;
+// 			} else
 			if (strchr(brackets, *p) != NULL) {
 				(void) attroff(COLOR_PAIR(CP_RED)|A_BOLD);
 			} else if (strchr(operators, *p) != NULL) {
 				(void) attroff(COLOR_PAIR(CP_CYAN));
 			}
 		}
+		(void) attrset(0);
 #endif /* COLOUR */
 #else /* IOCCC */
 		if (from <= epage and epage < to) {
