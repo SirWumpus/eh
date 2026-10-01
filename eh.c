@@ -735,15 +735,14 @@ display(void)
 		if (ematch <= epage) {
 			(void) attroff(A_BOLD|A_UNDERLINE);
 		}
-		epage += mbl;
 #else /* IOCCC */
 		if (from <= epage and epage < to) {
 			standout();
 		}
 		int mbl = mblength(*p);
 		(void) mvaddnstr(i, j, p, mbl);
-		epage += mbl;
 #endif /* IOCCC */
+		epage += mbl;
 		/* Handle tab expansion ourselves.  Historical
 		 * Curses addch() would advance to the next
 		 * tabstop (a multiple of 8, eg. 0, 8, 16, ...).
@@ -1267,6 +1266,16 @@ deld(void)
 	adjmarks(-yank_length);
 }
 
+/**
+ * Delete character right (under) the cursor; same as `dl`.
+ */
+void
+delx(void)
+{
+	(void) ungetch('l');
+	deld();
+}
+
 #ifndef IOCCC
 /**
  * Yank current line.
@@ -1276,16 +1285,6 @@ yankY(void)
 {
 	marker = -1;
 	ungetstr("^yj");
-}
-
-/**
- * Delete character right (under) the cursor; same as `dl`.
- */
-void
-delx(void)
-{
-	(void) ungetch('l');
-	deld();
 }
 
 /**
@@ -1428,17 +1427,6 @@ paradown(void)
 	}
 }
 #else /* IOCCC */
-/**
- * Delete character right (under) the cursor; same as `dl`.
- */
-void
-delx(void)
-{
-	/* Do not delete selection, use `d` instead. */
-	(void) ungetch('l');
-	deld();
-}
-
 #endif /* IOCCC */
 
 void
