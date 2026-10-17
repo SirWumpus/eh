@@ -107,6 +107,23 @@ Notes
   - Loads UTF-8 files as-is and internally remains UTF-8 (not converteed to `wchar_t` or `char32_t`).
   - UTF-8 input will likely require an intl. keyboard or enabling [US Intl. dead-key keyboard](https://en.wikipedia.org/wiki/QWERTY#US-International) support.  See also [Unicode Input](https://en.wikipedia.org/wiki/Unicode_input).
 
+  - **NetBSD 7** predates the C17 standard and the support for `<uchar.h>`.  Also NCurses does not appear to have wide character support enabled.  If you search `/mblength` and see in the function comments :
+
+    * A string of inverted `~~~...` where Japanese should appear, then you are missing `LANG` and `LC_ALL` environment variables.  For example:
+
+      ```
+      $ export LANG=en_CA-UTF-8
+      $ export LC_ALL=$LANG
+      ```
+
+      Consider adding to your shell profile.
+
+    * A string of `M-M-M-...` where Japanese should appear then rebuild using NetBSD's native Curses.
+ 
+      ```
+      $ make CSTD="-std=gnu11" CURSES=true clobber build
+      ```
+
 * The display of long physical lines that are larger than the terminal screen is untested, so considered undefined.
 
 * Control characters, other than TAB and LF, are displayed as highlighted alphabetic characters.
