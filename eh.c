@@ -23,7 +23,6 @@
 #include <wctype.h>
 #include <signal.h>
 #include <sys/wait.h>
-#include <uchar.h>
 #include <errno.h>
 #else /* IOCCC */
 #endif /* IOCCC */
@@ -192,6 +191,64 @@ mblength(const int ch)
 	assert(0 <= ch and ch < 256);
 	return 1+(ch > 193)+(ch > 223)+(ch > 239);
 }
+
+/*
+ * NetBSD 7 predates C17.
+ */
+#if __STDC_VERSION__ >= 201710L
+#include <uchar.h>
+#else /* __STDC_VERSION__ */
+# ifdef __NetBSD__
+#  define _NETBSD_SOURCE 1
+extern char *strndup(const char *str, size_t len);
+# endif
+#include <wchar.h>
+#include <stdint.h>
+
+typedef uint32_t char32_t;
+
+/*
+ * Convert a UTF32 code point to a UTF8 multibyte character.  Return
+ * the length of the UTF8 string or -1 for an invalid code point.
+ */
+size_t
+c32rtomb(char *mb, char32_t cp, mbstate_t *ps)
+{
+	/* Assume ASCII by default. */
+	*mb = (unsigned char) cp;
+	/* How many bytes needed to encode as UTF8? */
+	int i = 1+(127 < cp)+(2047 < cp)+(65535 < cp);
+	if (1 < i) {
+		/* Initial mask function of multibyte length. */
+		unsigned char mask = 127 >> i;
+		/* Start byte prefix encodes length as N bits followed by 0. */
+		signed char prefix = -128 >> (i-1);
+		for (int shift = 6*i-6; 0 <= shift; shift -= 6, mask = 0x3F, prefix = -128) {
+			*mb++ = prefix | ((cp >> shift) & mask);
+		}
+	}
+	return i;
+}
+
+/*
+ * Convert a UTF8 multibyte character to UTF32 code point.  Return
+ * the length of the UTF8 string consumed or -1 for an invalid sequence.
+ */
+size_t
+mbrtoc32(char32_t *cp, const char *mb, size_t n, mbstate_t *ps)
+{
+	int i = mblength(*cp = *mb);
+	if (1 < i) {
+		*cp = 0;
+		/* Initial mask function of multibyte length. */
+		unsigned char mask = 0x7F >> i;
+		for (int shift = 6*i-6; 0 <= shift; shift -= 6, mask = 0x3F) {
+			*cp |= (*mb++ & mask) << shift;
+		}
+	}
+	return i;
+}
+#endif /* __STDC_VERSION__ */
 
 off_t
 nextch(off_t cur)

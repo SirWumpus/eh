@@ -10,8 +10,8 @@
 # More portable between bmake and gmake that have different IF-ELSE syntax.
 # Unix vs Windows extensions; gmake supports BSD's X != cmdline vs X = $(cmdline)
 MAKE_OS	!= if test "${.MAKE.OS}" = ''; then uname|sed 's/^CYGWIN.*/Cygwin/'; else echo ${.MAKE.OS}; fi
-O	!= if test ${MAKE_OS} = 'Cygwin'; then echo '.obj'; else echo '.o'; fi
-E	!= if test ${MAKE_OS} = 'Cygwin'; then echo '.exe'; fi
+O	!= if test "${MAKE_OS}" = 'Cygwin'; then echo '.obj'; else echo '.o'; fi
+E	!= if test "${MAKE_OS}" = 'Cygwin'; then echo '.exe'; fi
 
 .SUFFIXES:
 .SUFFIXES: .c .h .i $O $E
@@ -26,7 +26,7 @@ USER	:= 0
 GROUP	:= 0
 MD5SUM	:= md5
 
-INSTALL_FLAGS != if test ${MAKE_OS} != 'Cygwin'; then echo "-o ${USER} -g ${GROUP}"; fi
+INSTALL_FLAGS != if test "${MAKE_OS}" != 'Cygwin'; then echo "-o ${USER} -g ${GROUP}"; fi
 
 # Override from the command-line, eg. make DBG='-O0 -g'
 DBG	:= -DNDEBUG
@@ -47,13 +47,31 @@ VERSION != cat VERSION
 BUILT	!= date -u +'%a, %d %b %Y %H:%M:%SZ'
 COMMIT	!= if [ -d .git ]; then git describe --tags; fi
 
+# The standard to compile against
+#
+# Your IOCCC submission is free to require older C standards, or
+# even not specify a C standard at all.  We suggest trying
+# for -std=gnu17, but that is not a requirement and you won't
+# be penalized if you name CSTD empty or use another
+# well known and reasonably widely implemented C standard.
+#
+CSTD= -std=gnu17
+
+# Compiler bit architecture
+#
+# Example for 32-bitness: ARCH= -m32
+# Example for 64-bitness: ARCH= -m64
+#
+# NOTE: Normally one should not specify a specific architecture.
+#
+ARCH=
+
 # Defines that are needed to compile
 #
 # Example: -Dfoo -Dbar=baz
 #
 CDEFINE := -DBUILT="\"${BUILT}\"" -DVERSION="\"${VERSION}\""
 CDEFINE += -D_XOPEN_SOURCE=800
-
 
 # Common C compiler warnings to silence
 #
@@ -75,6 +93,18 @@ CSILENCE := -Wno-char-subscripts -Wno-incompatible-pointer-types -Wno-unused-par
 # 	-Wno-c99-compat -Wno-incompatible-function-pointer-types-strict \
 # 	-Wno-unsafe-buffer-usage
 
+# Attempt to silence unknown warnings
+#
+# If you add -Wno-stuff to CSILENCE, then please change CUNKNOWN to read:
+#
+#	CUNKNOWN= -Wno-unknown-warning-option
+#
+CUNKNOWN=
+
+# Common C compiler warning flags
+#
+CWARN= -Wall -Wextra -pedantic ${CSILENCE} ${CUNKNOWN}
+
 # Some of the most commonly used includes like ctype.h, stdio.h,
 # stdlib.h, and string.h should be ignored or counted as 2, eg.
 #
@@ -88,9 +118,24 @@ CINCLUDE := -include curses.h -include ctype.h -include string.h \
 	-include stdlib.h -include iso646.h -include regex.h \
 	-include fcntl.h -include locale.h -include unistd.h
 
-CFLAGS	:= -std=gnu17 -Os -funsigned-char -Wall -Wextra ${CSILENCE} ${DBG}
+# Other flags to pass to the C compiler
+#
+# Example: COTHER= -fno-math-errno
+#
+COTHER=	-funsigned-char
 
-CPPFLAGS:= ${CDEFINE} ${CCONFIG} ${CINCLUDE}
+# Optimization
+#
+#OPT= -O3 -g3
+
+# Prefer building for small `very toight like a toiger`.
+OPT= -Os
+
+# Default flags for ANSI C compilation
+#
+CFLAGS	 = ${CSTD} ${CWARN} ${ARCH} ${OPT} ${DBG}
+
+CPPFLAGS:= ${CDEFINE} ${CINCLUDE} ${COTHER} ${CCONFIG}
 LDFLAGS	:=
 LIBS	:=
 
