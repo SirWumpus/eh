@@ -1133,18 +1133,18 @@ insert(void)
 	mode = ins;
 	display();
 	char *start = gap;
-	(void) timeout(100);
-	unsigned input = 0, pause = 0;
+	(void) timeout(10);
+	unsigned input = 0, idle = 0;
 	while ((ch = getsigch()) not_eq CTRL_C and ch not_eq ESC) {
 		switch (ch) {
 		case ERR:
-			/* Timeout. */
-			input = 0;
-			if (!pause) {
-				/* Update screen once more before pause. */
+			/* Assume timeout. */
+			if (!idle) {
+				/* Update once before running idle. */
 				display();
-				pause = 1;
+				idle = 1;
 			}
+			input = 0;
 			continue;
 		case KEY_LEFT:
 			ungetstr("\033hi");
@@ -1225,14 +1225,14 @@ insert(void)
 		}
 		here = pos(egap);
 		chg = CHANGED;
-		/* Slow (manual) input, maintain the screen; otherwise
-		 * put off screen updates for pasted text until all
-		 * input processed.
+		/* For slow input (hunt'n'poke), maintain the screen;
+		 * otherwise the skip screen updates for pasted text
+		 * until all input processed.
 		 */
 		if (input++ < 3) {
 			display();
 		}
-		pause = 0;
+		idle = 0;
 	}
 	(void) timeout(-1);
 	mode = cmd;
