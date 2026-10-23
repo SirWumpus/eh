@@ -103,7 +103,7 @@ TESTS:= tests_have_term_data \
 	indent6 indent7 indent8 indent9 \
 	outdent0 outdent1 list0 \
 	word0 word1 word2 \
-	edit0 edit1 edit2 edit3
+	edit0 edit1 edit2 edit3 edit4
 
 .PHONY : ${TESTS}
 .SILENT: ${TESTS}
@@ -1506,10 +1506,18 @@ edit2:
 	${A_OUT}
 	-${PASS}
 
-# CB-46 Edit, discard, and try to undo/redo after buffer reset.
+# CB-46 Edit, do not discard, and quit.
 edit3:
 	-${TITLE}
-	printf 'ihello world\033Ey\n\nuUUQ' | ${PROG} a.txt >a.out
+	printf 'ihello world\033Ey\n\nQy\n' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	-${PASS}
+
+# CB-46 Edit, discard, and try to undo/redo after buffer reset.
+edit4:
+	-${TITLE}
+	printf 'ihello world\033Ey\n\025\nuUQy\n' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	-${PASS}

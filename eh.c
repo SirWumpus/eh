@@ -1684,7 +1684,7 @@ fileread(const char * const fn)
 		}
 		(void) close(fd);
 	}
-	if (errno) {
+	if (errno && errno not_eq ENOENT) {
 		(void) snprintf(gap, COLS-20, "%s (%d)", strerror(errno), errno);
 		mode = gap;
 	}

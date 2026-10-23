@@ -1,0 +1,41 @@
+<RMSO>
+<CLEAR>
+<SMSO>a.txt 0B L1                                                                     <RMSO>
+<CUD1>
+<SMSO>^D<RMSO>
+<2;1>
+<SMSO><RMSO>
+<1;15>
+<SMSO>INS<RMSO>
+<2;1>
+<SMSO><RMSO>
+<1;7>
+<SMSO>1B L1 *<RMSO>
+<2;1>
+<SMSO><RMSO>
+h<1;7>
+<SMSO>2<RMSO>
+<2;2>
+<SMSO><RMSO>
+e<1;7>
+<SMSO>3<RMSO>
+<2;3>
+<SMSO><RMSO>
+l<1;7>
+<SMSO>11B L1 *   <RMSO>
+<2;4>
+<SMSO><RMSO>
+lo world<HOME>
+Discard changes y/[n]?                                                          <1;24>
+<2;1>
+<HOME>
+<SMSO>a.txt 11B L1 *                                                                  <RMSO>
+<2;12>
+<HOME>
+>                                                                               <1;2>
+a.txt<2;1>
+<HOME>
+<SMSO>a.txt 11B L1                                                                    <RMSO>
+<2;12>
+<24;1>
+
