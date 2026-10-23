@@ -351,7 +351,7 @@ struct ubuf {
 	char buf[];
 };
 
-struct ubuf *undo_list, *redo_list;
+static struct ubuf *undo_list, *redo_list;
 
 /* See `ex` Mark which describes when the previous-mark (` or ') is set.
  * https://pubs.opengroup.org/onlinepubs/9799919799/utilities/ex.html#tag_20_40_13_25
@@ -1675,13 +1675,18 @@ int
 fileread(const char * const fn)
 {
 	int fd;
+	errno = 0;
 	ssize_t n = 0;
-	if (0 < (fd = open(fn, 0))) {
+	if (*fn not_eq '\0' and 0 < (fd = open(fn, 0))) {
 		while (0 < (n = read(fd, gap, egap-gap))) {
 			gap += n;
 			growgap(BUF/2);
 		}
 		(void) close(fd);
+	}
+	if (errno) {
+		(void) snprintf(gap, COLS-20, "%s (%d)", strerror(errno), errno);
+		mode = gap;
 	}
 	return (int) n;
 }
@@ -1709,19 +1714,32 @@ readfile(void)
 void
 edit(void)
 {
-	here = 0;
-	page = 0;
-	epage = 1;
-	gap = buf;
-	egap = ebuf;
-	undo_free(undo_list);
-	undo_free(redo_list);
+	if (chg == CHANGED) {
+		prompt("Discard changes y/[n]? ", "");
+		if (*gap not_eq 'y') {
+			return;
+		}
+	}
 	prompt("*", filename);
-	free(filename);
-	filename = strdup(gap);
-	if (fileread(gap)) {
-		/* ed(1) ? */
-		(void) beep();
+	/* Reset buffer only if the filename changes. */
+	if (strcmp(filename, gap) != 0) {
+		/* Update filename _before_ reseting buffer. */
+		free(filename);
+		filename = strdup(gap);
+		/* Reset. */
+		chg = NOCHANGE;
+		undo_free(undo_list);
+		undo_free(redo_list);
+		/* CB-46 reset lists after free. */
+		undo_list = redo_list = NULL;
+		here = page = 0;
+		epage = 1;
+		egap = ebuf;
+		gap = buf;
+		if (fileread(filename)) {
+			/* ed(1) ? */
+			(void) beep();
+		}
 	}
 }
 

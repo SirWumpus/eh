@@ -102,7 +102,8 @@ TESTS:= tests_have_term_data \
 	indent0 indent1 indent2 indent3 indent4 indent5 \
 	indent6 indent7 indent8 indent9 \
 	outdent0 outdent1 list0 \
-	word0 word1 word2
+	word0 word1 word2 \
+	edit0 edit1 edit2 edit3
 
 .PHONY : ${TESTS}
 .SILENT: ${TESTS}
@@ -1476,6 +1477,39 @@ word2:
 	-${TITLE}
 	cp test/utf8.txt a.txt
 	printf '2j4lwb4le3hbQ' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	-${PASS}
+
+# CB-46 Edit and switch files.
+edit0:
+	-${TITLE}
+	printf 'E\nuUUQ' | ${PROG} test/short.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	-${PASS}
+
+# CB-46 Edit, abort switch, write.
+edit1:
+	-${TITLE}
+	printf 'ihello world\033E\nW\nQ' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	${A_TXT}
+	-${PASS}
+
+# CB-46 Edit, discard, and switch file.
+edit2:
+	-${TITLE}
+	printf 'ihello world\033Ey\ntest/utf8.txt\nQ' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	-${PASS}
+
+# CB-46 Edit, discard, and try to undo/redo after buffer reset.
+edit3:
+	-${TITLE}
+	printf 'ihello world\033Ey\n\nuUUQ' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	-${PASS}
