@@ -80,9 +80,10 @@
 
 #ifdef COLOUR
 enum { CP_RED = 1, CP_YELLOW, CP_GREEN, CP_BLUE, CP_PURPLE, CP_CYAN, CP_WHITE } ;
+static int show_colour;
 #endif /* COLOUR */
 
-static int show_all, show_colour;
+static int show_all;
 static char chg = NOCHANGE;
 static int cur_row, cur_col, count, ere_dollar_only, ere_carat_only, search_wrapped, replace_all, yanking;
 static char *filename, *yank_text, *replace;
@@ -219,7 +220,7 @@ typedef uint32_t char32_t;
  * the length of the UTF8 string or -1 for an invalid code point.
  */
 size_t
-c32rtomb(char *mb, char32_t cp, mbstate_t *ps)
+c32rtomb(char * restrict mb, char32_t cp, mbstate_t * restrict ps)
 {
 	/* Assume ASCII by default. */
 	*mb = (unsigned char) cp;
@@ -242,16 +243,22 @@ c32rtomb(char *mb, char32_t cp, mbstate_t *ps)
  * the length of the UTF8 string consumed or -1 for an invalid sequence.
  */
 size_t
-mbrtoc32(char32_t *cp, const char *mb, size_t n, mbstate_t *ps)
+mbrtoc32(char32_t * restrict cp, const char * restrict mb, size_t n, mbstate_t * restrict ps)
 {
-	int i = mblength(*cp = *mb);
+	unsigned char *umb = (unsigned char *) mb;
+	*cp = *umb;
+	/* Assume mb points to a start byte. */
+	int i = mblength(*umb);
 	if (1 < i) {
 		*cp = 0;
 		/* Initial mask function of multibyte length. */
 		unsigned char mask = 0x7F >> i;
 		for (int shift = 6*i-6; 0 <= shift; shift -= 6, mask = 0x3F) {
-			*cp |= (*mb++ & mask) << shift;
+			*cp |= (*umb++ & mask) << shift;
 		}
+	} else if (127 < *umb) {
+		/* Invalid start byte. */
+		return -1;
 	}
 	return i;
 }
@@ -1895,11 +1902,13 @@ list(void)
 	show_all = !show_all;
 }
 
+#ifdef COLOUR
 void
 colour(void)
 {
 	show_colour = !show_colour;
 }
+#endif /* COLOUR */
 
 void
 nil(void)
@@ -2426,7 +2435,9 @@ static struct binding cmds[] = {
 	{ '>',		indent },
 	{ CTRL_L,	list },
 	{ CTRL_X,	altx },
+#ifdef COLOUR
 	{ CTRL_RT_SQR,	colour },
+#endif /* COLOUR */
 
 	/* Other */
 	{ '\\',		anchor },
