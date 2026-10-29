@@ -102,6 +102,8 @@ See Also
 Notes
 -----
 
+* `eh` won the [IOCCC 28](https://www.ioccc.org/2024/) `Nice accent eh-ward`.  See the winning source `git checkout ioccc_2024_winner; cd ioccc28`.
+
 * Has UTF-8 support.
 
   - Loads UTF-8 files as-is and internally remains UTF-8 (not converteed to `wchar_t` or `char32_t`).
