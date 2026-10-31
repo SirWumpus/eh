@@ -92,7 +92,7 @@ TESTS:= tests_have_term_data \
 	undo0 undo1 undo2 undo3 undo4 \
 	paste0 paste1 paste2 paste3 \
 	bang0 bang1 bang2 bang3 bang4 bang5 bang6 bang7 \
-	replace0 replace1 replace2 write0 read0 read1 \
+	replace0 replace1 replace2 write0 read0 read1 read2 \
 	select0 select1 select2 select3 select4 select5 \
 	mb0 mb1 mb2 mb3 mb4 imb0 imb1 imb2 imb3 imb4 \
 	replace3 replace4 replace8 replace9 replace5 \
@@ -1092,9 +1092,9 @@ write1:
 # Read file into an empty buffer.
 read0:
 	-${TITLE}
-	printf 'Rtest/short.txtWa.txt\nQy' | ${PROG} >a.out
+	printf 'Rtest/short.txt\nWa.txt\nQy' | ${PROG} >a.out
 	${A_CORE}
-	${A_OUT}
+	cmp test/short.txt a.txt
 	-${PASS}
 
 # Add text, then read a file into the middle, and save.
@@ -1103,6 +1103,14 @@ read1:
 	printf 'iThe quick brown fox jumps over the lazy dog.\n\033/fox\nRtest/short.txt\nW\nQ' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_OUT}
+	-${PASS}
+
+# CB-39 Read file larger than a screen lines into an empty buffer.
+read2:
+	-${TITLE}
+	printf 'Rtest/Makefile\nWa.txt\nQ' | ${PROG} >a.out
+	${A_CORE}
+	cmp test/Makefile a.txt
 	-${PASS}
 
 # Toggle select on/off without selecting anything.

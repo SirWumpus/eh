@@ -1711,7 +1711,8 @@ readfile(void)
 		off_t len = pos(ebuf)-eof;
 		undo_save(UNDO_INS, here, gap-len, len);
 		here = pos(egap);
-		epage = here+1;
+		/* CB-49 Force display() to reframe. */
+		epage = 0;
 		chg = CHANGED;
 		adjmarks(len);
 	}
