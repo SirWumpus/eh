@@ -2329,6 +2329,21 @@ search(void)
 	if (regcomp(&ere, gap, REG_EXTENDED bitor REG_NEWLINE) not_eq 0) {
 		/* Something about the pattern is fubar. */
 		(void) beep();
+		/* CB-48: A failed regcomp() leaves the regex_t in an
+		 * undefined state.  On glibc (Rocky Linux) regexec() does
+		 * not validate it, so a later `n` -> search_next() would
+		 * dereference uninitialised memory and segfault.  Recompile
+		 * the default empty pattern used at startup, which is a
+		 * zero-width no-op, so `n` stays safe and does not move.
+		 * Also drop any replacement parsed from the bad command so
+		 * it cannot be inserted by a later no-op search_next().
+		 */
+		(void) regcomp(&ere, "", 0);
+		ere_carat_only = 0;
+		ere_dollar_only = 0;
+		match_length = 0;
+		free(replace);
+		replace = NULL;
 	} else {
 		/* Kludge to handle repeated /^/ matching. */
 		ere_carat_only = gap[0] == '^' and '\0' == gap[1];

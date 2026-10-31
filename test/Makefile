@@ -104,7 +104,8 @@ TESTS:= tests_have_term_data \
 	outdent0 outdent1 list0 \
 	word0 word1 word2 \
 	edit0 edit1 edit2 edit3 edit4 \
-	ere15 ere16 ere17 ere18 next0 next1
+	ere15 ere16 ere17 ere18 next0 next1 \
+	ere19 ere20
 
 .PHONY : ${TESTS}
 .SILENT: ${TESTS}
@@ -1573,4 +1574,23 @@ ere18:
 	printf '//\nQ' | ${PROG} test/short.txt >a.out
 	${A_CORE}
 	${A_OUT}
+	-${PASS}
+
+# CB-48 A bad search pattern beeps and must not corrupt the buffer,
+# ie. a later `n` is a safe no-op and the replacement from the failed
+# command is discarded.  Follow up to the next1 segfault regression.
+ere19:
+	-${TITLE}
+	printf 'ifoo bar foo\033/[bad/ZZZ/\nnW\nQy' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_TXT}
+	-${PASS}
+
+# CB-48 Bad pattern followed by `n` must not segfault (glibc),
+# and later a valid search replace continues to work normally.
+ere20:
+	-${TITLE}
+	printf 'ifoo bar foo\033/[bad/ZZZ/\n/foo/XXX/\nnW\nQy' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_TXT}
 	-${PASS}
