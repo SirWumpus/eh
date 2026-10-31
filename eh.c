@@ -2321,6 +2321,10 @@ search(void)
 	(void) mvgetnstr(0, 1, gap, egap-gap);
 #endif /* IOCCC */
 	regfree(&ere);
+	/* CB-48 sidebar: NetBSD for the empty pattern `/` compiles or
+	 * `//` oddly returns the none portable error REG_EMPTY even
+	 * though gap is an empty string; sanitizer reports nothing.
+	 */
 	if (regcomp(&ere, gap, REG_EXTENDED bitor REG_NEWLINE) not_eq 0) {
 		/* Something about the pattern is fubar. */
 		(void) beep();
@@ -2557,6 +2561,8 @@ main(int argc, char **argv)
 		/* Good grief Charlie Brown! */
 		return 2;
 	}
+	/* CB-48 Set a default empty pattern. */
+	(void) regcomp(&ere, "", 0);
 	/* Force display() to frame the initial screen. */
 	epage = 1;
 	while (mode not_eq NULL) {

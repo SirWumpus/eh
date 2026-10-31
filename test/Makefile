@@ -103,7 +103,8 @@ TESTS:= tests_have_term_data \
 	indent6 indent7 indent8 indent9 \
 	outdent0 outdent1 list0 \
 	word0 word1 word2 \
-	edit0 edit1 edit2 edit3 edit4
+	edit0 edit1 edit2 edit3 edit4 \
+	ere15 ere16 ere17 ere18 next0 next1
 
 .PHONY : ${TESTS}
 .SILENT: ${TESTS}
@@ -1518,6 +1519,50 @@ edit3:
 edit4:
 	-${TITLE}
 	printf 'ihello world\033Ey\n\025\nuUQy\n' | ${PROG} a.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	-${PASS}
+
+# CB-48 Would seg.fault on Linux.
+next0:
+	-${TITLE}
+	printf 'nQ' | ${PROG} >a.out
+	${A_CORE}
+	-${PASS}
+
+# CB-48 Seg. fault for a bad pattern.
+next1:
+	-${TITLE}
+	printf '/[a-z\nnQ' | ${PROG} >a.out
+	${A_CORE}
+	-${PASS}
+
+# Empty pattern never matches, ie. doesn't move.
+ere15:
+	-${TITLE}
+	printf '/\nQ' | ${PROG} >a.out
+	${A_CORE}
+	-${PASS}
+
+# Empty pattern never matches, ie. doesn't move.
+ere16:
+	-${TITLE}
+	printf '//\nQ' | ${PROG} >a.out
+	${A_CORE}
+	-${PASS}
+
+# Empty pattern never matches, ie. doesn't move.
+ere17:
+	-${TITLE}
+	printf '/\nQ' | ${PROG} test/short.txt >a.out
+	${A_CORE}
+	${A_OUT}
+	-${PASS}
+
+# Empty pattern never matches, ie. doesn't move.
+ere18:
+	-${TITLE}
+	printf '//\nQ' | ${PROG} test/short.txt >a.out
 	${A_CORE}
 	${A_OUT}
 	-${PASS}
