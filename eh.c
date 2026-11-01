@@ -478,6 +478,14 @@ getsigch(void)
 		 */
 		return ERR;
 	}
+	/* CB-52 Treat ERR as EOF when not a tty, ie. non-interactive
+	 * piped input without an explicit `Q` quit command.
+	 */
+	if (ch == ERR and not isatty(STDIN_FILENO)) {
+		/* By-pass discard prompt. */
+		chg = NOCHANGE;
+		return CTRL_C;
+	}
 	return ch;
 }
 
