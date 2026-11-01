@@ -147,6 +147,11 @@ Notes
 * NetBSD (primary), FreeBSD, OpenBSD, Rocky Linux (secondary), SlackWare, Cygwin all work.  Please beware of differences in the shell tool chains of different platforms, eg. `/bin/sh`, GNU `printf(1)` `\e` vs FreeBSD `printf(1)` `\033`; tool error response messages seen with `fmt(1)` that can affect the regression testing.
 
 
+### Bug Reporting
+
+When reporting a bug, we desire an Issue be created first for possible discussion, before submitting a PR which must reference in the Issue in commit message(s), eg `CB #nnn` where nnn is the Issue number.
+
+
 References
 ----------
 
