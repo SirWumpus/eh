@@ -1,0 +1,29 @@
+<RMSO>
+<CLEAR>
+<SMSO> 0B L1                                                                          <RMSO>
+<CUD1>
+<SMSO>^D<RMSO>
+<2;1>
+<SMSO><RMSO>
+<1;10>
+<SMSO>INS<RMSO>
+<2;1>
+<SMSO><RMSO>
+<1;2>
+<SMSO>1B L1 *<RMSO>
+<2;1>
+<SMSO><RMSO>
+h<1;2>
+<SMSO>2<RMSO>
+<2;2>
+<SMSO><RMSO>
+e<1;2>
+<SMSO>3<RMSO>
+<CUD1>
+<SMSO><RMSO>
+l<1;2>
+<SMSO>5B L1      <RMSO>
+<2;4>
+<SMSO><RMSO>
+lo<24;1>
+

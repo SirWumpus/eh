@@ -66,6 +66,11 @@ A_TXT		= ( diff -u ${DATA}/$@.txt a.txt || ${SAVE_TXT} )
 A_OUT_OR_SKIP	= ( ${A_OUT} >/dev/null && ${PASS} ) || ${SKIP}
 A_TXT_OR_SKIP	= ( diff -u ${DATA}/$@.txt a.txt ) || ${SKIP}
 
+# NetBSD `timeout(1)` does not timeout or kill $PROG.  Rocky Linux `timeout(1)`
+# actually times out, so `timeout(1)` might not be passing through stdin.
+#
+#TIMEOUT		= timeout -s KILL 3
+
 # NetBSD tic vs NCurses tic
 TIC	!= if test "${CURSES}" = NCurses -a -e /usr/pkg/bin/tic; then echo '/usr/pkg/bin/tic'; else echo tic; fi
 
@@ -105,7 +110,7 @@ TESTS:= tests_have_term_data \
 	word0 word1 word2 \
 	edit0 edit1 edit2 edit3 edit4 \
 	ere15 ere16 ere17 ere18 next0 next1 \
-	ere19 ere20
+	ere19 ere20 eof_note eof0 eof1 eof2
 
 .PHONY : ${TESTS}
 .SILENT: ${TESTS}
@@ -1593,4 +1598,32 @@ ere20:
 	printf 'ifoo bar foo\033/[bad/ZZZ/\n/foo/XXX/\nnW\nQy' | ${PROG} a.txt >a.out
 	${A_CORE}
 	${A_TXT}
+	-${PASS}
+
+eof_note:
+	@echo 'The following three tests must NOT hang.'
+
+# CB-52 Piped input that reaches EOF with no quit command must leave the
+# editor cleanly and promptly.
+eof0:
+	-${TITLE}
+	printf "" | ${PROG} >a.out
+	${A_CORE}
+	${A_OUT}
+	-${PASS}
+
+# CB-52 EOF immediately after a `R` read command used to hang.
+eof1:
+	-${TITLE}
+	printf "Rtest/short.txt\n" | ${PROG} >a.out
+	${A_CORE}
+	${A_OUT}
+	-${PASS}
+
+# CB-52 EOF while inserting text used to hang in insert()'s getch() timeout loop.
+eof2:
+	-${TITLE}
+	printf "ihello" | ${PROG} >a.out
+	${A_CORE}
+	${A_OUT}
 	-${PASS}
