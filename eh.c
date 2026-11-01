@@ -476,7 +476,7 @@ getsigch(void)
 		 * numeric input or a partial command, then when you
 		 * return you'll have likely forgotten where you are.
 		 */
-		ch = ERR;
+		return ERR;
 	}
 	return ch;
 }
@@ -2474,6 +2474,8 @@ static struct binding cmds[] = {
 	{ -1,		nil }
 };
 
+#define NIL	(sizeof (cmds) / sizeof (cmds[0])-1)
+
 #else /* IOCCC */
 /*                        |-MOTION_CMDS-|-edit-|--misc-| */
 static const char key[] = "hjklbwHJKL|G/nixydPu\\WQ\003";
@@ -2518,7 +2520,9 @@ getcmd(const int m)
 		ch = '+';
 		lnbegin();
 	}
-	for (j = 0; cmds[j].key not_eq -1 and ch not_eq cmds[j].key; j++) {
+	/* Set the last cmd, nil(), to the input key. */
+	cmds[NIL].key = ch;
+	for (j = 0; ch not_eq cmds[j].key; j++) {
 		;
 	}
 	if (j < m) {
