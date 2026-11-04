@@ -495,9 +495,7 @@ line_number(off_t cur)
 {
 	unsigned long line = 1;
 	while (0 < cur) {
-		if (*ptr(--cur) == '\n') {
-			line++;
-		}
+		line += (*ptr(--cur) == '\n');
 	}
 	return line;
 }
@@ -1375,6 +1373,8 @@ deld(void)
 #ifndef IOCCC
 	marker = -1;
 	chg = CHANGED;
+	/* For `d/pattern` disable highlighting the matched pattern. */
+	match_start = 0;
 	undo_save(UNDO_DEL, yank_here, yank_text, yank_length);
 #else /* IOCCC */
 #endif /* IOCCC */
