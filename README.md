@@ -1,3 +1,4 @@
+![eh!](./eh_exclaim.png)  
 ![eh screen capture](./screen0.png)  
 Primary Repository https://codeberg.org/SirWumpus/eh
 
