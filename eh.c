@@ -55,6 +55,8 @@
  */
 #define BEYOND_HERE_BE_	0x33480
 
+#define MAX_UTF8_LEN	4
+
 #define CHANGED		'*'
 #define NOCHANGE	' '
 #define MARKS		27
@@ -246,10 +248,19 @@ size_t
 mbrtoc32(char32_t * restrict cp, const char * restrict mb, size_t n, mbstate_t * restrict ps)
 {
 	unsigned char *umb = (unsigned char *) mb;
+// 	if (cp == NULL or mb == NULL) {
+// 		errno = EFAULT;
+// 		return -1;
+// 	}
+// 	errno = 0;
 	*cp = *umb;
 	/* Assume mb points to a start byte. */
+	assert(*umb < 128 or (*umb bitand 0xC0) != 0xC0);
 	int i = mblength(*umb);
 	if (1 < i) {
+// 		if (n < i) {
+// 			return -1;
+// 		}
 		*cp = 0;
 		/* Initial mask function of multibyte length. */
 		unsigned char mask = 0x7F >> i;
@@ -556,7 +567,7 @@ charwidth(const char *s, int col)
 {
 	char32_t wc;
 	mbstate_t mbs = { 0 };	/* Do NOT track state. */
-	ssize_t mbl = mbrtoc32(&wc, s, 4, &mbs);
+	ssize_t mbl = mbrtoc32(&wc, s, MAX_UTF8_LEN, &mbs);
 	/* Invalid MB sequence or MB continuation byte, count
 	 * width one ASCII character (see display() '~' place
 	 * holder), or a control count one highlighted ASCII
@@ -818,7 +829,7 @@ display(void)
 		} else {
 			char32_t wc;
 			mbstate_t mbs = { 0 };	/* Do NOT track state. */
-			mbl = mbrtoc32(&wc, p, 4, &mbs);
+			mbl = mbrtoc32(&wc, p, MAX_UTF8_LEN, &mbs);
 			if (0 < mbl and (0 < wcwidth(wc) or iswspace(wc))) {
 				/* Use addnstr() family that already handles
 				 * UTF8 instead of add_wch() to avoid all the
@@ -1089,7 +1100,7 @@ c32at(const off_t cur)
 	char *s = ptr(cur);
 	mbstate_t mbs = { 0 };          /* Do NOT track state. */
 	char32_t wc = (char32_t)*s;     /* Assume ASCI or invalid MB value. */
-	(void) mbrtoc32(&wc, s, 4, &mbs);
+	(void) mbrtoc32(&wc, s, MAX_UTF8_LEN, &mbs);
 	return wc;
 }
 
@@ -1860,7 +1871,7 @@ altx(void)
 	if (gap == p) {
 		/* Erase UTF-8 character, insert code point. */
 		gap -= here-prevch(here);
-		i = mbrtoc32(&wc, gap, 4, &mbs);
+		i = mbrtoc32(&wc, gap, MAX_UTF8_LEN, &mbs);
 		if (0 < i) {
 			gap += snprintf(gap, 9, "%06X", wc);
 		}
@@ -1931,7 +1942,7 @@ flipcase(void)
 	char32_t wc;
 	movegap(here);
 	mbstate_t mbs = { 0 };          /* Do NOT track state. */
-	ssize_t mbl = mbrtoc32(&wc, egap, 4, &mbs);
+	ssize_t mbl = mbrtoc32(&wc, egap, MAX_UTF8_LEN, &mbs);
 	if (iswalpha(wc)) {
 		undo_save(UNDO_DEL_A, here, egap, mbl);
 		wc = iswlower(wc) ? towupper(wc) : towlower(wc);
