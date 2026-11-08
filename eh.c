@@ -85,7 +85,7 @@ static int show_colour;
 
 static int show_all;
 static char chg = NOCHANGE;
-static int cur_row, cur_col, count, ere_dollar_only, ere_carat_only, search_wrapped, replace_all, yanking;
+static int cur_row, cur_col, count, ere_dollar_only, search_wrapped, replace_all, yanking;
 static char *filename, *yank_text, *replace;
 static char *buf, *gap, *egap, *ebuf;
 static const char brackets[] = "()[]{}";
@@ -2347,14 +2347,17 @@ search(void)
 		 * it cannot be inserted by a later no-op search_next().
 		 */
 		(void) regcomp(&ere, "", 0);
-		ere_carat_only = 0;
+// 		ere_carat_only = 0;
 		ere_dollar_only = 0;
 		match_length = 0;
+#ifndef IOCCC
 		free(replace);
 		replace = NULL;
+#else /* IOCCC */
+#endif /* IOCCC */
 	} else {
-		/* Kludge to handle repeated /^/ matching. */
-		ere_carat_only = gap[0] == '^' and '\0' == gap[1];
+// 		/* Kludge to handle repeated /^/ matching. */
+// 		ere_carat_only = gap[0] == '^' and '\0' == gap[1];
 		/* Kludge to handle repeated /$/ matching. */
 		ere_dollar_only = gap[0] == '$' and '\0' == gap[1];
 		match_length = 0;
@@ -2566,6 +2569,8 @@ main(int argc, char **argv)
 	 * which can alter the expected test output files.
 	 */
 	(void) raw();
+	/* CB-48 Set a default empty pattern. */
+	(void) regcomp(&ere, "", 0);
 #ifdef COLOUR
 	if (has_colors()) {
 		(void) start_color();
@@ -2589,8 +2594,6 @@ main(int argc, char **argv)
 		/* Good grief Charlie Brown! */
 		return 2;
 	}
-	/* CB-48 Set a default empty pattern. */
-	(void) regcomp(&ere, "", 0);
 	/* Force display() to frame the initial screen. */
 	epage = 1;
 	while (mode not_eq NULL) {
