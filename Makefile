@@ -168,7 +168,7 @@ MANDIR  != if test "${MANDIR}" = '.'; then echo /usr/local/share/man; else echo 
 #######################################################################
 
 .PHONY: all build clean clobber debug distclean nuke install
-.PHONY: strip size test tests snapshot tag
+.PHONY: strip size test tests snapshot tag uninstall remove
 
 all: build
 
@@ -195,6 +195,9 @@ install: README.md eh$E
 	install ${INSTALL_FLAGS} -m 555 eh$E /usr/local/bin
 	install ${INSTALL_FLAGS} -d ${MANDIR}/cat1
 	install ${INSTALL_FLAGS} -p -m 444 README.md ${MANDIR}/cat1/eh.0
+
+uninstall remove:
+	rm -f /usr/local/bin/eh$E ${MANDIR}/cat1/eh.0
 
 VERSION: eh.c
 	if [ -d .git ]; then git describe --tags > VERSION; fi
