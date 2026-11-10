@@ -1,7 +1,7 @@
 /*
  * Edit Here
  *
- * Copyright 2024, 2025 by Anthony C Howe.  All rights reserved.
+ * Copyright 2024, 2026 by Anthony C Howe.  All rights reserved.
  *
  * For TextPad suggest this Unicode font...
  * https://www.unifoundry.com/pub/unifont/unifont-16.0.03/font-builds/unifont-16.0.03.otf
@@ -570,7 +570,7 @@ charwidth(const char *s, int col)
 	ssize_t mbl = mbrtoc32(&wc, s, MAX_UTF8_LEN, &mbs);
 	/* Invalid MB sequence or MB continuation byte, count
 	 * width one ASCII character (see display() '~' place
-	 * holder), or a control count one highlighted ASCII
+	 * holder), or a control count as one highlighted ASCII
 	 * character, otherwise TAB offset or character width.
 	 */
 	return mbl <= 0 or (127 < *s and *s < 194)

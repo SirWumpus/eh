@@ -100,10 +100,30 @@ See Also
 `ed(1)`, `ex(1)`, `vi(1)`
 
 
+Tested Platforms
+----------------
+
+* NetBSD (primary), FreeBSD, OpenBSD, Rocky Linux (secondary), SlackWare, Cygwin all work.  
+
+* Be aware of differences in the shell tool chains across platforms, eg. `/bin/sh` is Bash on Linux and a Bourne or Korn shell on BSDs; GNU `printf(1)` supports `\e` vs FreeBSD `printf(1)` classic `\033`; differences in tool messages,  such as `fmt(1)`, that can affect the regression testing.
+
+
+Bug Reporting
+-------------
+
+When reporting a bug, we desire an Issue be created first for possible discussion, before submitting a PR which must reference the Issue in the commit message(s), eg `CB #nnn` where nnn is the Issue number.
+
+
 Notes
 -----
 
-* `eh` won the [IOCCC 28](https://www.ioccc.org/2024/) `Nice accent eh-ward`.  See the winning source `git checkout ioccc_2024_winner; cd ioccc28`.
+* `eh` won the [IOCCC 28](https://www.ioccc.org/2024/howe) `Nice accent eh-ward`.  Also see the winning source here:
+
+      git checkout ioccc_2024_winner; cd ioccc28
+
+* `u` and `U` do not behave as in historical `vi(1)`; they now provide multi undo and redo respectively.
+
+* Control characters, other than TAB and LF, are displayed as highlighted alphabetic characters.
 
 * Has UTF-8 support.
 
@@ -127,12 +147,6 @@ Notes
       $ make CSTD="-std=gnu11" CURSES=true clobber build
       ```
 
-* The display of long physical lines that are larger than the terminal screen is untested, so considered undefined.
-
-* Control characters, other than TAB and LF, are displayed as highlighted alphabetic characters.
-
-* `u` and `U` do not behave as in historical `vi(1)`; they now provide multi undo and redo respectively.
-
 * CRLF newlines (DOS, Windows) should be converted to LF newlines.  Consider converting newlines using SUS tools like `awk(1)` or `sed(1)`:
 
         $ sed -e's/^V^M$//' dos.txt > unix.txt
@@ -141,16 +155,6 @@ Notes
   `^V` is the default `stty(1)` insert literal prefix key.
 
 * Cygwin builds may be bugged with respect to `wcwidth()`, since `wchar_t` reflects UTF-16 to match Windows and there is no equivalent `c32width()` nor means to determine cell width of surrogate pairs, such as emoji.
-
-
-### Tested Platforms
-
-* NetBSD (primary), FreeBSD, OpenBSD, Rocky Linux (secondary), SlackWare, Cygwin all work.  Please beware of differences in the shell tool chains of different platforms, eg. `/bin/sh` is Bash on Linux and a Bourne or Korn shell on BSDs, GNU `printf(1)` `\e` vs FreeBSD `printf(1)` `\033`; tool error response messages seen with `fmt(1)` that can affect the regression testing.
-
-
-### Bug Reporting
-
-When reporting a bug, we desire an Issue be created first for possible discussion, before submitting a PR which must reference the Issue in the commit message(s), eg `CB #nnn` where nnn is the Issue number.
 
 
 References
@@ -170,3 +174,6 @@ References
 
 * Single Unix Specification, Curses issue 7  
   <https://pubs.opengroup.org/onlinepubs/9699909599/toc.pdf>
+
+
+**Copyright 2024, 2026 by Anthony C Howe.  All rights reserved.**
